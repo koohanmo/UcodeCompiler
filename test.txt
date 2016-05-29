@@ -30,6 +30,6 @@ function void foo2 -> {}
 main
 {
 	int a;
-	a=call foo1(a,b);
+	a=call foo1(a[b+1],b);
 	call foo2();
 }
