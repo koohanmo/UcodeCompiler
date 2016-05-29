@@ -91,6 +91,8 @@ public class Lexer {
 			case ']': ch= nextChar(); return Token.rightBracketTok;
 			case '}': ch= nextChar(); return Token.rightBraceTok;
 			case ';': ch= nextChar(); return Token.semicolonTok;
+			case '%': ch= nextChar(); return Token.modTok;
+			case '!': ch= nextChar(); return Token.notTok;
 			case '*': return chkOpt('*',Token.multiplyTok, Token.expTok);
 			case '<': return chkOpt('=', Token.ltTok, Token.lteqTok);
 			case '>': return chkOpt('=', Token.gtTok, Token.gteqTok);

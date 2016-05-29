@@ -65,7 +65,7 @@ public class Token {
 	
 	public static final Token gteqTok = new Token(TokenType.GreaterEqual, ">=");
 	
-	public static final Token notTok = new Token(TokenType.Not, "not");
+	public static final Token notTok = new Token(TokenType.Not, "!");
 	
 	public static final Token noteqTok = new Token(TokenType.NotEqual, "!=");
 	
@@ -95,6 +95,7 @@ public class Token {
 	
 	public static final Token decTok =new Token (TokenType.Decrement,"--");
 	
+	public static final Token modTok =new Token (TokenType.Mod,"%");
 	
 	private TokenType type;
 	private String value = "";
