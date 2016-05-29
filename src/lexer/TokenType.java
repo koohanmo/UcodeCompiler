@@ -1,7 +1,7 @@
 package lexer;
 public enum TokenType {
 
-Bool, Char, Else, False, Float, Arrow, Increment,Decrement, Mod, Call,
+Bool, Char, Else, False, Float, Arrow, Increment,Decrement, Mod, Call, Function,
 
 If, Int, Main, True, While, And, Or, Not,
 

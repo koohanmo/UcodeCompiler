@@ -1,4 +1,4 @@
-int foo1 -> {int f1 int f2}{
+function int foo1 -> {int f1 int f2}{
 	char a;
 	float b;
 	int c;
@@ -13,7 +13,7 @@ int foo1 -> {int f1 int f2}{
 
 }
 
-void foo2 ->()
+function void foo2 ->()
 {
 	int b,c,d,a[10];
 	

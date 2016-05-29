@@ -99,6 +99,9 @@ public class Token {
 	
 	public static final Token callTok =new Token (TokenType.Call,"call");
 	
+	public static final Token funcTok =new Token (TokenType.Function,"function");
+	
+	
 	private TokenType type;
 	private String value = "";
 	
