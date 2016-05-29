@@ -1,3 +1,5 @@
+//test program
+
 int foo1 -> {int f1 int f2}{
 	char a;
 	float b;
@@ -10,7 +12,6 @@ int foo1 -> {int f1 int f2}{
 	b=-b;
 	b=b++;
 	c=c++;
-
 }
 
 void foo2 ->()
@@ -18,7 +19,7 @@ void foo2 ->()
 	int b,c,d,a[10];
 	
 	if b<c b=c; else b=c+1;
-	
+	s
 	for(a[0]=0;a[1]<1 and a[2]<0 or a[3]<11;a[0]=a[0]+{
 		while(b<c+b+d)
 			d=a[1]+(++a[0])*(--a[1])/(-a[0]);

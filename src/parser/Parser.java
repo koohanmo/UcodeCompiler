@@ -34,52 +34,94 @@ public class Parser {
         System.exit(1);
     }
     public Program program() {
-        // Program --> void main ( ) '{' Declarations Statements '}'
-        TokenType[ ] header = {TokenType.Int, TokenType.Main,
-                          TokenType.LeftParen, TokenType.RightParen};
-        for (int i=0; i<header.length; i++)   // bypass "int main ( )"
-            match(header[i]);
-        match(TokenType.LeftBrace);
-//	System.out.print("call to declarations()");
+        // Program --> Declarations Funcs MainFunc
 	Declarations decs = declarations();
-	Block b = progstatements();
-//	System.out.println("block object call to statements()" + b);
-        match(TokenType.RightBrace);
-//	System.out.println(" Program()  finished");
-	return new Program(decs, b);  // student exercise
+	Funcs fs = funcs();
+	MainFunc mF = mainFunc();
+	return new Program(decs, fs, mF);  // student exercise
     }
+    
+    
+    private Funcs funcs(){
+    	Funcs fs = new Funcs();
+    	while(isType() || isVoid()){
+    		Func f = func();
+    		fs.add(f);
+    	}
+    	return fs;
+    }
+    
+    private Func func(){
+    	//Type Identifier ->{Declarations}{Declarations Statements  Return}	
+    	Type t = type();
+    	String  id = match(TokenType.Id);
+    	Declarations arg = declarations();
+    	Declarations dec = declarations();
+    	Statements b = statements();
+    	Expression rE = expression();
+    	
+    	return new Func(t,id,arg,dec,b,rE);
+    }
+    
+    private MainFunc mainFunc(){
+    	
+    	Declarations decpart = declarations();
+    	Statements body = statements();
+    	return new MainFunc(decpart,body);
+    }
+    
     private Declarations declarations() {
         // Declarations --> { Declaration }
 	Declarations ds = new Declarations(); 
 	while (isType()){
 		declaration(ds);
 	}
-//	System.out.println(" arrary declared");
-        return ds;  // student exercise
+        return ds;
     }
   
     private void declaration (Declarations ds) {
-        // Declaration  --> Type Id { , Id } ;
-	Variable v;
-	Declaration d;
 	Type t = type();
-	v = new Variable(match(TokenType.Id));
-	d = new Declaration(v, t);	
+	Variable v= new Variable(match(TokenType.Id));
+	Declaration d;
+	//배열일 경우
+	if(isLeftBracket()) 
+		d= arrayDecl(t,v);
+	else
+		d = new VariableDecl(v, t);
+	
 	ds.add(d);
-
-		while (isComma()) {	
-			token = lexer.next();	
-			v = new Variable(match(TokenType.Id));
-			d = new Declaration(v, t);
-            //d = (v, t);	
-			ds.add(d);
-		}
+	while(isComma())
+	{
+		token = lexer.next();
+		Variable v2= new Variable(match(TokenType.Id));
+		Declaration d2;
+		//배열일 경우
+		if(isLeftBracket()) 
+			d2= arrayDecl(t,v2);
+		else
+			d2 = new VariableDecl(v2, t);
+		
+		ds.add(d2);
+	}
+	
 	match(TokenType.Semicolon);
 	}
   
+
+    
+    
+    private ArrayDecl arrayDecl(Type t, Variable v){
+		token=lexer.next(); //왼쪽 [ 제거
+		int size = Integer.parseInt(match(TokenType.IntLiteral));
+		if(!isRightBracket())
+			error(TokenType.RightBracket);
+		else
+			token=lexer.next();
+		return new ArrayDecl(v,t,size);
+	}
+    
     private Type type () {
-        // Type  -->  int | bool | float | char 
-	// look up enum in API make sure that this is working 
+        // Type  -->  int | bool | float | char | bigint
 	Type t = null;
 	if (token.type().equals(TokenType.Int)) {
             t = Type.INT;		
@@ -93,19 +135,32 @@ public class Parser {
 	} else if (token.type().equals(TokenType.Char)) {
 			t = Type.CHAR;
 //			System.out.println(" Type  is char");
-	} else error ("Error in Type construction");
+	} else if (token.type().equals(TokenType.BigInteger)){
+			t= Type.BIGINT;
+	}else error ("Error in Type construction");
 	token = lexer.next();
 	return t;          
     }
+    
+    private Statements statements(){
+    	Statements s = new Statements();
+		Statement st;
+		while (isStatement()) {
+			st = statement();
+			s.add(st);
+		}
+	    	return s;
+    }
+    
   
     private Statement statement() {
-        // Statement --> ; | Block | Assignment | IfStatement | WhileStatement
+        // Statement --> ; | Block | Assignment | IfStatement | WhileStatement | for | voidFuncCall
 	Statement s = null;
 //	System.out.println("starting statment()");
 	if (token.type().equals(TokenType.Semicolon))
 		s = new Skip();
 	else if (token.type().equals(TokenType.LeftBrace)) //block
-		s = statements();
+		s = progstatements();
 //		System.out.println("block data " + s);}
 	else if (token.type().equals(TokenType.If))    //if
 		s = ifStatement();
@@ -113,24 +168,12 @@ public class Parser {
 		s = whileStatement();
 	else if (token.type().equals(TokenType.Id)) 
 		s = assignment();
+	else if (token.type().equals(TokenType.For))
+		s = forStatement();
+	else if (token.type().equals(TokenType.Call))
+		s = funcCall();
 	else error("Error in Statement construction");
         return s;
-    }
-  
-    private Block statements( ) {
-        // Block --> '{' Statements '}'
-//	System.out.println("Starting block statments() " );
-	Statement s;
-	Block b = new Block();
-	
-	match(TokenType.LeftBrace);
-//	System.out.println(" left brace matched");
-	while (isStatement()) {
-		s = statement();
-		b.members.add(s);
-	}
-        match(TokenType.RightBrace);// end of the block 
-        return b;
     }
     
 	private Block progstatements( ) {
@@ -160,6 +203,19 @@ public class Parser {
 	match(TokenType.Semicolon);
         return new Assignment(target, source); 
     }
+    
+    private ForLoop forStatement()
+    {
+    	Expression first,test,third;
+    	Statement body;
+    	first = expression();
+    	test = expression();
+    	third = expression();
+    	body = statement();
+    	return new ForLoop(first,test,third,body);
+    }
+    
+    private funcCall 
   
     private Conditional ifStatement() {
         // IfStatement --> if ( Expression ) Statement [ else Statement ]
@@ -344,12 +400,16 @@ public class Parser {
     
     private boolean isMultiplyOp( ) {
         return token.type().equals(TokenType.Multiply) ||
-               token.type().equals(TokenType.Divide);
+               token.type().equals(TokenType.Divide)||
+               token.type().equals(TokenType.Mod)||
+               token.type().equals(TokenType.Exponential);
     }
     
     private boolean isUnaryOp( ) {
         return token.type().equals(TokenType.Not) ||
-               token.type().equals(TokenType.Minus);
+               token.type().equals(TokenType.Minus)||
+               token.type().equals(TokenType.Increment)||
+               token.type().equals(TokenType.Decrement);
     }
     
     private boolean isEqualityOp( ) {
@@ -368,7 +428,12 @@ public class Parser {
         return token.type().equals(TokenType.Int)
             || token.type().equals(TokenType.Bool) 
             || token.type().equals(TokenType.Float)
-            || token.type().equals(TokenType.Char);
+            || token.type().equals(TokenType.Char)
+        	|| token.type().equals(TokenType.BigInteger);
+    }
+    
+    private boolean isVoid(){
+    	return token.type().equals(TokenType.Void);
     }
     
     private boolean isLiteral( ) {
@@ -407,6 +472,15 @@ public class Parser {
 		token.type().equals(TokenType.Id); 
     }
  
+    private boolean isLeftBracket()
+	{
+		return 	token.type().equals(TokenType.LeftBracket); 
+	}
+	private boolean isRightBracket()
+	{
+		return token.type().equals(TokenType.RightBracket);
+	}
+    
     public static void main(String args[]) {
         Parser parser  = new Parser(new Lexer("test.txt"));
         Program prog = parser.program();

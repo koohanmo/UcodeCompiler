@@ -1,20 +1,16 @@
-package parser;/// Abstract syntax for the language C++Lite,
-// exactly as it appears in Appendix B.
-// add a display method to each class
+package parser;
 import java.util.*;
 
 class Program {
-    // Program = Declarations decpart ; Block body
+    // Program = Declarations decpart ; Funcs funcs; MainFunc mainFunc; 
     Declarations decpart;
-    Block body;
-    
-    /* pass an int value to display() and have the int value represent the 
-    number of constant whitespace representation : \n : as a block that can be 
-    incremented. */
+    Funcs funcs;
+    MainFunc mainFunc;
 
-    Program (Declarations d, Block b) {
+    Program (Declarations d, Funcs f, MainFunc m){
         decpart = d;
-        body = b;
+        funcs = f;
+        mainFunc = m;
     }
     public void display(int k) {
         for (int w = 0; w < k; ++w) {
@@ -22,13 +18,152 @@ class Program {
         }
 	        System.out.println("Program (abstract syntax:)");
 	        decpart.display(++k);
-	        body.display(++k);
+	        funcs.display(++k);
+	        mainFunc.display(++k);
     }
 }
 
+class Funcs extends ArrayList<Funcs>{
+	//Funcs = Func|voidFunk*
+    public void display(int k) {
+    for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	System.out.println("All Functions: ");
+    for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+    System.out.print("Functions = {");
+	for (int i = 0; i < size(); i++)
+		get(i).display(k);
+    System.out.println("}");
+    }
+}
+
+class Func extends Funcs{
+	//Func = Type type; String id ; Declarations arguments ; Declarrations decpart ; Statements body ; Expression returnExpr;
+	Type type;
+	String id;
+	Declarations arguments;
+	Declarations decpart;
+	Statements body;
+	Expression returnExpr;
+	
+	
+	public Func(Type t, String i, Declarations p, Declarations d, Statements b, Expression r){
+		type=t;
+		id=i;
+		arguments=p;
+		decpart=d;
+		body=b;
+		returnExpr=r;
+	}
+	
+    public void display(int k) {
+    for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	System.out.println(type.toString()+"Function: " + id);
+    for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+    System.out.print("Params = {");
+	for (int i = 0; i < arguments.size(); i++)
+		arguments.get(i).display(k);
+    System.out.println("}");
+    
+    
+    System.out.print("Declarations = {");
+	for (int i = 0; i < decpart.size(); i++)
+		decpart.get(i).display(k);
+    System.out.println("}");
+    
+    System.out.print("Statements = {");
+	for (int i = 0; i < body.size(); i++)
+		body.get(i).display(k);
+    System.out.println("}");
+    
+    System.out.print("return = {");
+ 		returnExpr.display(k);
+     System.out.println("}");
+    }
+	
+}
+
+class voidFunc extends Funcs{
+	//voidFunc = String id; Declarations arguments ; Declarrations decpart ; Statements body
+	String id;
+	Declarations arguments;
+	Declarations decpart;
+	Statements body;
+	
+	public voidFunc(String i, Declarations p, Declarations d, Statements b){
+		id=i;
+		arguments=p;
+		decpart=d;
+		body=b;
+	}
+	
+	
+    public void display(int k) {
+    for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	System.out.println("Function: " + id);
+    for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+    System.out.print("Params = {");
+	for (int i = 0; i < arguments.size(); i++)
+		arguments.get(i).display(k);
+    System.out.println("}");
+    
+    
+    System.out.print("Declarations = {");
+	for (int i = 0; i < decpart.size(); i++)
+		decpart.get(i).display(k);
+    System.out.println("}");
+    
+    System.out.print("Statements = {");
+	for (int i = 0; i < body.size(); i++)
+		body.get(i).display(k);
+    System.out.println("}");
+    }
+	
+}
+
+class MainFunc{
+	//MainFunc = Declarations decpart ; Statements body;
+	Declarations decpart;
+	Statements body;
+	
+	public MainFunc(Declarations d, Statements b){
+		decpart = d;
+		body = b;
+	}
+	
+	
+	public void display(int k) {
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	       System.out.println("Main :");
+	        decpart.display(++k);
+        System.out.print("Statements = {");
+    	for (int i = 0; i < body.size(); i++)
+    		body.get(i).display(k);
+        System.out.println("}");
+    }
+}
+
+
+class Params extends ArrayList<Expression>{
+	//Pram
+	
+	public void display(int k){}
+}
 class Declarations extends ArrayList<Declaration> {
     // Declarations = Declaration*
-    // (a list of declarations d1, d2, ..., dn)
 
     public void display(int k) {
         for (int w = 0; w < k; ++w) {
@@ -45,18 +180,55 @@ class Declarations extends ArrayList<Declaration> {
     }
 }
 
-class Declaration {
-// Declaration = Variable v; Type t
-    Variable v;
-    Type t;
+abstract class Declaration 
+{
+	//VariableDecl | ArrayDecl
+	abstract void display(int k);
+}
 
-    Declaration (Variable var, Type type) {
-        v = var; t = type;
-    }
+class VariableDecl extends Declaration
+{
+	//Variable v; Type t
+	Variable v;
+	Type t;
+	VariableDecl(Variable v, Type t)
+	{
+		this.v=v;
+		this.t=t;
+	}
+	
     public void display(int k) {
-            System.out.print(" <" + v + ", ");
-            System.out.print(t + "> ");
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
         }
+	    System.out.println("\t VariableDecl:");
+	    System.out.println(t+" ");
+	    v.display(++k);
+	  	
+    }
+
+}
+
+class ArrayDecl extends Declaration
+{
+	//Variable v; Type t; Integer size
+	Variable v;
+	Type t;
+	int size;
+	ArrayDecl(Variable v, Type t, int size)
+	{
+		this.v=v;
+		this.t=t;
+		this.size=size;
+	}
+    public void display(int k) {
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	    System.out.println("\t ArrayDecl:");
+	    System.out.println(t+" " + size);
+	    v.display(++k);
+    }
 }
 
 class Type {
@@ -65,26 +237,95 @@ class Type {
     final static Type BOOL = new Type("bool");
     final static Type CHAR = new Type("char");
     final static Type FLOAT = new Type("float");
-    // final static Type UNDEFINED = new Type("undef");
+    final static Type BIGINT = new Type("bigint");
     
     private String id;
     private Type (String t) { id = t; }
     public String toString ( ) { return id; }
 }
 
-abstract class Statement {
-    // Statement = Skip | Block | Assignment | Conditional | Loop
-    public void display(int k) {
-    }
+class Statements extends  ArrayList<Statement>{
+	//Statements = statement*
+}
+
+
+abstract class Statement extends Statements{
+    // Statement = Skip | Block | Assignment | Conditional | Loop | forLoop | voidFuncCall
+    abstract public void display(int k);
 }
 
 class Skip extends Statement {
+	public void display(int k){}
+}
+
+
+class ForLoop extends Statement{
+	//ForLoop = Expression first ; Expression test ; Expression third; Statement body
+	
+	Expression first,test,third;
+	Statement body;
+	public ForLoop(Expression first, Expression second, Expression third, Statement body)
+	{
+		this.first=first;
+		this.test = second;
+		this.third=third;
+		this.body=body;
+	}
+	
+    public void display(int k) {
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	    System.out.println("\tfor:");
+	    first.display(++k);
+	    test.display(++k);
+	    third.display(++k);
+		body.display(++k);
+    }
+}
+
+class voidFuncCall extends Statement{
+	//voidFuncCall = 
+	
+	String id;
+	ArrayList<Expression> param= new ArrayList<Expression>();
+	public voidFuncCall(String i, ArrayList<Expression> ex){
+		id=i;
+		param=ex;
+	}
+	
+	@Override
+	public void display(int k) { 
+		// TODO Auto-generated method stub
+		
+		
+		
+	}
+	
+}
+
+class FuncCall extends Statement{
+
+	String id;
+	ArrayList<Expression> param= new ArrayList<Expression>();
+	public FuncCall(String i, ArrayList<Expression> ex){
+		id=i;
+		param=ex;
+	}
+	
+	
+	@Override
+	public void display(int k) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
 
 class Block extends Statement {
     // Block = Statement*
     //         (a Vector of members)
-    public ArrayList<Statement> members = new ArrayList<Statement>();
+    public Statements members = new Statements();
 
     public void display(int k) {
         for (int w = 0; w < k; ++w) {
@@ -164,7 +405,6 @@ class Loop extends Statement {
 abstract class Expression {
     // Expression = Variable | Value | Binary | Unary
     public void display(int k) {
-//	System.out.println("Display Expression Object");
     }
 
 }
@@ -227,12 +467,38 @@ abstract class Value extends Expression {
         if (type == Type.BOOL) return new BoolValue( );
         if (type == Type.CHAR) return new CharValue( );
         if (type == Type.FLOAT) return new FloatValue( );
+        if (type == Type.BIGINT) return new BigIntValue();
         throw new IllegalArgumentException("Illegal type in mkValue");
     }	    
 /*public void display() {
 	System.out.println("Display Value Object");
     }*/
 }
+
+class BigIntValue extends Value{
+    private String value = "0";
+
+    BigIntValue ( ) { type = Type.BIGINT; }
+    BigIntValue (String v) { this( ); value = v; undef = false; }
+
+    String BigIntValue ( ) {
+        assert !undef : "reference to undefined int value";
+        return value;
+    }
+
+    public String toString( ) {
+        if (undef)  return "undef";
+        return "" + value;
+    }
+    public void display(int k) {
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	System.out.print("BigInt: ");
+	System.out.println(value);
+    }
+}
+
 
 class IntValue extends Value {
     private int value = 0;

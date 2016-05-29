@@ -17,6 +17,6 @@ Equals, Less, LessEqual, Greater, GreaterEqual,
 
 Divide,  Id, IntLiteral,
 
-FloatLiteral, CharLiteral
+FloatLiteral, CharLiteral, Call
 
 }
