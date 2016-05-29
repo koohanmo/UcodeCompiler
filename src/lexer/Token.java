@@ -97,6 +97,8 @@ public class Token {
 	
 	public static final Token modTok =new Token (TokenType.Mod,"%");
 	
+	public static final Token callTok =new Token (TokenType.Call,"call");
+	
 	private TokenType type;
 	private String value = "";
 	
