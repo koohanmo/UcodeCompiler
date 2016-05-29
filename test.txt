@@ -6,11 +6,13 @@ function int foo1 -> {int f1;int f2;}{
 	bigint d;
 	bool e;
 	
-	b=a*b/c%d**e+(int)a;
+	b=a*b/c%d**e+int(a);
 	e=!e;
 	b=-b;
-	b=b++;
-	c=c++;
+	b=++b;
+	c=++c;
+	
+	return a
 }
 
 function void foo2 ->()

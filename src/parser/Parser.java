@@ -64,8 +64,6 @@ public class Parser {
     	match(TokenType.RightBrace);
     	match(TokenType.LeftBrace);
     	Declarations dec = declarations();
-    	match(TokenType.RightBrace);
-    	match(TokenType.LeftBrace);
     	Statements b = statements();
     	Expression rE = expression();
     	match(TokenType.RightBrace);
@@ -82,8 +80,6 @@ public class Parser {
     	match(TokenType.RightBrace);
     	match(TokenType.LeftBrace);
     	Declarations dec = declarations();
-    	match(TokenType.RightBrace);
-    	match(TokenType.LeftBrace);
     	Statements b = statements();
     	match(TokenType.RightBrace);
     	
