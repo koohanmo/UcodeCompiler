@@ -262,11 +262,12 @@ class Skip extends Statement {
 class ForLoop extends Statement{
 	//ForLoop = Expression first ; Expression test ; Expression third; Statement body
 	
-	Expression first,test,third;
+	Assignment assign;
+	Expression test,third;
 	Statement body;
-	public ForLoop(Expression first, Expression second, Expression third, Statement body)
+	public ForLoop(Assignment assign, Expression second, Expression third, Statement body)
 	{
-		this.first=first;
+		this.assign=assign;
 		this.test = second;
 		this.third=third;
 		this.body=body;
@@ -277,7 +278,7 @@ class ForLoop extends Statement{
             System.out.print("\t");
         }
 	    System.out.println("\tfor:");
-	    first.display(++k);
+	    assign.display(++k);
 	    test.display(++k);
 	    third.display(++k);
 		body.display(++k);
@@ -301,16 +302,16 @@ class voidFuncCall extends Statement{
         }
 	    System.out.println("\tvoidFuncCall:");
 	    System.out.println(id);
-	    System.out.print("Params = {");
+	    System.out.println("Params = {");
 		for (int i = 0; i < param.size(); i++)
 			param.get(i).display(k);
-	    System.out.print("}");
+	    System.out.println("}");
 	    
     }
 	
 }
 
-class FuncCall extends Statement{
+class FuncCall extends Expression{
 
 	String id;
 	ArrayList<Expression> param= new ArrayList<Expression>();
@@ -323,8 +324,10 @@ class FuncCall extends Statement{
         for (int w = 0; w < k; ++w) {
             System.out.print("\t");
         }
-	    System.out.println("\tvoidFuncCall:");
-	    System.out.println(id);
+	    System.out.println("\tFuncCall:" + id);
+	    for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
 	    System.out.print("Params = {");
 		for (int i = 0; i < param.size(); i++)
 			param.get(i).display(k);
@@ -352,13 +355,15 @@ class Block extends Statement {
 
 class Assignment extends Statement {
     // Assignment = Variable target; Expression source
-    Variable target;
-    Expression source;
-
-    Assignment (Variable t, Expression e) {
-        target = t;
-        source = e;
-    }
+	//VariableRef target; Expression source
+	VariableRef target;
+	Expression source;
+	
+	public Assignment(VariableRef target, Expression source)
+	{
+		this.target=target;
+		this.source = source;
+	}
     public void display(int k) {
         for (int w = 0; w < k; ++w) {
             System.out.print("\t");
@@ -421,28 +426,72 @@ abstract class Expression {
 
 }
 
-class Variable extends Expression {
-    // Variable = String id
-    private String id;
-
-    Variable (String s) { id = s; }
-
-    public String toString( ) { return id; }
-    
-    public boolean equals (Object obj) {
-        String s = ((Variable) obj).id;
-        return id.equals(s); // case-sensitive identifiers
+abstract class VariableRef extends Expression
+{
+	//Variable | ArrayRef
+    public void display(int k) {
     }
-    
-    public int hashCode ( ) { return id.hashCode( ); }
-    
+}
+class Variable extends VariableRef
+{
+	String id;
+	public Variable(String id)
+	{
+		this.id=id;
+	}
+	
     public void display(int k) {
         for (int w = 0; w < k; ++w) {
             System.out.print("\t");
         }
 	System.out.println("Variable " + id);
     }
+	
+	
 }
+class ArrayRef extends VariableRef
+{
+	String id;
+	Expression index;
+	
+	public ArrayRef(String id, Expression index)
+	{
+		this.id=id;
+		this.index = index;
+	}
+	
+    public void display(int k) {
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	System.out.println("ArrayRef " + id);
+	index.display(k++);
+    }
+}
+
+
+//class Variable extends Expression {
+//    // Variable = String id
+//    private String id;
+//
+//    Variable (String s) { id = s; }
+//
+//    public String toString( ) { return id; }
+//    
+//    public boolean equals (Object obj) {
+//        String s = ((Variable) obj).id;
+//        return id.equals(s); // case-sensitive identifiers
+//    }
+//    
+//    public int hashCode ( ) { return id.hashCode( ); }
+//    
+//    public void display(int k) {
+//        for (int w = 0; w < k; ++w) {
+//            System.out.print("\t");
+//        }
+//	System.out.println("Variable " + id);
+//    }
+//}
 
 abstract class Value extends Expression {
     // Value = IntValue | BoolValue |

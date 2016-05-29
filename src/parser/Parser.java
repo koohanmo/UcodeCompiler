@@ -42,8 +42,9 @@ public class Parser {
     
     private Funcs funcs(){
     	Funcs fs = new Funcs();
-    	match(TokenType.Function);
-    	while(isType() || isVoid()){
+    	
+    	while(isFunction()){
+        	match(TokenType.Function);
     		Funcs f;
     		if(isVoid())
     			f=voidfunc(); 
@@ -65,6 +66,7 @@ public class Parser {
     	match(TokenType.LeftBrace);
     	Declarations dec = declarations();
     	Statements b = statements();
+    	match(TokenType.Return);
     	Expression rE = expression();
     	match(TokenType.RightBrace);
     	
@@ -88,8 +90,11 @@ public class Parser {
     
     private MainFunc mainFunc(){
     	
+    	match(TokenType.Main);
+    	match(TokenType.LeftBrace);
     	Declarations decpart = declarations();
     	Statements body = statements();
+    	match(TokenType.RightBrace);
     	return new MainFunc(decpart,body);
     }
     
@@ -215,31 +220,44 @@ public class Parser {
     private Assignment assignment( ) {
         // Assignment --> Id = Expression ;
 //	System.out.println("Starting assignment()");
-	Expression source; 
-	Variable target; 
 	
-	target = new Variable(match(TokenType.Id));
+	VariableRef target;
+	String id = match(TokenType.Id);
+	
+	if(isLeftBracket())
+		target = arrayRef(id);
+	else
+		target = new Variable(id);
+	
 	match(TokenType.Assign);
-	source = expression();
+	Expression source = expression();
 	match(TokenType.Semicolon);
-        return new Assignment(target, source); 
+	return new Assignment(target,source);
     }
+    
+    private VariableRef arrayRef(String id)
+	{
+		token=lexer.next();
+		Expression index = expression();
+		token=lexer.next();
+		return new ArrayRef(id,index);
+	}
     
     private ForLoop forStatement()
     {
-    	Expression first,test,third;
+    	Assignment assign;
+    	Expression test,third;
     	Statement body;
     	
     	match(TokenType.For);
     	match(TokenType.LeftParen);
-    	first = expression();
-    	match(TokenType.Semicolon);
+    	assign = assignment();
     	test = expression();
     	match(TokenType.Semicolon);
     	third = expression();
     	match(TokenType.RightParen);
     	body = statement();
-    	return new ForLoop(first,test,third,body);
+    	return new ForLoop(assign,test,third,body);
     }
     
     private FuncCall funcCall()
@@ -247,11 +265,16 @@ public class Parser {
     	match(TokenType.Call);
     	String id = match(TokenType.Id);
     	ArrayList<Expression> param= new ArrayList<Expression>();
-    	match(TokenType.LeftParen);
+    	if(!token.type().equals(TokenType.LeftParen))
+    		error(TokenType.LeftParen);
     	do{
+    		token=lexer.next();
+    		if(isRightParen()) break;
     		Expression e = expression();
-    		token = lexer.next();
+    		param.add(e);
     	}while(isComma());
+    	
+    	
     	match(TokenType.RightParen);
     	return new FuncCall(id,param);
     	
@@ -262,12 +285,17 @@ public class Parser {
     	match(TokenType.Call);
     	String id = match(TokenType.Id);
     	ArrayList<Expression> param= new ArrayList<Expression>();
-    	match(TokenType.LeftParen);
+    	if(!token.type().equals(TokenType.LeftParen))
+    		error(TokenType.LeftParen);
     	do{
+    		token=lexer.next();
+    		if(isRightParen()) break;
     		Expression e = expression();
-    		token = lexer.next();
+    		param.add(e);
     	}while(isComma());
+    	
     	match(TokenType.RightParen);
+    	match(TokenType.Semicolon);
     	return new voidFuncCall(id,param);
     	
     }
@@ -279,9 +307,7 @@ public class Parser {
 	Expression test;
 	
 	match(TokenType.If);
-	match(TokenType.LeftParen);
 	test = expression();
-	match(TokenType.RightParen);
 	s = statement();
 	
 	if (token.type().equals(TokenType.Else)) {
@@ -398,7 +424,18 @@ public class Parser {
 //	System.out.println("(primary) start");
         Expression e = null;
         if (token.type().equals(TokenType.Id)) {
-            e = new Variable(match(TokenType.Id));
+            String id = match(TokenType.Id);
+			if(isLeftBracket())
+			{
+				match(TokenType.LeftBracket);
+				Expression index = expression();
+				match(TokenType.RightBracket);
+				e = new ArrayRef(id,index);				
+			}
+			else
+			{
+				e=new Variable(id);
+			}
         } else if (isLiteral()) {
             e = literal();
         } else if (token.type().equals(TokenType.LeftParen)) {
@@ -411,7 +448,9 @@ public class Parser {
             Expression term = expression();
             match(TokenType.RightParen);
             e = new Unary(op, term);
-        } else error("Id | Literal | ( | Type");
+        }else if(isFuncCall())
+        	e = funcCall();
+        else error("Id | Literal | ( | Type");
         return e;
     }
 
@@ -443,6 +482,10 @@ public class Parser {
 	return value;
     }
   
+    private boolean isFuncCall(){
+    	return token.type().equals(TokenType.Call);
+    }
+    
     private boolean isBooleanOp() {
 	return token.type().equals(TokenType.And) || 
 	    token.type().equals(TokenType.Or);
@@ -491,6 +534,10 @@ public class Parser {
     	return token.type().equals(TokenType.Void);
     }
     
+    private boolean isFunction(){
+    	return token.type().equals(TokenType.Function);
+    }
+    
     private boolean isLiteral( ) {
         return token.type().equals(TokenType.IntLiteral) ||
             isBooleanLiteral() ||
@@ -524,7 +571,10 @@ public class Parser {
 		isLeftBrace() ||
 		token.type().equals(TokenType.If) ||
 		token.type().equals(TokenType.While) ||
-		token.type().equals(TokenType.Id); 
+		token.type().equals(TokenType.Id) ||
+		token.type().equals(TokenType.For)||
+		token.type().equals(TokenType.Call);
+				
     }
  
     private boolean isLeftBracket()
@@ -534,6 +584,10 @@ public class Parser {
 	private boolean isRightBracket()
 	{
 		return token.type().equals(TokenType.RightBracket);
+	}
+	private boolean isRightParen()
+	{
+		return token.type().equals(TokenType.RightParen);
 	}
     
     public static void main(String args[]) {
