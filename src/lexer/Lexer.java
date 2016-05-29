@@ -83,8 +83,6 @@ public class Lexer {
 				ch = nextChar();
 				return Token.mkCharLiteral("" + ch1);
 			case eofCh: return Token.eofTok;
-			case '+': ch = nextChar(); 	return Token.plusTok;
-			case '-': ch= nextChar();return Token.minusTok;
 			case ',': ch= nextChar();return Token.commaTok;		
 			case '(': ch= nextChar(); return Token.leftParenTok;
 			case ')': ch= nextChar();return Token.rightParenTok;
@@ -92,11 +90,13 @@ public class Lexer {
 			case '[': ch= nextChar(); return Token.leftBracketTok;
 			case ']': ch= nextChar(); return Token.rightBracketTok;
 			case '}': ch= nextChar(); return Token.rightBraceTok;
-			case '*': return chkOpt('*',Token.multiplyTok, Token.expTok);
 			case ';': ch= nextChar(); return Token.semicolonTok;
+			case '*': return chkOpt('*',Token.multiplyTok, Token.expTok);
 			case '<': return chkOpt('=', Token.ltTok, Token.lteqTok);
 			case '>': return chkOpt('=', Token.gtTok, Token.gteqTok);
 			case '=': return chkOpt('=', Token.assignTok, Token.eqeqTok);
+			case '-': return chkOpt('-',Token.arrowTok,Token.decTok, Token.minusTok);
+			case '+': return chkOpt('+',Token.plusTok, Token.incTok);
 			default: error("Illegal character " + ch); 
 			} // switch
 		} while (true);
@@ -112,9 +112,7 @@ public class Lexer {
 		
 	}
 	
-	private boolean isArrayDecl(char c){
-		return (c>='a' && c<='z' || c>='A' && c<='Z' || c=='[' || c==']');
-	}
+	
 	
 	private void check(char c) {
 		ch = nextChar();
@@ -125,6 +123,7 @@ public class Lexer {
 	
 	private Token chkOpt(char c, Token one, Token two) {
 		ch = nextChar();
+		
 		if(ch != c){        // =다음에오는 토큰이 =이 아닐 경우 assign 
 			return one;	
 		}
@@ -132,6 +131,25 @@ public class Lexer {
 			ch = nextChar();
 			return two;	
 		}	
+	}
+	
+	private Token chkOpt(char c, Token one, Token two, Token three){
+		ch=nextChar();
+		if(ch =='>'){
+			ch=nextChar();
+			return one; 
+		}
+		else if(ch ==c)
+		{
+			ch=nextChar();
+			return two;
+		}
+		else 
+		{
+			return three;
+		}
+		
+		
 	}
 	
 	private String concat(String set) {       //letter와 digit string을 합쳐줌

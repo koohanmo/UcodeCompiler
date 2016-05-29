@@ -1,7 +1,8 @@
 //test program2
-int guhanmo(){
-   int i[3]={5,5,5};
-   if(not(i>=3) and a<=0){}
+int guhanmo->(int a int b){
+   if (not(i>=3) and a<=0){}
+   i++
+   i--
 }
 void main() {
 	sin(x);

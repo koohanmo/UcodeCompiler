@@ -89,6 +89,13 @@ public class Token {
 	
 	public static final Token forTok = new Token(TokenType.For, "for");
 	
+	public static final Token arrowTok =new Token (TokenType.Arrow,"->");
+	
+	public static final Token incTok =new Token (TokenType.Increment,"++");
+	
+	public static final Token decTok =new Token (TokenType.Decrement,"--");
+	
+	
 	private TokenType type;
 	private String value = "";
 	
