@@ -1,11 +1,3 @@
-
-//test program2
-int guhanmo->(int a int b){
-   if (not(i>=3) and a<=0){}
-   i++
-   i--
-//test program
-
 int foo1 -> {int f1 int f2}{
 	char a;
 	float b;
