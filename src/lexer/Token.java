@@ -101,6 +101,8 @@ public class Token {
 	
 	public static final Token funcTok =new Token (TokenType.Function,"function");
 	
+	public static final Token returnTok =new Token (TokenType.Return,"return");
+	
 	
 	private TokenType type;
 	private String value = "";
