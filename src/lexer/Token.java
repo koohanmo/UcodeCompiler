@@ -89,106 +89,54 @@ public class Token {
 	
 	public static final Token forTok = new Token(TokenType.For, "for");
 	
-
-	
 	private TokenType type;
-	
 	private String value = "";
 	
-	
-	
 	private Token (TokenType t, String v) {
-		
 		type = t; 
-		
 		value = v; 
-		
 		if (t.compareTo(TokenType.Eof) < 0) {
-			
 			int ti = t.ordinal();
-			
 			reserved[ti] = v;
-			
-			token[ti] = this;
-			
-		}
-		
+			token[ti] = this;	
+		}	
 	}
-	
-	
-	
 	public TokenType type( ) { return type; }
-	
-	
 	
 	public String value( ) { return value; }
 	
-	
-	
 	public static Token keyword ( String name ) {
-		
 		char ch = name.charAt(0);
-		
 		if (ch >= 'A' && ch <= 'Z') return mkIdentTok(name);
-		
 		for (int i = 0; i < KEYWORDS; i++)
-			
 			if (name.equals(reserved[i])) return token[i];
-		
 		return mkIdentTok(name);
-		
 	} // keyword
 	
-	
-	
 	public static Token mkIdentTok (String name) {
-		
-		return new Token(TokenType.Id, name);
-		
+		return new Token(TokenType.Id, name);	
 	}
-	
-	
 	
 	public static Token mkIntLiteral (String name) {
-		
 		return new Token(TokenType.IntLiteral, name);
-		
 	}
-	
-	
 	
 	public static Token mkFloatLiteral (String name) {
-		
 		return new Token(TokenType.FloatLiteral, name);
-		
 	}
-	
-	
 	
 	public static Token mkCharLiteral (String name) {
-		
 		return new Token(TokenType.CharLiteral, name);
-		
 	}
 	
-	
-	
 	public String toString ( ) {
-		
 		if (type.compareTo(TokenType.Id) < 0) return value;
-		
 		return type + "\t" + value;
-		
 	} // toString
 	
-	
-	
-	public static void main (String[] args) {
-		
+	public static void main (String[] args) {	
 		System.out.println(eofTok);
-		
 		System.out.println(whileTok);
-		
 	}
 	
 } // Token
