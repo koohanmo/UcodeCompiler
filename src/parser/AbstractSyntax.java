@@ -295,12 +295,18 @@ class voidFuncCall extends Statement{
 	}
 	
 	@Override
-	public void display(int k) { 
-		// TODO Auto-generated method stub
-		
-		
-		
-	}
+	public void display(int k) {
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	    System.out.println("\tvoidFuncCall:");
+	    System.out.println(id);
+	    System.out.print("Params = {");
+		for (int i = 0; i < param.size(); i++)
+			param.get(i).display(k);
+	    System.out.print("}");
+	    
+    }
 	
 }
 
@@ -312,13 +318,19 @@ class FuncCall extends Statement{
 		id=i;
 		param=ex;
 	}
-	
-	
 	@Override
 	public void display(int k) {
-		// TODO Auto-generated method stub
-		
-	}
+        for (int w = 0; w < k; ++w) {
+            System.out.print("\t");
+        }
+	    System.out.println("\tvoidFuncCall:");
+	    System.out.println(id);
+	    System.out.print("Params = {");
+		for (int i = 0; i < param.size(); i++)
+			param.get(i).display(k);
+	    System.out.print("}");
+	    
+    }
 	
 }
 

@@ -1,5 +1,7 @@
 package parser;
 
+import java.util.ArrayList;
+
 import lexer.*;
 
 public class Parser {
@@ -45,22 +47,50 @@ public class Parser {
     private Funcs funcs(){
     	Funcs fs = new Funcs();
     	while(isType() || isVoid()){
-    		Func f = func();
+    		Funcs f;
+    		if(isVoid())
+    			f=voidfunc(); 
+    		else f = func();
     		fs.add(f);
     	}
     	return fs;
     }
     
     private Func func(){
-    	//Type Identifier ->{Declarations}{Declarations Statements  Return}	
+    	//Type Identifier ->{Declarations}{Declarations Statements  Return}
     	Type t = type();
     	String  id = match(TokenType.Id);
+    	
+    	match(TokenType.Arrow);
+    	match(TokenType.LeftBracket);
     	Declarations arg = declarations();
+    	match(TokenType.RightBracket);
+    	match(TokenType.LeftBracket);
     	Declarations dec = declarations();
+    	match(TokenType.RightBracket);
+    	match(TokenType.LeftBracket);
     	Statements b = statements();
     	Expression rE = expression();
+    	match(TokenType.RightBracket);
     	
     	return new Func(t,id,arg,dec,b,rE);
+    }
+    private voidFunc voidfunc()
+    {
+    	match(TokenType.Void);
+    	String  id = match(TokenType.Id);
+    	match(TokenType.Arrow);
+    	match(TokenType.LeftBracket);
+    	Declarations arg = declarations();
+    	match(TokenType.RightBracket);
+    	match(TokenType.LeftBracket);
+    	Declarations dec = declarations();
+    	match(TokenType.RightBracket);
+    	match(TokenType.LeftBracket);
+    	Statements b = statements();
+    	match(TokenType.RightBracket);
+    	
+    	return new voidFunc(id,arg,dec,b);
     }
     
     private MainFunc mainFunc(){
@@ -171,23 +201,21 @@ public class Parser {
 	else if (token.type().equals(TokenType.For))
 		s = forStatement();
 	else if (token.type().equals(TokenType.Call))
-		s = funcCall();
+		s = voidFuncCall();
 	else error("Error in Statement construction");
         return s;
     }
     
 	private Block progstatements( ) {
         // Block --> '{' Statements '}'
-//	System.out.println("Starting block statments() " );`
-//	match(TokenType.LeftBrace);
-//	System.out.println(" left brace matched");
+	match(TokenType.LeftBrace);
 	Block b = new Block();
 	Statement s;
 	while (isStatement()) {
 		s = statement();
 		b.members.add(s);
 	}
-//      match(TokenType.RightBrace);// end of the block 
+      match(TokenType.RightBrace);
         return b;
     }
   
@@ -208,15 +236,49 @@ public class Parser {
     {
     	Expression first,test,third;
     	Statement body;
+    	
+    	match(TokenType.For);
+    	match(TokenType.LeftParen);
     	first = expression();
+    	match(TokenType.Semicolon);
     	test = expression();
+    	match(TokenType.Semicolon);
     	third = expression();
+    	match(TokenType.RightParen);
     	body = statement();
     	return new ForLoop(first,test,third,body);
     }
     
-    private funcCall 
+    private FuncCall funcCall()
+    {
+    	match(TokenType.Call);
+    	String id = match(TokenType.Id);
+    	ArrayList<Expression> param= new ArrayList<Expression>();
+    	match(TokenType.LeftParen);
+    	do{
+    		Expression e = expression();
+    		token = lexer.next();
+    	}while(isComma());
+    	match(TokenType.RightParen);
+    	return new FuncCall(id,param);
+    	
+    }
   
+    private voidFuncCall voidFuncCall()
+    {
+    	match(TokenType.Call);
+    	String id = match(TokenType.Id);
+    	ArrayList<Expression> param= new ArrayList<Expression>();
+    	match(TokenType.LeftParen);
+    	do{
+    		Expression e = expression();
+    		token = lexer.next();
+    	}while(isComma());
+    	match(TokenType.RightParen);
+    	return new voidFuncCall(id,param);
+    	
+    }
+    
     private Conditional ifStatement() {
         // IfStatement --> if ( Expression ) Statement [ else Statement ]
 	Conditional con;
@@ -402,7 +464,7 @@ public class Parser {
         return token.type().equals(TokenType.Multiply) ||
                token.type().equals(TokenType.Divide)||
                token.type().equals(TokenType.Mod)||
-               token.type().equals(TokenType.Exponential);
+               token.type().equals(TokenType.Pow);
     }
     
     private boolean isUnaryOp( ) {
