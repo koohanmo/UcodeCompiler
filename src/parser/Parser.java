@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import lexer.*;
 
 public class Parser {
-    // Recursive descent parser that inputs a C++Lite program and 
-    // generates its abstract syntax.  Each method corresponds to
-    // a concrete syntax grammar rule, which appears as a comment
-    // at the beginning of the method.
-  
+
     Token token;          // current token from the input stream
     Lexer lexer;
   
@@ -46,6 +42,7 @@ public class Parser {
     
     private Funcs funcs(){
     	Funcs fs = new Funcs();
+    	match(TokenType.Function);
     	while(isType() || isVoid()){
     		Funcs f;
     		if(isVoid())
@@ -57,38 +54,38 @@ public class Parser {
     }
     
     private Func func(){
-    	//Type Identifier ->{Declarations}{Declarations Statements  Return}
+    	//function Type Identifier ->{Declarations}{Declarations Statements  Return}
+
     	Type t = type();
     	String  id = match(TokenType.Id);
-    	
     	match(TokenType.Arrow);
-    	match(TokenType.LeftBracket);
+    	match(TokenType.LeftBrace);
     	Declarations arg = declarations();
-    	match(TokenType.RightBracket);
-    	match(TokenType.LeftBracket);
+    	match(TokenType.RightBrace);
+    	match(TokenType.LeftBrace);
     	Declarations dec = declarations();
-    	match(TokenType.RightBracket);
-    	match(TokenType.LeftBracket);
+    	match(TokenType.RightBrace);
+    	match(TokenType.LeftBrace);
     	Statements b = statements();
     	Expression rE = expression();
-    	match(TokenType.RightBracket);
+    	match(TokenType.RightBrace);
     	
     	return new Func(t,id,arg,dec,b,rE);
     }
-    private voidFunc voidfunc()
-    {
+    private voidFunc voidfunc(){
+  
     	match(TokenType.Void);
     	String  id = match(TokenType.Id);
     	match(TokenType.Arrow);
-    	match(TokenType.LeftBracket);
+    	match(TokenType.LeftBrace);
     	Declarations arg = declarations();
-    	match(TokenType.RightBracket);
-    	match(TokenType.LeftBracket);
+    	match(TokenType.RightBrace);
+    	match(TokenType.LeftBrace);
     	Declarations dec = declarations();
-    	match(TokenType.RightBracket);
-    	match(TokenType.LeftBracket);
+    	match(TokenType.RightBrace);
+    	match(TokenType.LeftBrace);
     	Statements b = statements();
-    	match(TokenType.RightBracket);
+    	match(TokenType.RightBrace);
     	
     	return new voidFunc(id,arg,dec,b);
     }
