@@ -30,5 +30,5 @@ main
 {
 	int a;
 	a=foo1(a,b);
-	foo2();
+	call foo2();
 }
