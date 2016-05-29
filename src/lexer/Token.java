@@ -83,7 +83,7 @@ public class Token {
 	
 	public static final Token voidTok =new Token(TokenType.Void, "void");
 	
-	public static final Token expTok = new Token(TokenType.Exponential, "**");
+	public static final Token powTok = new Token(TokenType.Pow, "**");
 	
 	public static final Token bigIntegerTok = new Token(TokenType.BigInteger, "bigint");
 	

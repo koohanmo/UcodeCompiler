@@ -93,7 +93,7 @@ public class Lexer {
 			case ';': ch= nextChar(); return Token.semicolonTok;
 			case '%': ch= nextChar(); return Token.modTok;
 			case '!': ch= nextChar(); return Token.notTok;
-			case '*': return chkOpt('*',Token.multiplyTok, Token.expTok);
+			case '*': return chkOpt('*',Token.multiplyTok, Token.powTok);
 			case '<': return chkOpt('=', Token.ltTok, Token.lteqTok);
 			case '>': return chkOpt('=', Token.gtTok, Token.gteqTok);
 			case '=': return chkOpt('=', Token.assignTok, Token.eqeqTok);

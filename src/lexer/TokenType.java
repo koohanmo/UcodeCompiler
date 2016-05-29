@@ -5,7 +5,7 @@ Bool, Char, Else, False, Float, Arrow, Increment,Decrement, Mod,
 
 If, Int, Main, True, While, And, Or, Not,
 
- Exponential, For, BigInteger ,Void,
+ Pow, For, BigInteger ,Void,
 
 Eof, LeftBrace, RightBrace, LeftBracket, RightBracket,
 
