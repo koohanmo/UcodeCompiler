@@ -1,22 +1,27 @@
-//test program2
-int guhanmo(){
-   int i[3]={5,5,5};
-   if(not(i>=3) and a<=0){}
+//test program
+
+int foo1 -> {int f1 int f2}{
+	char a;
+	float b;
+	int c;
+	bigint d;
+	bool e;
+	
+	b=a*b/c%d**e+(int)a;
+	e=!e;
+	b=-b;
+	b=b++;
+	c=c++;
 }
-void main() {
-	sin(x);
-	tan(y);
-	plot(1,2);
-	normal(2,3);
-	bigint i =3;	
-	int j;
-	i=20;
-	read>>i;
-	write(i);
-	j=1;
-	while(i<10) {
-	 i=i-1;     
-	 if(i==15)j=j-1; 
-	 else  j=j+1;	 	  
-    }	
- }
+
+void foo2 ->()
+{
+	int b,c,d,a[10];
+	
+	if b<c b=c; else b=c+1;
+	
+	for(a[0]=0;a[1]<1&&a[2]<0||a[3]<11;a[0]=a[0]+{
+		while(b<c+b+d)
+			d=a[1]+(++a[0])*(--a[1])/(-a[0]);
+	}
+}
