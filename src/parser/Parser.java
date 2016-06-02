@@ -2,6 +2,7 @@ package parser;
 
 import java.util.ArrayList;
 
+import abstractSyntax.*;
 import lexer.*;
 
 public class Parser {
@@ -111,7 +112,7 @@ public class Parser {
 	Type t = type();
 	Variable v= new Variable(match(TokenType.Id));
 	Declaration d;
-	//¹è¿­ÀÏ °æ¿ì
+	//ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½
 	if(isLeftBracket()) 
 		d= arrayDecl(t,v);
 	else
@@ -123,7 +124,7 @@ public class Parser {
 		token = lexer.next();
 		Variable v2= new Variable(match(TokenType.Id));
 		Declaration d2;
-		//¹è¿­ÀÏ °æ¿ì
+		//ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(isLeftBracket()) 
 			d2= arrayDecl(t,v2);
 		else
@@ -139,7 +140,7 @@ public class Parser {
     
     
     private ArrayDecl arrayDecl(Type t, Variable v){
-		token=lexer.next(); //¿ÞÂÊ [ Á¦°Å
+		token=lexer.next(); //ï¿½ï¿½ï¿½ï¿½ [ ï¿½ï¿½ï¿½ï¿½
 		int size = Integer.parseInt(match(TokenType.IntLiteral));
 		if(!isRightBracket())
 			error(TokenType.RightBracket);
