@@ -3,7 +3,7 @@ package abstractSyntax;
 
 public class Variable extends VariableRef
 {
-	String id;
+	public String id;
 	public Variable(String id)
 	{
 		this.id=id;

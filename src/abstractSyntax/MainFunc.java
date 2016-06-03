@@ -1,11 +1,11 @@
 package abstractSyntax;
 
+import sementic.TypeManager;
 
-
-public class MainFunc{
+public class MainFunc extends Funcs{
 	//MainFunc = Declarations decpart ; Statements body;
-	Declarations decpart;
-	Statements body;
+	public Declarations decpart;
+	public Statements body;
 	
 	public MainFunc(Declarations d, Statements b){
 		decpart = d;
@@ -23,5 +23,9 @@ public class MainFunc{
     	for (int i = 0; i < body.size(); i++)
     		body.get(i).display(k);
         System.out.println("}");
+    }
+	
+    public void validCheck(){
+    		TypeManager.getInstance().V(this);
     }
 }

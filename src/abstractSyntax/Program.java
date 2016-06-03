@@ -1,5 +1,8 @@
 package abstractSyntax;
 
+import java.util.HashMap;
+
+import sementic.TypeManager;
 
 public class Program {
     // Program = Declarations decpart ; Funcs funcs; MainFunc mainFunc; 
@@ -21,4 +24,16 @@ public class Program {
 	        funcs.display(++k);
 	        mainFunc.display(++k);
     }
+    
+    /*
+     *  Program의 TypeCheck 
+     */    
+    private HashMap<Type, String> globalVariable = new HashMap<Type,String>();
+    
+    public void validCheck(){
+    	TypeManager.getInstance().setGlobalVariable(decpart);
+        funcs.validCheck();
+        mainFunc.validCheck();
+    }   
+    
 }

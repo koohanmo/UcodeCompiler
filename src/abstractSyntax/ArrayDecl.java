@@ -4,9 +4,9 @@ package abstractSyntax;
 public class ArrayDecl extends Declaration
 {
 	//Variable v; Type t; Integer size
-	Variable v;
-	Type t;
-	int size;
+	public Variable v;
+	public Type t;
+	public int size;
 	public ArrayDecl(Variable v, Type t, int size)
 	{
 		this.v=v;

@@ -4,12 +4,12 @@ package abstractSyntax;
 
 public class Func extends Funcs{
 	//Func = Type type; String id ; Declarations arguments ; Declarrations decpart ; Statements body ; Expression returnExpr;
-	Type type;
-	String id;
-	Declarations arguments;
-	Declarations decpart;
-	Statements body;
-	Expression returnExpr;
+	public Type type;
+	public String id;
+	public Declarations arguments;
+	public Declarations decpart;
+	public Statements body;
+	public Expression returnExpr;
 	
 	
 	public Func(Type t, String i, Declarations p, Declarations d, Statements b, Expression r){

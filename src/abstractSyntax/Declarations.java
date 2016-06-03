@@ -1,6 +1,9 @@
 package abstractSyntax;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import sementic.TypeManager;
 
 
 public class Declarations extends ArrayList<Declaration> {
@@ -19,4 +22,5 @@ public class Declarations extends ArrayList<Declaration> {
 		get(i).display(k);
     System.out.println("}");
     }
+        
 }

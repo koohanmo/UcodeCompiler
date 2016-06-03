@@ -3,8 +3,8 @@ package abstractSyntax;
 public class VariableDecl extends Declaration
 {
 	//Variable v; Type t
-	Variable v;
-	Type t;
+	public Variable v;
+	public Type t;
 	public VariableDecl(Variable v, Type t)
 	{
 		this.v=v;

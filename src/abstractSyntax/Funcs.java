@@ -2,6 +2,8 @@ package abstractSyntax;
 
 import java.util.ArrayList;
 
+import sementic.TypeManager;
+
 
 
 public class Funcs extends ArrayList<Funcs>{
@@ -18,5 +20,11 @@ public class Funcs extends ArrayList<Funcs>{
 	for (int i = 0; i < size(); i++)
 		get(i).display(k);
     System.out.println("}");
+    }
+    
+    public void validCheck(){
+    	for(Funcs f : this){
+    		TypeManager.getInstance().V(f);
+    	}
     }
 }

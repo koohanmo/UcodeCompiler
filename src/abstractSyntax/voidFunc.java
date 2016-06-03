@@ -4,10 +4,10 @@ package abstractSyntax;
 
 public class voidFunc extends Funcs{
 	//voidFunc = String id; Declarations arguments ; Declarrations decpart ; Statements body
-	String id;
-	Declarations arguments;
-	Declarations decpart;
-	Statements body;
+	public String id;
+	public Declarations arguments;
+	public Declarations decpart;
+	public Statements body;
 	
 	public voidFunc(String i, Declarations p, Declarations d, Statements b){
 		id=i;
