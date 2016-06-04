@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class voidFuncCall extends Statement{
 	//voidFuncCall = 
 	
-	String id;
-	ArrayList<Expression> param= new ArrayList<Expression>();
+	public String id;
+	public ArrayList<Expression> param= new ArrayList<Expression>();
 	public voidFuncCall(String i, ArrayList<Expression> ex){
 		id=i;
 		param=ex;

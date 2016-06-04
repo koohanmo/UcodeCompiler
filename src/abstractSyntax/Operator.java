@@ -3,8 +3,8 @@ package abstractSyntax;
 public class Operator {
     // Operator = BooleanOp | RelationalOp | ArithmeticOp | UnaryOp
     // BooleanOp = && | ||
-    final static String AND = "&&";
-    final static String OR = "||";
+    final static String AND = "and";
+    final static String OR = "or";
     // RelationalOp = < | <= | == | != | >= | >
     final static String LT = "<";
     final static String LE = "<=";
@@ -16,14 +16,21 @@ public class Operator {
     final static String PLUS = "+";
     final static String MINUS = "-";
     final static String TIMES = "*";
+    final static String POW="**";
+    final static String MOD="%";
     final static String DIV = "/";
     // UnaryOp = !    
     final static String NOT = "!";
     final static String NEG = "-";
+    //Increament, Decrement
+    final static String INC ="++";
+    final static String DEC ="--";
     // CastOp = int | float | char
     final static String INT = "int";
     final static String FLOAT = "float";
     final static String CHAR = "char";
+    final static String BIGINT ="bigint";
+    final static String BOOLEAN ="boolean";
     // Typed Operators
     // RelationalOp = < | <= | == | != | >= | >
     final static String INT_LT = "INT<";
@@ -80,20 +87,31 @@ public class Operator {
     public String toString( ) { return val; }
     public boolean equals(Object obj) { return val.equals(obj); }
     
-    boolean BooleanOp ( ) { return val.equals(AND) || val.equals(OR); }
-    boolean RelationalOp ( ) {
+    public boolean BooleanOp ( ) { return val.equals(AND) || val.equals(OR); }
+    public boolean RelationalOp ( ) {
         return val.equals(LT) || val.equals(LE) || val.equals(EQ)
             || val.equals(NE) || val.equals(GT) || val.equals(GE);
     }
-    boolean ArithmeticOp ( ) {
+    public boolean ArithmeticOp ( ) {
         return val.equals(PLUS) || val.equals(MINUS)
-            || val.equals(TIMES) || val.equals(DIV);
+            || val.equals(TIMES) || val.equals(DIV)||val.equals(POW) ||val.equals(MOD);
     }
-    boolean NotOp ( ) { return val.equals(NOT) ; }
-    boolean NegateOp ( ) { return val.equals(NEG) ; }
-    boolean intOp ( ) { return val.equals(INT); }
-    boolean floatOp ( ) { return val.equals(FLOAT); }
-    boolean charOp ( ) { return val.equals(CHAR); }
+    
+    public boolean IncOp () {return val.equals(INC);}
+    public boolean DecOp () {return val.equals(DEC);}
+    public boolean NotOp ( ) { return val.equals(NOT) ; }
+    public boolean NegateOp ( ) { return val.equals(NEG) ; }
+    
+    public boolean CastOp(){
+    	return val.equals(INT) || val.equals(CHAR) || val.equals(FLOAT)
+    			||val.equals(BOOLEAN) || val.equals(BIGINT);
+    }
+    
+    public boolean intOp ( ) { return val.equals(INT); }
+    public boolean floatOp ( ) { return val.equals(FLOAT); }
+    public boolean charOp ( ) { return val.equals(CHAR); }
+    public boolean boolOp ( ) { return val.equals(BOOLEAN); }
+    public boolean bigIntOp ( ) { return val.equals(BIGINT); }
 
     final static String intMap[ ] [ ] = {
         {PLUS, INT_PLUS}, {MINUS, INT_MINUS},

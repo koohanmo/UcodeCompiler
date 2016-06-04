@@ -1,4 +1,5 @@
 //test program
+
 function int foo1 -> {int f1;int f2;}{
 	char a;
 	float b;
@@ -30,6 +31,6 @@ function void foo2 -> {}
 main
 {
 	int a;
-	a=call foo1(a[b+1],b);
+	a=call foo1(a,2);
 	call foo2();
 }

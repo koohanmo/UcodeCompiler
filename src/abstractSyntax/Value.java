@@ -2,8 +2,8 @@ package abstractSyntax;
 
 public abstract class Value extends Expression {
     // Value = IntValue | BoolValue |
-    //         CharValue | FloatValue
-    protected Type type;
+    //         CharValue | FloatValue | BigIntValue
+    public Type type;
     protected boolean undef = true;
 
     int intValue ( ) {
@@ -25,6 +25,7 @@ public abstract class Value extends Expression {
         assert false : "should never reach here";
         return 0.0f;
     }
+    
 
     boolean isUndef( ) { return undef; }
 

@@ -4,9 +4,8 @@ package abstractSyntax;
 public class Conditional extends Statement {
 // Conditional = Expression test; Statement thenbranch, elsebranch
 
-    Expression test;
-    Statement thenbranch, elsebranch;
-    // elsebranch == null means "if... then"
+    public Expression test;
+    public Statement thenbranch, elsebranch;
     
     public Conditional (Expression t, Statement tp) {
         test = t; thenbranch = tp; elsebranch = new Skip( );

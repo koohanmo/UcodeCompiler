@@ -4,8 +4,8 @@ package abstractSyntax;
 public class Assignment extends Statement {
     // Assignment = Variable target; Expression source
 	//VariableRef target; Expression source
-	VariableRef target;
-	Expression source;
+	public VariableRef target;
+	public Expression source;
 	
 	public Assignment(VariableRef target, Expression source)
 	{

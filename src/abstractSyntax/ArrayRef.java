@@ -4,8 +4,8 @@ package abstractSyntax;
 
 public class ArrayRef extends VariableRef
 {
-	String id;
-	Expression index;
+	public String id;
+	public Expression index;
 	
 	public ArrayRef(String id, Expression index)
 	{
