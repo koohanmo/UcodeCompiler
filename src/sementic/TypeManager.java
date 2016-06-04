@@ -11,9 +11,6 @@ public class TypeManager {
 	private HashMap<String, Integer> globalArray = new HashMap<String, Integer>();
 	private HashMap<String, FunctionDef> funcTable = new HashMap<String, FunctionDef>();
 	
-	public TypeManager(){
-		instance = new TypeManager();
-	}
 	
 	public static TypeManager getInstance(){
 		if(instance==null) instance = new TypeManager();
@@ -45,9 +42,8 @@ public class TypeManager {
 	}
 	
 	public void setLocalVariable(FunctionDef f, Declarations arg, Declarations decls){
-		
 		//set arg to localVariable
-		if(arg!=null || arg.size()>0){
+		if(arg!=null){
 			for(Declaration d : arg){
 				if(d instanceof VariableDecl){
 					VariableDecl current = (VariableDecl)d;
@@ -85,6 +81,8 @@ public class TypeManager {
 			setLocalVariable(currenfDef,currentF.arguments,currentF.decpart);
 			V(currenfDef,currentF.body);
 			V(currenfDef,currentF.returnExpr);
+			if(funcTable.containsKey(currentF.id)) typeError("함수명이 중복되었습니다.");  //기본 정의함수랑도 비교해야됨
+			else funcTable.put(currentF.id,currenfDef);
 		}
 		else if(f instanceof voidFunc){
 			voidFunc currentF = (voidFunc)f;
@@ -92,12 +90,16 @@ public class TypeManager {
 			currenfDef.setParams(currentF.arguments);
 			setLocalVariable(currenfDef,currentF.arguments,currentF.decpart);
 			V(currenfDef,currentF.body);
+			if(funcTable.containsKey(currentF.id)) typeError("함수명이 중복되었습니다.");  //기본 정의함수랑도 비교해야됨
+			else funcTable.put(currentF.id,currenfDef);
 		}
 		else{
 			MainFunc currentF = (MainFunc)f;
 			FunctionDef currenfDef = new FunctionDef(null);
 			setLocalVariable(currenfDef,null,currentF.decpart);
 			V(currenfDef,currentF.body);
+			if(funcTable.containsKey("main")) typeError("함수명이 중복되었습니다.");  //기본 정의함수랑도 비교해야됨
+			else funcTable.put("main",currenfDef);
 		}
 	}
 	
@@ -110,14 +112,35 @@ public class TypeManager {
 	public void V(FunctionDef f, Statements statements){
 		if(statements.size()==0) return;
 		for(Statement s : statements){
-			//Skip | Block | Assignment | Conditional | Loop | forLoop | voidFuncCall
-			
+			V(f,s);
 		}
 	}
 	
+	public void V(FunctionDef f, Statement s){
+		//Skip | Block | Assignment | Conditional | Loop | forLoop | voidFuncCall
+		if(s==null) throw new IllegalArgumentException("AST error : null statement");
+		if(s instanceof Skip) return;
+		else if(s instanceof Assignment){
+			//선언이 되었는지, 연산 type이 맞는지 확인.
+			Assignment current = (Assignment)s;
+			
+		}else if(s instanceof Conditional){
+			//조건문 , statement 검사
+			
+		}else if(s instanceof Loop){
+			//조건문 , statement 검사
+			
+		}else if(s instanceof ForLoop){
+			////조건문 3개, statement 검사
+			
+		}else if(s instanceof voidFuncCall){
+			//선언된 함수인지, 파라미터의 갯수, 타입이 맞는지 확인.
+			
+		}else typeError("statement가 적합하지 않습니다.");
+	}
+	
 	//TODO Complete
-	//return check
-	public void V(FunctionDef f, Expression ret){
+	public void V(FunctionDef f, Expression e){
 		
 	}
 	
