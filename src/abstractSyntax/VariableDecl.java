@@ -21,4 +21,10 @@ public class VariableDecl extends Declaration
 	  	
     }
 
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return v.id;
+	}
+
 }

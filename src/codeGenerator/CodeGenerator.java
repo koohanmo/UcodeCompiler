@@ -5,13 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
-import abstractSyntax.Declaration;
-import abstractSyntax.Program;
+import abstractSyntax.*;
 import lexer.Lexer;
 import parser.Parser;
-import sementic.TypeChecker;
+import sementic.*;
 
 public class CodeGenerator {
+	
+	public final int LASTGENERATE = 609;
 	
 	public static int blockNumber=1;
 	public static int globalStart=1;
@@ -44,23 +45,58 @@ public class CodeGenerator {
 	private void generate(Program program){
 		//전역번수 선언 to globalVars
 		for(Declaration  d : program.decpart){
-			mkUcode(d);
-			
+			mkUcode(d, TypeManager.getInstance().globalVariables);
 		}
 		//머리 선언된 함수 선언
-		
-		
+		DefinedFunction definedFunction = new DefinedFunction();
+		definedFunction.writeDefinedFunctions();
+	
 		//메인 구현
+		mkUcode(program.mainFunc);
+		
 		//함수 구현
+		mkUcode(program.funcs);
+		
+		//메인 호출
+		mkUcode(this.LASTGENERATE);
 	}
 	
-	private void mkUcode(Declaration d){
+	private void mkUcode(Funcs func){
+		for(Funcs f : func){
+			if(f instanceof voidFunc) mkUcode((voidFunc) f);
+			else mkUcode((Func)f);
+		}
+	}
+	
+	private void mkUcode(Func f){
 		
+	}
+	
+	private void mkUcode(voidFunc f){
+		
+	}
+	
+	private void mkUcode(MainFunc mainFunc){
+		
+	}
+	
+	//마무리 구현.ㄴㄴ
+	private void mkUcode(int op){
+		if(op == this.LASTGENERATE){
+			//전역번수 갯수.
+			
+			
+			
+			
+		}
+	}
+	
+	private void mkUcode(Declaration d ,HashMap<String, SymbolElement> map){
+		int varSize = map.get(d.getId()).size;
 		StringBuilder sb = new StringBuilder("");
-		//sb.append(mkSym(blockNumber,globalStart + ));
-		
-		
-		
+		sb.append(mkSym(globalStart,varSize));
+		globalVars.put(d.getId(), new VariableInfo(blockNumber,globalStart));
+		globalStart+=varSize;
 	}
 	
 	private String mkSpace(){

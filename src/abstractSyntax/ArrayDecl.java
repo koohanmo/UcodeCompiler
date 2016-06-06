@@ -21,4 +21,9 @@ public class ArrayDecl extends Declaration
 	    System.out.println(t+" " + size);
 	    v.display(++k);
     }
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return v.id;
+	}
 }

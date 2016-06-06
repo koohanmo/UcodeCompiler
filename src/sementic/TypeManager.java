@@ -8,9 +8,9 @@ import abstractSyntax.*;
 public class TypeManager {
 	
 	private static TypeManager instance;
-	private HashMap<String, SymbolElement> globalVariables = new HashMap<String, SymbolElement>();
-	private HashMap<String, Integer> globalArray = new HashMap<String, Integer>();
-	private HashMap<String, FunctionDef> funcTable = new HashMap<String, FunctionDef>();
+	public HashMap<String, SymbolElement> globalVariables = new HashMap<String, SymbolElement>();
+	public HashMap<String, Integer> globalArray = new HashMap<String, Integer>();
+	public HashMap<String, FunctionDef> funcTable = new HashMap<String, FunctionDef>();
 	
 	
 	public static TypeManager getInstance(){
