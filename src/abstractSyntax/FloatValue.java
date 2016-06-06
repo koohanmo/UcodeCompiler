@@ -1,5 +1,7 @@
 package abstractSyntax;
 
+import codeGenerator.CodeGenerator;
+
 public class FloatValue extends Value {
     private float value = 0;
 
@@ -24,4 +26,7 @@ public class FloatValue extends Value {
 	System.out.println(value);
     }
 
+	public void genCode() {
+		CodeGenerator.ldc(Float.floatToRawIntBits(value));
+	}
 }

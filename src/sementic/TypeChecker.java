@@ -16,7 +16,7 @@ public class TypeChecker {
 		public Program check(){
 			Program p = parser.program();
 			p.validCheck();
-			return p;
+			return p;       //abstract tree에 program을 반환
 		}
 
 	
@@ -25,5 +25,6 @@ public class TypeChecker {
 			Program Program = typeChecker.check();
 			
 		}
+	
 
 }

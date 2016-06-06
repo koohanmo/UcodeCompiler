@@ -1,5 +1,6 @@
 package abstractSyntax;
 
+import codeGenerator.CodeGenerator;
 
 public class BoolValue extends Value {
     private boolean value = false;
@@ -30,4 +31,7 @@ public class BoolValue extends Value {
 	System.out.println(value);
     }
 
+    public void genCode() {
+		CodeGenerator.ldc(intValue());
+	}
 }

@@ -25,6 +25,13 @@ public class Operator {
     //Increament, Decrement
     final static String INC ="++";
     final static String DEC ="--";
+    
+    final static String PLUSASSIGN = "+=";
+	final static String MINUSASSIGN = "-=";
+	final static String TIMESASSIGN = "*=";
+	final static String DIVASSIGN = "/=";
+	final static String MODASSIGN = "%=";
+	final static String ASSIGN = "=";
     // CastOp = int | float | char
     final static String INT = "int";
     final static String FLOAT = "float";
@@ -46,6 +53,14 @@ public class Operator {
     final static String INT_DIV = "INT/";
     // UnaryOp = !    
     final static String INT_NEG = "-";
+    
+    final static String INT_PLUS_ASSIGN = "INT+=";
+	final static String INT_MINUS_ASSIGN = "INT-=";
+	final static String INT_TIMES_ASSIGN = "INT*=";
+	final static String INT_DIV_ASSIGN = "INT/=";
+	final static String INT_MOD_ASSIGN = "INT%=";
+	final static String INT_ASSIGN = "INT=";
+	
     // RelationalOp = < | <= | == | != | >= | >
     final static String FLOAT_LT = "FLOAT<";
     final static String FLOAT_LE = "FLOAT<=";
@@ -60,6 +75,15 @@ public class Operator {
     final static String FLOAT_DIV = "FLOAT/";
     // UnaryOp = !    
     final static String FLOAT_NEG = "-";
+    
+	final static String FLOAT_PLUS_ASSIGN = "FLOAT+=";
+	final static String FLOAT_MINUS_ASSIGN = "FLOAT-=";
+	final static String FLOAT_TIMES_ASSIGN = "FLOAT*=";
+	final static String FLOAT_DIV_ASSIGN = "FLOAT/=";
+	final static String FLOAT_MOD_ASSIGN = "FLOAT%=";
+	final static String FLOAT_ASSIGN = "FLOAT=";
+	
+	
     // RelationalOp = < | <= | == | != | >= | >
     final static String CHAR_LT = "CHAR<";
     final static String CHAR_LE = "CHAR<=";
@@ -118,7 +142,11 @@ public class Operator {
         {TIMES, INT_TIMES}, {DIV, INT_DIV},
         {EQ, INT_EQ}, {NE, INT_NE}, {LT, INT_LT},
         {LE, INT_LE}, {GT, INT_GT}, {GE, INT_GE},
-        {NEG, INT_NEG}, {FLOAT, I2F}, {CHAR, I2C}
+        {NEG, INT_NEG}, {FLOAT, I2F}, {CHAR, I2C},
+        {ASSIGN, INT_PLUS_ASSIGN} ,{MINUSASSIGN, INT_MINUS_ASSIGN},
+        {TIMESASSIGN, INT_TIMES_ASSIGN}, { DIVASSIGN,INT_DIV_ASSIGN},
+        {MODASSIGN,INT_MOD_ASSIGN},{ASSIGN,INT_ASSIGN}
+        
     };
 
     final static String floatMap[ ] [ ] = {
@@ -126,13 +154,16 @@ public class Operator {
         {TIMES, FLOAT_TIMES}, {DIV, FLOAT_DIV},
         {EQ, FLOAT_EQ}, {NE, FLOAT_NE}, {LT, FLOAT_LT},
         {LE, FLOAT_LE}, {GT, FLOAT_GT}, {GE, FLOAT_GE},
-        {NEG, FLOAT_NEG}, {INT, F2I}
+        {NEG, FLOAT_NEG}, {INT, F2I},
+        {ASSIGN, FLOAT_PLUS_ASSIGN} ,{MINUSASSIGN, FLOAT_MINUS_ASSIGN},
+        {TIMESASSIGN, FLOAT_TIMES_ASSIGN}, { DIVASSIGN,FLOAT_DIV_ASSIGN},
+        {MODASSIGN,FLOAT_MOD_ASSIGN},{ASSIGN,FLOAT_ASSIGN}
     };
 
     final static String charMap[ ] [ ] = {
         {EQ, CHAR_EQ}, {NE, CHAR_NE}, {LT, CHAR_LT},
         {LE, CHAR_LE}, {GT, CHAR_GT}, {GE, CHAR_GE},
-        {INT, C2I}
+        {INT, C2I},
     };
 
     final static String boolMap[ ] [ ] = {

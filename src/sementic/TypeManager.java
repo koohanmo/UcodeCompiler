@@ -24,18 +24,18 @@ public class TypeManager {
 	}
 	
 	/*
-	 *  ì „ì—­ ë³€ìˆ˜ ì²´í¬
+	 *  Àü¿ª º¯¼ö Ã¼Å©
 	 */
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
 				VariableDecl current = (VariableDecl)d;
-				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
+				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
 				globalVariables.put(current.v.id, current.t);
 			}
 			else{
 				ArrayDecl current = (ArrayDecl)d;
-				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
+				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
 				globalVariables.put(current.v.id, current.t);
 				globalArray.put(current.v.id, current.size);
 			}
@@ -48,14 +48,14 @@ public class TypeManager {
 			for(Declaration d : arg){
 				if(d instanceof VariableDecl){
 					VariableDecl current = (VariableDecl)d;
-					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
-					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
+					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
+					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
 					f.addVariable(current.v.id, current.t);
 				}
 				else{
 					ArrayDecl current = (ArrayDecl)d;
-					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
-					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
+					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
+					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
 					f.addVariable(current.v.id, current.t);
 					f.addArray(current.v.id, current.size);
 				}
@@ -64,14 +64,14 @@ public class TypeManager {
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
 				VariableDecl current = (VariableDecl)d;
-				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
-				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
+				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
+				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
 				f.addVariable(current.v.id, current.t);
 			}
 			else{
 				ArrayDecl current = (ArrayDecl)d;
-				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
-				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ë³€ìˆ˜ëª… ì„ ì–¸ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");
+				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
+				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": º¯¼ö¸í ¼±¾ğÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");
 				f.addVariable(current.v.id, current.t);
 				f.addArray(current.v.id, current.size);
 			}
@@ -95,7 +95,7 @@ public class TypeManager {
 			setLocalVariable(currenfDef,currentF.arguments,currentF.decpart);
 			V(currenfDef,currentF.body);
 			V(currenfDef,currentF.returnExpr);
-			if(funcTable.containsKey(currentF.id)) typeError(currenfDef.funcName + "  í•¨ìˆ˜ëª…ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");  //ê¸°ë³¸ ì •ì˜í•¨ìˆ˜ë‘ë„ ë¹„êµí•´ì•¼ë¨
+			if(funcTable.containsKey(currentF.id)) typeError(currenfDef.funcName + "  ÇÔ¼ö¸íÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");  //±âº» Á¤ÀÇÇÔ¼ö¶ûµµ ºñ±³ÇØ¾ßµÊ
 			else funcTable.put(currentF.id,currenfDef);
 		}
 		else if(f instanceof voidFunc){
@@ -113,7 +113,7 @@ public class TypeManager {
 			}
 			setLocalVariable(currenfDef,currentF.arguments,currentF.decpart);
 			V(currenfDef,currentF.body);
-			if(funcTable.containsKey(currentF.id)) typeError(currentF.id + "  í•¨ìˆ˜ëª…ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");  //ê¸°ë³¸ ì •ì˜í•¨ìˆ˜ë‘ë„ ë¹„êµí•´ì•¼ë¨
+			if(funcTable.containsKey(currentF.id)) typeError(currentF.id + "  ÇÔ¼ö¸íÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");  //±âº» Á¤ÀÇÇÔ¼ö¶ûµµ ºñ±³ÇØ¾ßµÊ
 			else funcTable.put(currentF.id,currenfDef);
 		}
 		else{
@@ -121,7 +121,7 @@ public class TypeManager {
 			FunctionDef currenfDef = new FunctionDef(null, "main");
 			setLocalVariable(currenfDef,null,currentF.decpart);
 			V(currenfDef,currentF.body);
-			if(funcTable.containsKey("main")) typeError("main" + "  í•¨ìˆ˜ëª…ì´ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.");  //ê¸°ë³¸ ì •ì˜í•¨ìˆ˜ë‘ë„ ë¹„êµí•´ì•¼ë¨
+			if(funcTable.containsKey("main")) typeError("main" + "  ÇÔ¼ö¸íÀÌ Áßº¹µÇ¾ú½À´Ï´Ù.");  //±âº» Á¤ÀÇÇÔ¼ö¶ûµµ ºñ±³ÇØ¾ßµÊ
 			else funcTable.put("main",currenfDef);
 		}
 	}
@@ -144,11 +144,11 @@ public class TypeManager {
 		if(s==null) throw new IllegalArgumentException("AST error : null statement");
 		if(s instanceof Skip) return;
 		else if(s instanceof Assignment){
-			//ì„ ì–¸ì´ ë˜ì—ˆëŠ”ì§€, ì—°ì‚° typeì´ ë§ëŠ”ì§€ í™•ì¸.
+			//¼±¾ğÀÌ µÇ¾ú´ÂÁö, ¿¬»ê typeÀÌ ¸Â´ÂÁö È®ÀÎ.
 			Assignment current = (Assignment)s;
 			V(f, current.target);
 			V(f, current.source);
-			//target Typeê³¼ source Type ë¹„êµ - typeOf
+			//target Type°ú source Type ºñ±³ - typeOf
 			V(typeOf(f, current.target),typeOf(f, current.source));
 			
 		}else if(s instanceof Block){
@@ -156,36 +156,36 @@ public class TypeManager {
 			for(Statement ss:current) V(f,ss);
 			
 		}else if(s instanceof Conditional){
-			//ì¡°ê±´ë¬¸ , statement ê²€ì‚¬
+			//Á¶°Ç¹® , statement °Ë»ç
 			Conditional c = (Conditional)s;
 			V(f,c.test);
-			V(Type.BOOL,typeOf(f, c.test)); //IFì˜ TestëŠ” BOOLë§Œ í—ˆìš©
+			V(Type.BOOL,typeOf(f, c.test)); //IFÀÇ Test´Â BOOL¸¸ Çã¿ë
 			V(f, c.thenbranch);
 			V(f,c.elsebranch);
 		}else if(s instanceof Loop){
-			//ì¡°ê±´ë¬¸ , statement ê²€ì‚¬
+			//Á¶°Ç¹® , statement °Ë»ç
 			Loop l = (Loop)s;
 			V(f, l.test);
-			V(Type.BOOL,typeOf(f, l.test)); //Loopì˜ TestëŠ” BOOLë§Œ í—ˆìš©
+			V(Type.BOOL,typeOf(f, l.test)); //LoopÀÇ Test´Â BOOL¸¸ Çã¿ë
 			V(f, l.body);
 		}else if(s instanceof ForLoop){
-			//ì¡°ê±´ë¬¸ 3ê°œ, statement ê²€ì‚¬
+			//Á¶°Ç¹® 3°³, statement °Ë»ç
 			//ForLoop = Assignment assign ; Expression test ; Expression third; Statement body
 			ForLoop fo = (ForLoop) s;
 			V(f, fo.assign);
 			V(f,fo.test);
-			V(Type.BOOL, typeOf(f,fo.test)); //ForLoopì˜ TestëŠ” Boolë§Œ í—ˆìš©
+			V(Type.BOOL, typeOf(f,fo.test)); //ForLoopÀÇ Test´Â Bool¸¸ Çã¿ë
 			V(f,fo.test);
 			V(f,fo.body);			
 		}else if(s instanceof voidFuncCall){
-			//ì„ ì–¸ëœ í•¨ìˆ˜ì¸ì§€, íŒŒë¼ë¯¸í„°ì˜ ê°¯ìˆ˜, íƒ€ì…ì´ ë§ëŠ”ì§€ í™•ì¸.
+			//¼±¾ğµÈ ÇÔ¼öÀÎÁö, ÆÄ¶ó¹ÌÅÍÀÇ °¹¼ö, Å¸ÀÔÀÌ ¸Â´ÂÁö È®ÀÎ.
 			voidFuncCall vf = (voidFuncCall) s;
-			//TODO ê¸°ë³¸ í•¨ìˆ˜ë„ ê²€ì‚¬ ì¶”ê°€í•´ì•¼ë¨
-			if(!funcTable.containsKey(vf.id)) typeError(vf.id +" : ì„ ì–¸ë˜ì–´ ìˆì§€ ì•Šì€ í•¨ìˆ˜ ì…ë‹ˆë‹¤.");
+			//TODO ±âº» ÇÔ¼öµµ °Ë»ç Ãß°¡ÇØ¾ßµÊ
+			if(!funcTable.containsKey(vf.id)) typeError(vf.id +" : ¼±¾ğµÇ¾î ÀÖÁö ¾ÊÀº ÇÔ¼ö ÀÔ´Ï´Ù.");
 			FunctionDef fd=funcTable.get(vf.id);
-			V(f, vf.param, fd); //íŒŒë¼ë¯¸í„° ê²€ì‚¬
+			V(f, vf.param, fd); //ÆÄ¶ó¹ÌÅÍ °Ë»ç
 			
-		}else typeError("statementê°€ ì í•©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		}else typeError("statement°¡ ÀûÇÕÇÏÁö ¾Ê½À´Ï´Ù.");
 	}
 	
 	public void V(FunctionDef f, Expression e){
@@ -203,7 +203,7 @@ public class TypeManager {
 			Unary u = (Unary) e;
 			V(f,u.term);
 			if(u.op.IncOp() || u.op.DecOp() || u.op.NegateOp()){
-				if(typeOf(f,u.term).equals(Type.BOOL)) typeError(f.funcName +": "+ u.op +"ì˜ UnaryOpê°€ ì •í™•í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤."); 
+				if(typeOf(f,u.term).equals(Type.BOOL)) typeError(f.funcName +": "+ u.op +"ÀÇ UnaryOp°¡ Á¤È®ÇÏÁö ¾Ê½À´Ï´Ù."); 
 			}else if(u.op.NotOp()){
 				V(Type.BOOL,typeOf(f,u.term));
 			}else if(u.op.CastOp()){
@@ -217,26 +217,26 @@ public class TypeManager {
 					V(Type.FLOAT,typeOf(f,u.term));
 				}else if(u.op.BooleanOp()){
 					V(Type.BOOL,typeOf(f,u.term));
-				}else typeError(f.funcName +": "+ u.op +"ì˜ UnaryOpê°€ ì •í™•í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
-			}else typeError(f.funcName +": "+ u.op +"ì˜ UnaryOpê°€ ì •í™•í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				}else typeError(f.funcName +": "+ u.op +"ÀÇ UnaryOp°¡ Á¤È®ÇÏÁö ¾Ê½À´Ï´Ù.");
+			}else typeError(f.funcName +": "+ u.op +"ÀÇ UnaryOp°¡ Á¤È®ÇÏÁö ¾Ê½À´Ï´Ù.");
 		}else if(e instanceof FuncCall){
 			FuncCall fc= (FuncCall) e;
-			//TODO ê¸°ë³¸ í•¨ìˆ˜ë„ ê²€ì‚¬ ì¶”ê°€í•´ì•¼ë¨
-			if(!funcTable.containsKey(fc.id)) typeError(f.funcName +": "+fc.id+"ê°€ ì •ì˜ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+			//TODO ±âº» ÇÔ¼öµµ °Ë»ç Ãß°¡ÇØ¾ßµÊ
+			if(!funcTable.containsKey(fc.id)) typeError(f.funcName +": "+fc.id+"°¡ Á¤ÀÇµÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
 			FunctionDef fd=funcTable.get(fc.id);
-			V(f, fc.param, fd); //íŒŒë¼ë¯¸í„° ê²€ì‚¬
+			V(f, fc.param, fd); //ÆÄ¶ó¹ÌÅÍ °Ë»ç
 			
-		}else typeError(f.funcName+" : "+"  Expressionì˜ íƒ€ì…ì´ ì´ìƒí•©ë‹ˆë‹¤.");
+		}else typeError(f.funcName+" : "+"  ExpressionÀÇ Å¸ÀÔÀÌ ÀÌ»óÇÕ´Ï´Ù.");
 	}
 	
 	public void V(FunctionDef f, ArrayList<Expression> params, FunctionDef fp){
-		if(params.size()!=fp.getParamSize()) typeError(f.funcName+" : "+fp.funcName+" : íŒŒë¼ë¯¸í„°ì˜ ìˆ˜ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		if(params.size()!=fp.getParamSize()) typeError(f.funcName+" : "+fp.funcName+" : ÆÄ¶ó¹ÌÅÍÀÇ ¼ö°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
 		for(Expression e : params) {
 			V(f,e);
 		}
 		for(int i=0; i<params.size();i++){
 			if(!typeOf(f, params.get(i)).equals(fp.getParams(i)))  
-				typeError(f.funcName+" : "+fp.funcName+" : íŒŒë¼ë¯¸í„°ì˜ íƒ€ì…ì´ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				typeError(f.funcName+" : "+fp.funcName+" : ÆÄ¶ó¹ÌÅÍÀÇ Å¸ÀÔÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
 		}
 		
 		
@@ -247,16 +247,16 @@ public class TypeManager {
 		if(v instanceof Variable){
 			Variable current = (Variable)v;
 			if(!f.isContainVariable(current.id) && !globalVariables.containsKey(current.id))
-				typeError(f.funcName+" : "+current.id+": ë³€ìˆ˜ê°€ ì„ ì–¸ì´ ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				typeError(f.funcName+" : "+current.id+": º¯¼ö°¡ ¼±¾ğÀÌ µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
 			
 		}
 		else{
 			ArrayRef current = (ArrayRef)v;
 			if(!f.isContainArray(current.id) && !globalVariables.containsKey(current.id))
-				typeError(f.funcName+" : "+current.id+": ë°°ì—´ì´ ì„ ì–¸ì´ ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				typeError(f.funcName+" : "+current.id+": ¹è¿­ÀÌ ¼±¾ğÀÌ µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
 			//TODO
 			if(!typeOf(f,current.index).equals(Type.INT))
-				typeError(f.funcName+" : "+current.id+": ë°°ì—´ì˜ ì¸ë±ìŠ¤ê°€ ì •í™•í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				typeError(f.funcName+" : "+current.id+": ¹è¿­ÀÇ ÀÎµ¦½º°¡ Á¤È®ÇÏÁö ¾Ê½À´Ï´Ù.");
 			
 		}
 	}
@@ -293,27 +293,27 @@ public class TypeManager {
 					return Type.FLOAT;
 				}else if(u.op.BooleanOp()){
 					return Type.BOOL;
-				}else typeError(f.funcName +": "+ u.op +"ì˜ UnaryOpê°€ ì •í™•í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				}else typeError(f.funcName +": "+ u.op +"ÀÇ UnaryOp°¡ Á¤È®ÇÏÁö ¾Ê½À´Ï´Ù.");
 			}
 		}else if(e instanceof FuncCall){
 			FuncCall fc = (FuncCall)e;
 			return funcTable.get(fc.id).getFuncType();
 		}else 
-			typeError(f.funcName+" : "+"ì•Œë§ëŠ” Expressionì´ ì•„ë‹™ë‹ˆë‹¤.");
-		return null; //ì§„ì…X
+			typeError(f.funcName+" : "+"¾Ë¸Â´Â ExpressionÀÌ ¾Æ´Õ´Ï´Ù.");
+		return null; //ÁøÀÔX
 	}
 	
 	private Type getVariableType(FunctionDef f,ArrayRef v){
 		if(f.isContainVariable(v.id)) return f.getVariableType(v.id);
 		else if(globalVariables.containsKey(v.id)) return globalVariables.get(v.id);
-		typeError(v.id +"ëŠ” Typeì´ ì •ì´ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		typeError(v.id +"´Â TypeÀÌ Á¤ÀÌµÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
 		return null;
 	}
 	
 	private Type getVariableType(FunctionDef f,Variable v){
 		if(f.isContainVariable(v.id)) return f.getVariableType(v.id);
 		else if(globalVariables.containsKey(v.id)) return globalVariables.get(v.id);
-		typeError(f.funcName+" : "+v.id +"ëŠ” Typeì´ ì •ì´ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		typeError(f.funcName+" : "+v.id +"´Â TypeÀÌ Á¤ÀÌµÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
 		return null;
 	}
 	
@@ -338,3 +338,4 @@ public class TypeManager {
 	}
 	
 }
+

@@ -1,5 +1,6 @@
 package abstractSyntax;
 
+import codeGenerator.CodeGenerator;
 
 public class CharValue extends Value {
     private char value = ' ';
@@ -25,4 +26,7 @@ public class CharValue extends Value {
 	System.out.println(value);
     }
 
+    public void genCode() {
+		CodeGenerator.ldc((int) value);
+	}
 }

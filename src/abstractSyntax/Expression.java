@@ -5,4 +5,7 @@ public abstract class Expression {
     public void display(int k) {
     }
 
+    public void genCode(){ 	
+    }
+    
 }
