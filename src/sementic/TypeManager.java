@@ -24,18 +24,18 @@ public class TypeManager {
 	}
 	
 	/*
-	 *  ���� ���� üũ
+	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
 	 */
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
 				VariableDecl current = (VariableDecl)d;
-				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
+				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
 				globalVariables.put(current.v.id, new SymbolElement(current.t, Type.BIGINT.equals(current.t)? 100:1));
 			}
 			else{
 				ArrayDecl current = (ArrayDecl)d;
-				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
+				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
 				globalVariables.put(current.v.id, new SymbolElement(current.t, current.size));
 				globalArray.put(current.v.id, current.size);
 			}
@@ -48,14 +48,14 @@ public class TypeManager {
 			for(Declaration d : arg){
 				if(d instanceof VariableDecl){
 					VariableDecl current = (VariableDecl)d;
-					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
-					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
+					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
 					f.addVariable(current.v.id, current.t, Type.BIGINT.equals(current.t)? 100:1);
 				}
 				else{
 					ArrayDecl current = (ArrayDecl)d;
-					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
-					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
+					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
 					f.addVariable(current.v.id, current.t, current.size);
 					f.addArray(current.v.id, current.size);
 				}
@@ -64,14 +64,14 @@ public class TypeManager {
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
 				VariableDecl current = (VariableDecl)d;
-				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
-				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
+				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
 				f.addVariable(current.v.id, current.t, Type.BIGINT.equals(current.t)? 100:1);
 			}
 			else{
 				ArrayDecl current = (ArrayDecl)d;
-				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
-				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": ������ ������ �ߺ��Ǿ����ϴ�.");
+				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
 				f.addVariable(current.v.id, current.t, current.size);
 				f.addArray(current.v.id, current.size);
 			}
@@ -95,7 +95,7 @@ public class TypeManager {
 			setLocalVariable(currenfDef,currentF.arguments,currentF.decpart);
 			V(currenfDef,currentF.body);
 			V(currenfDef,currentF.returnExpr);
-			if(funcTable.containsKey(currentF.id)) typeError(currenfDef.funcName + "  �Լ����� �ߺ��Ǿ����ϴ�.");  //�⺻ �����Լ����� ���ؾߵ�
+			if(funcTable.containsKey(currentF.id)) typeError(currenfDef.funcName + "  �뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");  //�뜝�뜦蹂� �뜝�룞�삕�뜝�룞�삕�뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�뙏�빞�벝�삕
 			else funcTable.put(currentF.id,currenfDef);
 		}
 		else if(f instanceof voidFunc){
@@ -113,7 +113,7 @@ public class TypeManager {
 			}
 			setLocalVariable(currenfDef,currentF.arguments,currentF.decpart);
 			V(currenfDef,currentF.body);
-			if(funcTable.containsKey(currentF.id)) typeError(currentF.id + "  �Լ����� �ߺ��Ǿ����ϴ�.");  //�⺻ �����Լ����� ���ؾߵ�
+			if(funcTable.containsKey(currentF.id)) typeError(currentF.id + "  �뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");  //�뜝�뜦蹂� �뜝�룞�삕�뜝�룞�삕�뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�뙏�빞�벝�삕
 			else funcTable.put(currentF.id,currenfDef);
 		}
 		else{
@@ -121,7 +121,7 @@ public class TypeManager {
 			FunctionDef currenfDef = new FunctionDef(null, "main");
 			setLocalVariable(currenfDef,null,currentF.decpart);
 			V(currenfDef,currentF.body);
-			if(funcTable.containsKey("main")) typeError("main" + "  �Լ����� �ߺ��Ǿ����ϴ�.");  //�⺻ �����Լ����� ���ؾߵ�
+			if(funcTable.containsKey("main")) typeError("main" + "  �뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");  //�뜝�뜦蹂� �뜝�룞�삕�뜝�룞�삕�뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�뙏�빞�벝�삕
 			else funcTable.put("main",currenfDef);
 		}
 	}
@@ -144,11 +144,11 @@ public class TypeManager {
 		if(s==null) throw new IllegalArgumentException("AST error : null statement");
 		if(s instanceof Skip) return;
 		else if(s instanceof Assignment){
-			//������ �Ǿ�����, ���� type�� �´��� Ȯ��.
+			//�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떎�뼲�삕�뜝�룞�삕�뜝�룞�삕, �뜝�룞�삕�뜝�룞�삕 type�뜝�룞�삕 �뜝�듅�뙋�삕�뜝�룞�삕 �솗�뜝�룞�삕.
 			Assignment current = (Assignment)s;
 			V(f, current.target);
 			V(f, current.source);
-			//target Type�� source Type �� - typeOf
+			//target Type�뜝�룞�삕 source Type �뜝�룞�삕 - typeOf
 			V(typeOf(f, current.target),typeOf(f, current.source));
 			
 		}else if(s instanceof Block){
@@ -156,36 +156,36 @@ public class TypeManager {
 			for(Statement ss:current) V(f,ss);
 			
 		}else if(s instanceof Conditional){
-			//���ǹ� , statement �˻�
+			//�뜝�룞�삕�뜝�떎諭꾩삕 , statement �뜝�떙�궪�삕
 			Conditional c = (Conditional)s;
 			V(f,c.test);
-			V(Type.BOOL,typeOf(f, c.test)); //IF�� Test�� BOOL�� ���
+			V(Type.BOOL,typeOf(f, c.test)); //IF�뜝�룞�삕 Test�뜝�룞�삕 BOOL�뜝�룞�삕 �뜝�룞�삕�뜝占�
 			V(f, c.thenbranch);
 			V(f,c.elsebranch);
 		}else if(s instanceof Loop){
-			//���ǹ� , statement �˻�
+			//�뜝�룞�삕�뜝�떎諭꾩삕 , statement �뜝�떙�궪�삕
 			Loop l = (Loop)s;
 			V(f, l.test);
-			V(Type.BOOL,typeOf(f, l.test)); //Loop�� Test�� BOOL�� ���
+			V(Type.BOOL,typeOf(f, l.test)); //Loop�뜝�룞�삕 Test�뜝�룞�삕 BOOL�뜝�룞�삕 �뜝�룞�삕�뜝占�
 			V(f, l.body);
 		}else if(s instanceof ForLoop){
-			//���ǹ� 3��, statement �˻�
+			//�뜝�룞�삕�뜝�떎諭꾩삕 3�뜝�룞�삕, statement �뜝�떙�궪�삕
 			//ForLoop = Assignment assign ; Expression test ; Expression third; Statement body
 			ForLoop fo = (ForLoop) s;
 			V(f, fo.assign);
 			V(f,fo.test);
-			V(Type.BOOL, typeOf(f,fo.test)); //ForLoop�� Test�� Bool�� ���
+			V(Type.BOOL, typeOf(f,fo.test)); //ForLoop�뜝�룞�삕 Test�뜝�룞�삕 Bool�뜝�룞�삕 �뜝�룞�삕�뜝占�
 			V(f,fo.test);
 			V(f,fo.body);			
 		}else if(s instanceof voidFuncCall){
-			//����� �Լ�����, �Ķ������ ����, Ÿ���� �´��� Ȯ��.
+			//�뜝�룞�삕�뜝�룞�삕�뜝占� �뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕, �뜝�떇�씛�삕�뜝�룞�삕�뜝�룞�삕�뜝占� �뜝�룞�삕�뜝�룞�삕, ���뜝�룞�삕�뜝�룞�삕 �뜝�듅�뙋�삕�뜝�룞�삕 �솗�뜝�룞�삕.
 			voidFuncCall vf = (voidFuncCall) s;
-			//TODO �⺻ �Լ��� �˻� �߰��ؾߵ�
-			if(!funcTable.containsKey(vf.id)) typeError(vf.id +" : ����Ǿ� ���� ���� �Լ� �Դϴ�.");
+			//TODO �뜝�뜦蹂� �뜝�뙃�눦�삕�뜝�룞�삕 �뜝�떙�궪�삕 �뜝�뙥怨ㅼ삕�뜝�뙏�빞�벝�삕
+			if(!funcTable.containsKey(vf.id)) typeError(vf.id +" : �뜝�룞�삕�뜝�룞�삕�벝�뜝占� �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�뙃�눦�삕 �뜝�뙃�땲�뙋�삕.");
 			FunctionDef fd=funcTable.get(vf.id);
-			V(f, vf.param, fd); //�Ķ���� �˻�
+			V(f, vf.param, fd); //�뜝�떇�씛�삕�뜝�룞�삕�뜝占� �뜝�떙�궪�삕
 			
-		}else typeError("statement�� �������� �ʽ��ϴ�.");
+		}else typeError("statement�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 	}
 	
 	public void V(FunctionDef f, Expression e){
@@ -202,9 +202,9 @@ public class TypeManager {
 		}else if(e instanceof Unary){
 			Unary u = (Unary) e;
 			V(f,u.term);
-			if(u.op.IncOp() || u.op.DecOp() || u.op.NegateOp()){
-				if(typeOf(f,u.term).equals(Type.BOOL)) typeError(f.funcName +": "+ u.op +"�� UnaryOp�� ��Ȯ���� �ʽ��ϴ�."); 
-			}else if(u.op.NotOp()){
+			if(u.op.incOp() || u.op.decOp() || u.op.negOp()){
+				if(typeOf(f,u.term).equals(Type.BOOL)) typeError(f.funcName +": "+ u.op +"�뜝�룞�삕 UnaryOp�뜝�룞�삕 �뜝�룞�삕�솗�뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕."); 
+			}else if(u.op.notOp()){
 				V(Type.BOOL,typeOf(f,u.term));
 			}else if(u.op.CastOp()){
 				if(u.op.intOp()){
@@ -217,27 +217,27 @@ public class TypeManager {
 					V(Type.FLOAT,typeOf(f,u.term));
 				}else if(u.op.BooleanOp()){
 					V(Type.BOOL,typeOf(f,u.term));
-				}else typeError(f.funcName +": "+ u.op +"�� UnaryOp�� ��Ȯ���� �ʽ��ϴ�.");
-			}else typeError(f.funcName +": "+ u.op +"�� UnaryOp�� ��Ȯ���� �ʽ��ϴ�.");
+				}else typeError(f.funcName +": "+ u.op +"�뜝�룞�삕 UnaryOp�뜝�룞�삕 �뜝�룞�삕�솗�뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
+			}else typeError(f.funcName +": "+ u.op +"�뜝�룞�삕 UnaryOp�뜝�룞�삕 �뜝�룞�삕�솗�뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 		}else if(e instanceof FuncCall){
 			FuncCall fc= (FuncCall) e;
-			//TODO �⺻ �Լ��� �˻� �߰��ؾߵ�
-			if(!funcTable.containsKey(fc.id)) typeError(f.funcName +": "+fc.id+"�� ���ǵǾ� ���� �ʽ��ϴ�.");
+			//TODO �뜝�뜦蹂� �뜝�뙃�눦�삕�뜝�룞�삕 �뜝�떙�궪�삕 �뜝�뙥怨ㅼ삕�뜝�뙏�빞�벝�삕
+			if(!funcTable.containsKey(fc.id)) typeError(f.funcName +": "+fc.id+"�뜝�룞�삕 �뜝�룞�삕�뜝�떎�릺�뼲�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 			FunctionDef fd=funcTable.get(fc.id);
-			V(f, fc.params, fd); //�Ķ���� �˻�
+			V(f, fc.params, fd); //�뜝�떇�씛�삕�뜝�룞�삕�뜝占� �뜝�떙�궪�삕
 			
-		}else typeError(f.funcName+" : "+"  Expression�� Ÿ���� �̻��մϴ�.");
+		}else typeError(f.funcName+" : "+"  Expression�뜝�룞�삕 ���뜝�룞�삕�뜝�룞�삕 �뜝�떛�궪�삕�뜝�뙆�땲�뙋�삕.");
 	}
 	
 	public void V(FunctionDef f, ArrayList<Expression> params, FunctionDef fp){
-		if(params.size()!=fp.getParamSize()) typeError(f.funcName+" : "+fp.funcName+" : �Ķ������ ���� ��ġ���� �ʽ��ϴ�.");
+		if(params.size()!=fp.getParamSize()) typeError(f.funcName+" : "+fp.funcName+" : �뜝�떇�씛�삕�뜝�룞�삕�뜝�룞�삕�뜝占� �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕移섇뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 		for(Expression e : params) {
 			V(f,e);
 		}
 		for(int i=0; i<params.size();i++){
 			if(!typeOf(f, params.get(i)).equals(fp.getParams(i).type))
 	
-				typeError(f.funcName+" : "+fp.funcName+" : �Ķ������ Ÿ���� ��ġ���� �ʽ��ϴ�.");
+				typeError(f.funcName+" : "+fp.funcName+" : �뜝�떇�씛�삕�뜝�룞�삕�뜝�룞�삕�뜝占� ���뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕移섇뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 		}
 		
 		
@@ -248,22 +248,22 @@ public class TypeManager {
 		if(v instanceof Variable){
 			Variable current = (Variable)v;
 			if(!f.isContainVariable(current.id) && !globalVariables.containsKey(current.id))
-				typeError(f.funcName+" : "+current.id+": ������ ������ �Ǿ� ���� �ʽ��ϴ�.");
+				typeError(f.funcName+" : "+current.id+": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떎�뼲�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 			
 		}
 		else{
 			ArrayRef current = (ArrayRef)v;
 			if(!f.isContainArray(current.id) && !globalVariables.containsKey(current.id))
-				typeError(f.funcName+" : "+current.id+": �迭�� ������ �Ǿ� ���� �ʽ��ϴ�.");
+				typeError(f.funcName+" : "+current.id+": �뜝�띁�뿴�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�떎�뼲�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 			//TODO
 			if(!typeOf(f,current.index).equals(Type.INT))
-				typeError(f.funcName+" : "+current.id+": �迭�� �ε����� ��Ȯ���� �ʽ��ϴ�.");
+				typeError(f.funcName+" : "+current.id+": �뜝�띁�뿴�뜝�룞�삕 �뜝�떥�벝�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�솗�뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 			
 		}
 	}
 	
 	
-	private Type typeOf(FunctionDef f, Expression e){
+	public Type typeOf(FunctionDef f, Expression e){
 		// Expression =VarableRef |Variable | Value | Binary | Unary | FuncCall
 		if(e==null) throw new IllegalArgumentException("AST error : null Expression");
 		if(e instanceof Value){
@@ -281,8 +281,8 @@ public class TypeManager {
 				return Type.BOOL;
 		}else if(e instanceof Unary){
 			Unary u = (Unary)e;
-			if(u.op.NotOp()) return Type.BOOL;
-			else if(u.op.NegateOp() || u.op.IncOp() || u.op.DecOp()) return typeOf(f,u.term);
+			if(u.op.notOp()) return Type.BOOL;
+			else if(u.op.negOp() || u.op.incOp() || u.op.decOp()) return typeOf(f,u.term);
 			else if(u.op.CastOp()){
 				if(u.op.intOp()){
 					return Type.INT;
@@ -294,27 +294,27 @@ public class TypeManager {
 					return Type.FLOAT;
 				}else if(u.op.BooleanOp()){
 					return Type.BOOL;
-				}else typeError(f.funcName +": "+ u.op +"�� UnaryOp�� ��Ȯ���� �ʽ��ϴ�.");
+				}else typeError(f.funcName +": "+ u.op +"�뜝�룞�삕 UnaryOp�뜝�룞�삕 �뜝�룞�삕�솗�뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 			}
 		}else if(e instanceof FuncCall){
 			FuncCall fc = (FuncCall)e;
 			return funcTable.get(fc.id).getFuncType();
 		}else 
-			typeError(f.funcName+" : "+"�˸´� Expression�� �ƴմϴ�.");
-		return null; //����X
+			typeError(f.funcName+" : "+"�뜝�떙留욌뙋�삕 Expression�뜝�룞�삕 �뜝�떍�떃�땲�뙋�삕.");
+		return null; //�뜝�룞�삕�뜝�룞�삕X
 	}
 	
 	private Type getVariableType(FunctionDef f,ArrayRef v){
 		if(f.isContainVariable(v.id)) return f.getVariableType(v.id);
 		else if(globalVariables.containsKey(v.id)) return globalVariables.get(v.id).type;
-		typeError(v.id +"�� Type�� ���̵Ǿ� ���� �ʽ��ϴ�.");
+		typeError(v.id +"�뜝�룞�삕 Type�뜝�룞�삕 �뜝�룞�삕�뜝�떛�릺�뼲�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 		return null;
 	}
 	
 	private Type getVariableType(FunctionDef f,Variable v){
 		if(f.isContainVariable(v.id)) return f.getVariableType(v.id);
 		else if(globalVariables.containsKey(v.id)) return globalVariables.get(v.id).type;
-		typeError(f.funcName+" : "+v.id +"�� Type�� ���̵Ǿ� ���� �ʽ��ϴ�.");
+		typeError(f.funcName+" : "+v.id +"�뜝�룞�삕 Type�뜝�룞�삕 �뜝�룞�삕�뜝�떛�릺�뼲�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 		return null;
 	}
 	

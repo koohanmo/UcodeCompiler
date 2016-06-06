@@ -9,7 +9,7 @@ public class CharValue extends Value {
 
     public CharValue (char v) { this( ); value = v; undef = false; }
 
-    char charValue ( ) {
+    public char charValue ( ) {
         assert !undef : "reference to undefined char value";
         return value;
     }

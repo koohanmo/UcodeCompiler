@@ -9,7 +9,7 @@ public class FloatValue extends Value {
 
     public FloatValue (float v) { this( ); value = v; undef = false; }
 
-    float floatValue ( ) {
+    public float floatValue ( ) {
         assert !undef : "reference to undefined float value";
         return value;
     }

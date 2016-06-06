@@ -8,7 +8,7 @@ public class IntValue extends Value {
 
     public IntValue (int v) { this( ); value = v; undef = false; }
 
-    int intValue ( ) {
+    public int intValue ( ) {
         assert !undef : "reference to undefined int value";
         return value;
     }

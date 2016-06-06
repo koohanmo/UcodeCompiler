@@ -121,10 +121,27 @@ public class Operator {
             || val.equals(TIMES) || val.equals(DIV)||val.equals(POW) ||val.equals(MOD);
     }
     
-    public boolean IncOp () {return val.equals(INC);}
-    public boolean DecOp () {return val.equals(DEC);}
-    public boolean NotOp ( ) { return val.equals(NOT) ; }
-    public boolean NegateOp ( ) { return val.equals(NEG) ; }
+    public boolean plusOp() {return val.equals(PLUS);}
+    public boolean minusOp() {return val.equals(MINUS);}
+    public boolean timesOp() {return val.equals(TIMES);}
+    public boolean divOp() {return val.equals(DIV);}
+    public boolean powOp() {return val.equals(POW);}
+    public boolean modOp() {return val.equals(MOD);}
+    
+    public boolean ltOp() {return val.equals(LT);}
+    public boolean leOp() {return val.equals(LE);}
+    public boolean eqOp() {return val.equals(EQ);}
+    public boolean neOp() {return val.equals(NE);}
+    public boolean gtOp() {return val.equals(GT);}
+    public boolean geOp() {return val.equals(GE);}
+    
+    public boolean andOp() {return val.equals(AND);}
+    public boolean orOp() {return val.equals(OR);}
+    
+    public boolean incOp () {return val.equals(INC);}
+    public boolean decOp () {return val.equals(DEC);}
+    public boolean notOp ( ) { return val.equals(NOT) ; }
+    public boolean negOp ( ) { return val.equals(NEG) ; }
     
     public boolean CastOp(){
     	return val.equals(INT) || val.equals(CHAR) || val.equals(FLOAT)

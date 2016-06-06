@@ -21,7 +21,7 @@ public class CodeGenerator {
 	
 	private HashMap<String, VariableInfo> globalVars = new HashMap<String, VariableInfo>();
 	private HashMap<String, VariableInfo> localVars = new HashMap<String, VariableInfo>();
-	
+	private FunctionDef currentFunc =null;
 	
 	private TypeChecker typeChecker;
 	String outputFile;
@@ -44,22 +44,25 @@ public class CodeGenerator {
 		generate(program);
 	}
 	private void generate(Program program){
-		//¿¸ø™π¯ºˆ º±æ to globalVars
+		//Ï†ÑÏó≠Î≤àÏàò ÏÑ†Ïñ∏ to globalVars
 		for(Declaration  d : program.decpart){
 			mkUcode(d, TypeManager.getInstance().globalVariables);
 		}
-		//∏”∏Æ º±æµ» «‘ºˆ º±æ
+		//Î®∏Î¶¨ ÏÑ†Ïñ∏Îêú Ìï®Ïàò ÏÑ†Ïñ∏
 		DefinedFunction definedFunction = new DefinedFunction();
 		definedFunction.writeDefinedFunctions();
 
-		//∏ﬁ¿Œ ±∏«ˆ
+		//Î©îÏù∏ Íµ¨ÌòÑ
 		mkUcode(program.mainFunc);
 		
-		//«‘ºˆ ±∏«ˆ
+		//Ìï®Ïàò Íµ¨ÌòÑ
 		mkUcode(program.funcs);
 
-		//∏ﬁ¿Œ »£√‚
-		mkUcode(this.LASTGENERATE);
+		//Î©îÏù∏ Ìò∏Ï∂ú
+		mkBgn();
+		mkLdp();
+		mkCall("main");
+		mkEnd();
 	}
 	
 	private void mkUcode(Funcs func){
@@ -70,7 +73,7 @@ public class CodeGenerator {
 	}
 	
 	private void mkUcode(Func f){
-		FunctionDef functionDef = TypeManager.getInstance().funcTable.get(f.id);
+		FunctionDef functionDef =currentFunc = TypeManager.getInstance().funcTable.get(f.id);
 		mkProc(functionDef,3);
 		int startAddress=1;
 		
@@ -90,7 +93,7 @@ public class CodeGenerator {
 			mkUcode(st);
 		}
 		
-		//∏Æ≈œ
+		//Î¶¨ÌÑ¥
 		mkRetv(f.returnExpr);
 		
 		localVars.clear();
@@ -98,7 +101,7 @@ public class CodeGenerator {
 	}
 	
 	private void mkUcode(voidFunc f){
-		FunctionDef functionDef = TypeManager.getInstance().funcTable.get(f.id);
+		FunctionDef functionDef  =currentFunc= TypeManager.getInstance().funcTable.get(f.id);
 		mkProc(functionDef,3);
 		int startAddress=1;
 		
@@ -118,7 +121,7 @@ public class CodeGenerator {
 			mkUcode(st);
 		}
 		
-		//∏Æ≈œ
+		//Î¶¨ÌÑ¥
 		mkEnd();
 		
 		localVars.clear();
@@ -127,7 +130,7 @@ public class CodeGenerator {
 	
 	private void mkUcode(MainFunc mainFunc){
 
-		FunctionDef functionDef = TypeManager.getInstance().funcTable.get("main");
+		FunctionDef functionDef  =currentFunc= TypeManager.getInstance().funcTable.get("main");
 		mkProc(functionDef,2);
 		int startAddress=1;
 
@@ -147,16 +150,7 @@ public class CodeGenerator {
 		blockNumber++;
 	}
 	
-	//∏∂π´∏Æ ±∏«ˆ.§§§§
-	private void mkUcode(int op){
-		if(op == this.LASTGENERATE){
-			//¿¸ø™π¯ºˆ ∞πºˆ.
-			
-			
-			
-			
-		}
-	}
+
 	
 	private void mkUcode(Statement s){
 		// Statement = Skip | Block | Assignment | Conditional | Loop | forLoop | voidFuncCall
@@ -238,12 +232,7 @@ public class CodeGenerator {
 	
 	//load variable
 	private void mkUcode(Variable v){
-		VariableInfo vi =null;
-		if(localVars.containsKey(v.id)){
-			vi =localVars.get(v.id);
-		}else if(globalVars.containsKey(v.id)){
-			vi =localVars.get(v.id);
-		}else System.err.println("Ucode make Error Can't find  : " + v.id );
+		VariableInfo vi =getVariableInfo(v.id);
 		mkLod(vi.blockNumber,vi.offset);
 	}
 	
@@ -256,8 +245,196 @@ public class CodeGenerator {
 	
 	
 	private void mkUcode(Expression expr){
-		//ææ.πﬂ.¡ø.∞∞.¥Ÿ.¿Ã.∞≈.ææ.πﬂ.¡¶.¿œ.æÓ.∑¡.øÓ.∞≈.¥Ÿ.ææ.πﬂ.æ».«ÿ
+	    // Expression = Variable | Value | Binary | Unary | FuncCall
+		if(expr instanceof Variable){
+			mkUcode((Variable)expr);
+		}else if(expr instanceof Value){
+			mkUcode((Value)expr);
+		}else if(expr instanceof Binary){
+			Binary bi = (Binary)expr;
+			mkUcode(bi);
+		}else if(expr instanceof Unary){
+			
+		}else if(expr instanceof FuncCall){
+			
+		}else System.err.println("Ucode make Error" + expr);	
 	}
+	
+	private void mkUcode(Binary bi){
+		mkUcode(bi.term1);
+		mkUcode(bi.term2);	
+		Type type=typeToEqual(bi.term1, bi.term2);
+		if(bi.op.plusOp()){
+			if(type.equals(Type.INT) || type.equals(Type.CHAR)){
+				if (bi.term1 instanceof ArrayRef){
+					if (bi.term2 instanceof  ArrayRef){
+						
+					}
+					else if (bi.term2 instanceof Variable){
+						
+					}
+					else if (bi.term2 instanceof Value){
+						
+					}
+					
+					else System.err.println("Ucode make Error");
+						
+					
+				}
+				
+				if (bi.term1 instanceof Variable){
+					if (bi.term2 instanceof  ArrayRef){
+						
+					}
+					else if (bi.term2 instanceof Variable){
+						
+					}
+					else if (bi.term2 instanceof Value){
+						
+					}
+					else System.err.println("Ucode make Error");
+					
+				}
+				
+				if (bi.term1 instanceof Value){
+					if (bi.term2 instanceof  ArrayRef){
+						
+					}
+					else if (bi.term2 instanceof Variable){
+						
+					}
+					else if (bi.term2 instanceof Value){
+						
+					}
+					else System.err.println("Ucode make Error");
+						
+						}
+				
+			}else if(type.equals(Type.FLOAT)){
+				
+			}
+		}
+		else if(bi.op.minusOp()){
+			
+		}
+		else if(bi.op.timesOp()){
+			
+		}
+		else if(bi.op.divOp()){
+			
+		}
+		else if(bi.op.modOp()){
+			
+		}
+		else if(bi.op.powOp()){
+			
+		}
+		else if(bi.op.andOp()){
+			
+		}
+		else if(bi.op.orOp()){
+			
+		}
+		else if(bi.op.gtOp()){
+			
+		}
+		else if(bi.op.ltOp()){
+			
+		}
+		else if(bi.op.leOp()){
+			
+		}
+		else if(bi.op.geOp()){
+			
+		}
+		else if(bi.op.neOp()){
+			
+		}
+		else if(bi.op.eqOp()){
+			
+		}
+		else{
+			
+		}
+	
+	}
+	
+	private void mkUcode(Unary u){
+		if(u.op.incOp()){
+			
+		}
+		else if(u.op.decOp()){
+			
+		}
+		else if(u.op.notOp()){
+			
+		}
+		else if(u.op.negOp()){
+			
+		}
+		else{
+			
+		}
+	
+	}
+	
+	private Type typeToEqual(Expression e1, Expression e2){
+		Type t1 = TypeManager.getInstance().typeOf(currentFunc, e1);
+		Type t2 = TypeManager.getInstance().typeOf(currentFunc, e2);	
+		if(t1.equals(t2)) return t1;
+		else castType(t1,t2);
+		return t1;
+	}
+	
+	
+	private void castType(Type to, Type from){
+		if(to.equals(Type.INT)){
+			if(from.equals(Type.FLOAT )){ 
+				mkLdp();
+				mkCall("F2I");
+			}
+		}else if(to.equals(Type.FLOAT)){
+			if(from.equals(Type.INT)){
+				mkLdp();
+				mkCall("I2F");
+			}else if(from.equals(Type.CHAR)){
+				mkLdp();
+				mkCall("I2F");
+			}
+		}else if(to.equals(Type.CHAR)){
+			if(from.equals(Type.FLOAT)){
+				mkLdp();
+				mkCall("F2I");
+			}
+		}	
+		else if(to.equals(Type.BIGINT)){
+			
+		}else System.err.println("Ucode make Error : cast" + to +" " + from );	
+	}
+	
+	
+	
+	private void mkUcode(Value val){
+	    // Value = IntValue | BoolValue |
+	    //         CharValue | FloatValue | BigIntValue
+		if(val instanceof IntValue){
+			IntValue iv = (IntValue)val;
+			mkLdc(iv.intValue());
+		}else if(val instanceof BoolValue){
+			BoolValue bv = (BoolValue)val;
+			mkLdc(bv.intValue());
+		}else if(val instanceof CharValue){
+			CharValue cv = (CharValue)val;
+			mkLdc((int)cv.charValue());
+		}else if(val instanceof FloatValue){
+			FloatValue fv = (FloatValue)val;
+			mkLdc(Float.floatToRawIntBits(fv.floatValue()));
+		}else if(val instanceof BigIntValue){
+			//„Öãz„Öã„Öã„Öã„Öã
+		}else System.err.println("Ucode make Error");	
+	}
+	
+	
 	private String mkSpace(String op){
 		StringBuffer sb = new StringBuffer(op);
 		int sp = 11-op.length();
@@ -265,12 +442,16 @@ public class CodeGenerator {
 		return sb.toString();
 	}
 	
-	
-	
 	private String mkSpace(){
 		return "           ";
 	}
 	
+	
+	private void mkBgn(){
+		StringBuilder sb= new StringBuilder(mkSpace());
+		sb.append("bgn " + globalVars.size());
+		writeToUco(sb.toString());
+	}
 	
 	private void mkLabel(String s){
 		StringBuilder sb= new StringBuilder(mkSpace(s));
@@ -295,6 +476,12 @@ public class CodeGenerator {
 	private void mkEnd(){
 		StringBuilder sb= new StringBuilder(mkSpace());
 		sb.append("end");
+		writeToUco(sb.toString());
+	}
+	
+	private void mkLdc(int val){
+		StringBuilder sb= new StringBuilder(mkSpace());
+		sb.append("ldc "+val);
 		writeToUco(sb.toString());
 	}
 	
