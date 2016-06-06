@@ -25,5 +25,5 @@ public class FloatValue extends Value {
 	System.out.print("FloatValue: ");
 	System.out.println(value);
     }
-ss
+
 }

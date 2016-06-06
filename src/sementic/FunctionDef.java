@@ -14,9 +14,9 @@ public class FunctionDef {
 	private int lexicalLevel;
 	
 	private Type funcType; 
-	private HashMap<String, Type> varTable = new HashMap<String, Type>();
+	private HashMap<String, SymbolElement> varTable = new HashMap<String, SymbolElement>();
 	private HashMap<String, Integer> arrayTable = new HashMap<String, Integer>();
-	private LinkedList<Type> params = new LinkedList<Type>();
+	private LinkedList<SymbolElement> params = new LinkedList<SymbolElement>();
 	
 	public FunctionDef(Type t, String name){
 		this.funcType=t;
@@ -27,11 +27,11 @@ public class FunctionDef {
 		return funcType;
 	}
 	
-	public void addParams(Type type){
-		params.add(type);
+	public void addParams(Type type , int size){
+		params.add(new SymbolElement(type,size));
 	}
 	
-	public Type getParams(int idx){
+	public SymbolElement getParams(int idx){
 		return params.get(idx);
 	}
 	
@@ -40,11 +40,11 @@ public class FunctionDef {
 	}
 	
 	public Type getVariableType(String id){
-		return varTable.get(id);
+		return varTable.get(id).type;
 	}	
 	
-	public void addVariable(String s, Type t){
-		varTable.put(s,t);
+	public void addVariable(String s, Type t ,int size){
+		varTable.put(s,new SymbolElement(t,size));
 	}
 	
 	public void addArray(String s, int n){

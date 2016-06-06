@@ -25,11 +25,6 @@ public class Program {
 	        mainFunc.display(++k);
     }
     
-    /*
-     *  Program�쓽 TypeCheck 
-     */    
-    private HashMap<Type, String> globalVariable = new HashMap<Type,String>();
-    
     public void validCheck(){
     	TypeManager.getInstance().setGlobalVariable(decpart);
         funcs.validCheck();
