@@ -15,6 +15,11 @@ public class Variable extends VariableRef
         }
 	System.out.println("Variable " + id);
     }
+
+	@Override
+	public String getId() {
+		return id;
+	}
 	
 	
 }

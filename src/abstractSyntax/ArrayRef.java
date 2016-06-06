@@ -20,4 +20,9 @@ public class ArrayRef extends VariableRef
 	System.out.println("ArrayRef " + id);
 	index.display(k++);
     }
+
+	@Override
+	public String getId() {
+		return id;
+	}
 }

@@ -23,8 +23,25 @@ public class FunctionDef {
 		this.funcName=name;
 	}
 	
+	public int getVariableSize(String name){
+		return varTable.get(name).size;
+	}
+	
 	public Type getFuncType(){
 		return funcType;
+	}
+	
+	public int getAllVariableSize(){
+		int s = 0;
+	    for( String key : varTable.keySet()){
+	    	s+=varTable.get(key).size;
+	    }
+		return s;
+	}
+	
+	
+	public int getVariableNum(){
+		return varTable.size();
 	}
 	
 	public void addParams(Type type , int size){
