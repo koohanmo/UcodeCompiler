@@ -6,9 +6,9 @@ import sementic.TypeManager;
 
 public class Program {
     // Program = Declarations decpart ; Funcs funcs; MainFunc mainFunc; 
-    Declarations decpart;
-    Funcs funcs;
-    MainFunc mainFunc;
+    public Declarations decpart;
+    public Funcs funcs;
+    public MainFunc mainFunc;
 
     public Program (Declarations d, Funcs f, MainFunc m){
         decpart = d;
@@ -26,7 +26,7 @@ public class Program {
     }
     
     /*
-     *  Program의 TypeCheck 
+     *  Program�쓽 TypeCheck 
      */    
     private HashMap<Type, String> globalVariable = new HashMap<Type,String>();
     

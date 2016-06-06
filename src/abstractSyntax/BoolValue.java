@@ -31,7 +31,4 @@ public class BoolValue extends Value {
 	System.out.println(value);
     }
 
-    public void genCode() {
-		CodeGenerator.ldc(intValue());
-	}
 }

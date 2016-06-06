@@ -25,8 +25,4 @@ public class CharValue extends Value {
 	System.out.print("CharValue: ");
 	System.out.println(value);
     }
-
-    public void genCode() {
-		CodeGenerator.ldc((int) value);
-	}
 }

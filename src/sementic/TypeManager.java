@@ -224,7 +224,7 @@ public class TypeManager {
 			//TODO 기본 함수도 검사 추가해야됨
 			if(!funcTable.containsKey(fc.id)) typeError(f.funcName +": "+fc.id+"가 정의되어 있지 않습니다.");
 			FunctionDef fd=funcTable.get(fc.id);
-			V(f, fc.param, fd); //파라미터 검사
+			V(f, fc.params, fd); //파라미터 검사
 			
 		}else typeError(f.funcName+" : "+"  Expression의 타입이 이상합니다.");
 	}

@@ -25,8 +25,5 @@ public class FloatValue extends Value {
 	System.out.print("FloatValue: ");
 	System.out.println(value);
     }
-
-	public void genCode() {
-		CodeGenerator.ldc(Float.floatToRawIntBits(value));
-	}
+ss
 }
