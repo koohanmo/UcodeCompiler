@@ -1,9 +1,9 @@
 //test program
 
 function int foo1 -> {int f1;int f2;}{
-	char a[10];
-//	float b;
-//	int c;
+	int a[10];
+	float b;
+	int c;
 //	bigint d;
 //	bool e;
 	
@@ -13,7 +13,9 @@ function int foo1 -> {int f1;int f2;}{
 //	b=++b;
 //	c=++c;
 
-	a[2] = 3;
+	c=1-2*c+2+a[2];
+	c=++b;
+	
 	
 	return a
 }
