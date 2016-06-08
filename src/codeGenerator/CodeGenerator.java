@@ -15,7 +15,7 @@ import java.util.HashMap;
 		
 		public final int LASTGENERATE = 609;
 		
-		public  int blockNumber=2;
+		public  int blockNumber=1;
 		public  int globalStart=1;
 		public  int LabelCnt=1;
 		public  boolean checkDeclGlobl= false;
@@ -59,15 +59,16 @@ import java.util.HashMap;
 			//전역번수 선언 to globalVars
 			for(Declaration  d : program.decpart){
 				mkUcode(d, TypeManager.getInstance().globalVariables);
-				checkDeclGlobl=true;
 			}
-			//머리 선언된 함수 선언
-			definedFunction = new DefinedFunction();
-			writeCustomFunctions();
+			blockNumber++;
+			
 			
 			//메인 구현
-			
 			mkUcode(program.mainFunc);
+			
+			
+			writeCustomFunctions();
+
 			
 			//함수 구현
 			mkUcode(program.funcs);
@@ -254,7 +255,6 @@ import java.util.HashMap;
 			mkUcode(ar.index);
 			mkLDA(ar.id);
 			mkAdd();
-			mkLdi();
 		}
 		
 		private void mkUcode(Expression expr){
@@ -279,6 +279,7 @@ import java.util.HashMap;
 			}else if(expr instanceof ArrayRef){
 				ArrayRef ar=(ArrayRef) expr;
 				mkUcode(ar);
+				mkLdi();
 			}else System.err.println("Ucode make Error" + expr);	
 		}
 		
@@ -472,7 +473,6 @@ import java.util.HashMap;
 				FloatValue fv = (FloatValue)val;
 				mkLdc(Float.floatToRawIntBits(fv.floatValue()));
 			}else if(val instanceof BigIntValue){
-				//ㅋzㅋㅋㅋㅋ
 			}else System.err.println("Ucode make Error");	
 		}
 		
@@ -514,6 +514,13 @@ import java.util.HashMap;
 			sb.append("retv");
 			writeToUco(sb.toString());
 		}
+		
+		private void mkRetv(){
+			StringBuilder sb= new StringBuilder(mkSpace());
+			sb.append("retv");
+			writeToUco(sb.toString());
+		}
+		
 		
 		private void mkEnd(){
 			StringBuilder sb= new StringBuilder(mkSpace());
@@ -924,11 +931,9 @@ import java.util.HashMap;
 			mkLod(blockNumber,1);
 			mkCall("cos");
 			mkDiv();
-			mkEnd();
+			mkRetv();
 			blockNumber++;
 			//pinv
-			
-			blockNumber++;
 			
 		}
 		public void writeUcode(Object o){
@@ -949,8 +954,15 @@ import java.util.HashMap;
 			if(id.equals("write")){
 			mkLdp();
 			for (Expression e : params){
-				VariableRef varef= (VariableRef) e;
-				mkUcode(varef);
+				if(e instanceof ArrayRef){
+					ArrayRef ar = (ArrayRef)e;
+					mkUcode(ar.index);
+					mkLDA(ar.id);
+					mkAdd();
+					mkLdi();
+				}
+				else 
+				mkUcode(e);
 			}
 			mkCall("write");
 			

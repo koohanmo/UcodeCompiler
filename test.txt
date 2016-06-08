@@ -1,4 +1,6 @@
 //test program
+int c;
+int g;
 
 function void foo -> {int i;}{
 int a;
