@@ -5,9 +5,9 @@ function int foo1 -> {int f1;int f2;}{
 	float b;
 	int c,d;
 	bool e;
-	
+
 	b=a*b/c%d;
-	e=!e;
+	//e=!e;
 	b=-b;
 	b=++b;
 	c=++c;
