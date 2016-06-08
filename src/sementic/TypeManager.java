@@ -63,6 +63,9 @@ public class TypeManager {
 	}
 	
 	
+<<<<<<< HEAD
+
+=======
 	/*
 	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
 	 */
@@ -74,6 +77,7 @@ public class TypeManager {
 	}
 	
 	
+>>>>>>> 8cd75bb23a8667815c5783781cc43319ced0171d
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
