@@ -1,203 +1,354 @@
-main       proc 2 1 2
+sin        proc 7 1 3
            sym 1 1 1
            sym 1 2 1
-           ldp
+           sym 1 3 1
+           sym 1 4 1
+           sym 1 5 1
+           sym 1 6 1
+           sym 1 7 1
+           ldc 3
+           str 1 1
+           ldc 1
+           str 1 2
+           ldc 0
+           str 1 3
+for11      nop
+           ldc 0
+           str 1 5
+           lod 1 5
+           ldc 20
+           lt
+           fjp endfor11
+           ldc 1
+           str 1 6
+for12      nop
+           ldc 1
+           str 1 7
+           lod 1 7
+           lod 1 2
+           le
+           fjp endfor12
+           lod 1 6
            lod 1 1
+           mul
+           str 1 6
+           ujp for12
+endfor12   nop
+for13      nop
+           ldc 1
+           str 1 7
+           lod 1 7
+           lod 1 2
+           le
+           fjp endfor13
+           lod 1 6
+           lod 1 1
+           div
+           str 1 6
+           ujp for13
+endfor13   nop
+if11       nop
+           ldc 0
+           lod 1 3
+           eq
+           fjp else11
+           lod 1 6
+           lod 1 4
+           add
+           str 1 4
+           ldc 1
+           str 1 3
+           ujp endif11
+else11     nop
+           lod 1 4
+           lod 1 6
+           sub
+           str 1 4
+           ldc 0
+           str 1 3
+endif11    nop
+           lod 1 2
+           ldc 2
+           add
+           str 1 2
+           ujp for11
+           end
+cos        proc 7 2 3
+           sym 2 1 1
+           sym 2 2 1
+           sym 2 3 1
+           sym 2 4 1
+           sym 2 5 1
+           sym 2 6 1
+           sym 2 7 1
+           ldc 3
+           str 2 1
+           ldc 0
+           str 2 2
+           ldc 0
+           str 2 3
+for11      nop
+           ldc 0
+           str 2 5
+           lod 2 5
+           ldc 20
+           lt
+           fjp endfor11
+           ldc 1
+           str 2 6
+for12      nop
+           ldc 1
+           str 2 7
+           lod 2 7
+           lod 2 2
+           le
+           fjp endfor12
+           lod 2 6
+           lod 2 1
+           mul
+           str 2 6
+           ujp for12
+endfor12   nop
+for13      nop
+           ldc 1
+           str 2 7
+           lod 2 7
+           lod 2 2
+           le
+           fjp endfor13
+           lod 2 6
+           lod 2 1
+           div
+           str 2 6
+           ujp for13
+endfor13   nop
+if11       nop
+           ldc 0
+           lod 2 3
+           eq
+           fjp else11
+           lod 2 6
+           lod 2 4
+           add
+           str 2 4
+           ldc 1
+           str 2 3
+           ujp endif11
+else11     nop
+           lod 2 4
+           lod 2 6
+           sub
+           str 2 4
+           ldc 0
+           str 2 3
+endif11    nop
+           lod 2 2
+           ldc 2
+           add
+           str 2 2
+           ujp for11
+           end
+tan        proc 7 3 3
+main       proc 2 5 2
+           sym 5 1 1
+           sym 5 2 1
+           ldp
+           lod 5 1
            call sin
            ldp
            ldc 1
            ldc 2
            call foo1
-           str 1 1
+           str 5 1
            ldp
            call foo2
-           lda 1 2
+           lda 5 2
            call read
            ldp
-           lod 1 2
+           lod 5 2
            call write
-           lda 1 1
+           lda 5 1
            call read
            ldp
            ldc 1
            ldc 2
            call foo1
-           str 1 1
+           str 5 1
            ldp
            call foo2
-           lda 1 2
-           lda 1 2
+           lda 5 2
+           lda 5 2
            call read
            ldp
-           lod 1 2
-           lod 1 1
+           lod 5 2
+           lod 5 1
            call write
            end
-foo1       proc 16 2 3
-           sym 2 1 1
-           sym 2 2 1
-           sym 2 3 10
-           sym 2 13 1
-           sym 2 14 1
-           sym 2 15 1
-           sym 2 16 1
-           lod 2 3
-           lod 2 13
+foo1       proc 16 6 3
+           sym 6 1 1
+           sym 6 2 1
+           sym 6 3 10
+           sym 6 13 1
+           sym 6 14 1
+           sym 6 15 1
+           sym 6 16 1
+           lod 6 3
+           lod 6 13
            ldp
            call F2I
            mul
-           lod 2 14
+           lod 6 14
            div
-           lod 2 15
+           lod 6 15
            mod
-           str 2 13
-           lod 2 16
+           str 6 13
+           lod 6 16
            notop
-           str 2 16
-           str 2 16
-           lod 2 13
+           str 6 16
+           str 6 16
+           lod 6 13
            ldc -1
            mul
-           str 2 13
-           str 2 13
-           lod 2 13
+           str 6 13
+           str 6 13
+           lod 6 13
            ldc 1
            add
-           str 2 13
-           str 2 13
-           lod 2 14
+           str 6 13
+           str 6 13
+           lod 6 14
            ldc 1
            add
-           str 2 14
-           str 2 14
+           str 6 14
+           str 6 14
            ldc 1
            ldc 2
-           lod 2 14
+           lod 6 14
            mul
            sub
            ldc 2
            add
            ldc 2
-           lda 2 3
+           lda 6 3
            add
            ldi
            add
-           str 2 14
-           lod 2 13
+           str 6 14
+           lod 6 13
            ldc 1
            add
-           str 2 13
-           str 2 14
-           lod 2 3
+           str 6 13
+           str 6 14
+           lod 6 3
            retv
-foo2       proc 13 3 3
-           sym 3 1 1
-           sym 3 2 1
-           sym 3 3 1
-           sym 3 4 10
+foo2       proc 13 7 3
+           sym 7 1 1
+           sym 7 2 1
+           sym 7 3 1
+           sym 7 4 10
            ldc 0
-           str 3 1
+           str 7 1
            ldc 1
-           str 3 2
+           str 7 2
 for1       nop
            ldc 1
-           str 3 2
-           lod 3 1
-           lod 3 2
+           str 7 2
+           lod 7 1
+           lod 7 2
            lt
            fjp endfor1
            ldc 1
-           str 3 3
-           lod 3 1
+           str 7 3
+           lod 7 1
            ldc 1
            add
-           str 3 1
+           str 7 1
            ujp for1
 endfor1    nop
 while2     nop
-           lod 3 1
-           lod 3 2
+           lod 7 1
+           lod 7 2
            lt
            fjp endwhile2
            ldc 2
-           str 3 1
+           str 7 1
            ujp while2
 endwhile2  nop
 if3        nop
-           lod 3 1
-           lod 3 2
+           lod 7 1
+           lod 7 2
            lt
            fjp else3
-           lod 3 2
-           str 3 1
+           lod 7 2
+           str 7 1
            ujp endif3
 else3      nop
-           lod 3 2
+           lod 7 2
            ldc 1
            add
-           str 3 1
+           str 7 1
 endif3     nop
 for4       nop
            ldc 0
-           lda 3 4
+           lda 7 4
            add
            ldi
            ldc 0
            sti
            ldc 0
-           lda 3 4
+           lda 7 4
            add
            ldi
            ldc 2
            lt
            fjp endfor4
 while5     nop
-           lod 3 1
-           lod 3 2
-           lod 3 1
+           lod 7 1
+           lod 7 2
+           lod 7 1
            add
-           lod 3 3
+           lod 7 3
            add
            lt
            fjp endwhile5
            ldc 1
-           lda 3 4
+           lda 7 4
            add
            ldi
            ldc 0
-           lda 3 4
+           lda 7 4
            add
            ldi
            ldc 1
            add
-           str 3 4
+           str 7 4
            ldc 1
-           lda 3 4
+           lda 7 4
            add
            ldi
            ldc 1
            sub
-           str 3 4
+           str 7 4
            mul
            ldc 0
-           lda 3 4
+           lda 7 4
            add
            ldi
            ldc -1
            mul
-           str 3 4
+           str 7 4
            div
            add
-           str 3 3
+           str 7 3
            ujp while5
 endwhile5  nop
            ldc 0
-           lda 3 4
+           lda 7 4
            add
            ldi
            ldc 1
            add
-           str 3 4
+           str 7 4
            ujp for4
 endfor4    nop
            end

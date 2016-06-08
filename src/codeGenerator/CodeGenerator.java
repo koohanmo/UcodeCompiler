@@ -595,6 +595,20 @@ import java.util.HashMap;
 			return sb.toString();
 		}
 		
+		private void mkSym(int blockNum,int start,int size){
+			StringBuffer sb = new StringBuffer(mkSpace());
+			sb.append("sym ");
+			sb.append(blockNum+" "+start+" "+size);
+			writeToUco(sb.toString());
+		}
+		private void mkStr(int blockNum,int start){
+			StringBuffer sb = new StringBuffer(mkSpace());
+			sb.append("str ");
+			sb.append(blockNum+" "+start);
+			writeToUco(sb.toString());
+		}
+	
+		
 		private void mkProc(FunctionDef fd, int lexicalLevel){
 			StringBuffer sb = new StringBuffer(mkSpace(fd.funcName));
 			sb.append("proc ");
@@ -610,7 +624,12 @@ import java.util.HashMap;
 			sb.append("str ");
 			sb.append(vi.blockNumber+" "+vi.offset);
 			writeToUco(sb.toString()); 
-			
+		}
+		private String mkStr(int start){
+			StringBuilder sb= new StringBuilder(mkSpace());
+			sb.append("str ");
+			sb.append(this.blockNumber+" "+start);
+			return sb.toString();
 		}
 		
 		private void mkLDA(String id){
@@ -719,28 +738,175 @@ import java.util.HashMap;
 			writeToUco(sb.toString());
 		}
 		
-		
-		
+	
 		//미리 정의된 definedFunc Ucode로 선언.
 		public void writeCustomFunctions(){
-			
+		
 			//sin
-			mkProc("sin", 변수크기);
+			mkProc("sin", 7);
+			mkSym(blockNumber,1,1);  //int x
+			mkSym(blockNumber,2,1);  //int idx
+			mkSym(blockNumber,3,1);  //int check
+			mkSym(blockNumber,4,1);  //float result
+			mkSym(blockNumber,5,1);  //int i
+			mkSym(blockNumber,6,1);  //float calval
+			mkSym(blockNumber,7,1);  //int j
+			mkLdc(3);
+			mkStr(blockNumber,1);    //x=3
+			mkLdc(1);    
+			mkStr(blockNumber,2);    //idx=1
+			mkLdc(0);
+			mkStr(blockNumber,3);    //check=0
+			mkLabel("for"+11);  //for1시작
+			mkLdc(0);
+			mkStr(blockNumber,5);  //i=0
+			mkLod(blockNumber,5);
+			mkLdc(20);
+			mkLt();
+			mkFjp("endfor"+11);
+			mkLdc(1);
+			mkStr(blockNumber,6);
+			mkLabel("for"+12); //for2시작
+			mkLdc(1);
+			mkStr(blockNumber,7);   //j=1
+			mkLod(blockNumber,7);
+			mkLod(blockNumber,2);
+			mkLe(); //j<=idx
+			mkFjp("endfor"+12);
+			mkLod(blockNumber,6); //lod calval
+			mkLod(blockNumber,1);
+			mkMul();
+			mkStr(blockNumber,6);    //calval=calval*x
+			mkUjp("for"+12);
+			mkLabel("endfor"+12);
+			mkLabel("for"+13);
+			mkLdc(1);   
+			mkStr(blockNumber,7);   //j=1
+			mkLod(blockNumber,7); //lod j
+			mkLod(blockNumber,2); //lod idx
+			mkLe();
+			mkFjp("endfor"+13);
+			mkLod(blockNumber,6); //lod calval
+			mkLod(blockNumber,1); //lod x
+			mkDiv();
+			mkStr(blockNumber,6);
+			mkUjp("for"+13);
+			mkLabel("endfor"+13);
+			mkLabel("if"+11);
+			mkLdc(0);
+			mkLod(blockNumber,3);
+			mkEq();
+			mkFjp("else"+11);
+			mkLod(blockNumber,6);
+			mkLod(blockNumber,4);
+			mkAdd();
+			mkStr(blockNumber,4);
+			mkLdc(1);
+			mkStr(blockNumber,3);
+			mkUjp("endif"+11);
+			mkLabel("else"+11);
+			mkLod(blockNumber,4);
+			mkLod(blockNumber,6);
+			mkSub();
+			mkStr(blockNumber,4);
+			mkLdc(0);
+			mkStr(blockNumber,3);
+			mkLabel("endif"+11);
+			mkLod(blockNumber,2);
+			mkLdc(2);
+			mkAdd();
+			mkStr(blockNumber,2);
+			mkUjp("for"+11);
+			mkEnd();
 			
+		
 			blockNumber++;
 			//cos
-			mkProc("cos", 변수크기);
+			mkProc("cos", 7);
+			mkSym(blockNumber,1,1);  //int x
+			mkSym(blockNumber,2,1);  //int idx
+			mkSym(blockNumber,3,1);  //int check
+			mkSym(blockNumber,4,1);  //float result
+			mkSym(blockNumber,5,1);  //int i
+			mkSym(blockNumber,6,1);  //float calval
+			mkSym(blockNumber,7,1);  //int j
+			mkLdc(3);
+			mkStr(blockNumber,1);    //x=3
+			mkLdc(0);    
+			mkStr(blockNumber,2);    //idx=0
+			mkLdc(0);
+			mkStr(blockNumber,3);    //check=0
+			mkLabel("for"+11);  //for1시작
+			mkLdc(0);
+			mkStr(blockNumber,5);  //i=0
+			mkLod(blockNumber,5);
+			mkLdc(20);
+			mkLt();
+			mkFjp("endfor"+11);
+			mkLdc(1);
+			mkStr(blockNumber,6);
+			mkLabel("for"+12); //for2시작
+			mkLdc(1);
+			mkStr(blockNumber,7);   //j=1
+			mkLod(blockNumber,7);
+			mkLod(blockNumber,2);
+			mkLe(); //j<=idx
+			mkFjp("endfor"+12);
+			mkLod(blockNumber,6); //lod calval
+			mkLod(blockNumber,1);
+			mkMul();
+			mkStr(blockNumber,6);    //calval=calval*x
+			mkUjp("for"+12);
+			mkLabel("endfor"+12);
+			mkLabel("for"+13);
+			mkLdc(1);   
+			mkStr(blockNumber,7);   //j=1
+			mkLod(blockNumber,7); //lod j
+			mkLod(blockNumber,2); //lod idx
+			mkLe();
+			mkFjp("endfor"+13);
+			mkLod(blockNumber,6); //lod calval
+			mkLod(blockNumber,1); //lod x
+			mkDiv();
+			mkStr(blockNumber,6);
+			mkUjp("for"+13);
+			mkLabel("endfor"+13);
+			mkLabel("if"+11);
+			mkLdc(0);
+			mkLod(blockNumber,3);
+			mkEq();
+			mkFjp("else"+11);
+			mkLod(blockNumber,6);
+			mkLod(blockNumber,4);
+			mkAdd();
+			mkStr(blockNumber,4);
+			mkLdc(1);
+			mkStr(blockNumber,3);
+			mkUjp("endif"+11);
+			mkLabel("else"+11);
+			mkLod(blockNumber,4);
+			mkLod(blockNumber,6);
+			mkSub();
+			mkStr(blockNumber,4);
+			mkLdc(0);
+			mkStr(blockNumber,3);
+			mkLabel("endif"+11);
+			mkLod(blockNumber,2);
+			mkLdc(2);
+			mkAdd();
+			mkStr(blockNumber,2);
+			mkUjp("for"+11);
+			mkEnd();
+			
 			
 			blockNumber++;
 			//tan
-			mkProc("tan", 변수크기);
+			mkProc("tan", 7);
 			
 			blockNumber++;
 			//pinv
 			
 			blockNumber++;
-			
-
 			
 		}
 		public void writeUcode(Object o){
