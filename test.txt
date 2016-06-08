@@ -1,6 +1,5 @@
 //test program
 
-int c,d;
 
 main
 {
@@ -8,11 +7,10 @@ main
    int b;
 
    for(b=0;b<10;++b){
-<<<<<<< HEAD
+
  if(b<5){ a[b]=b;}
-=======
+
   a[b]=b;
->>>>>>> f9b53e678456af98fc994b4d8f7705ab6b961c18
 
 }
    
@@ -20,11 +18,8 @@ main
  call write(a[b]);
 }
    
-<<<<<<< HEAD
-=======
 
 }
 
->>>>>>> f9b53e678456af98fc994b4d8f7705ab6b961c18
 
 }
