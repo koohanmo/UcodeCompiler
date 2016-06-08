@@ -641,6 +641,14 @@ import java.util.HashMap;
 			
 		}
 		
+		private void mkLDA(int blockNum,int start){
+			StringBuffer sb = new StringBuffer(mkSpace());
+			sb.append("lda ");
+			sb.append(blockNum+" "+start);
+			writeToUco(sb.toString()); 
+			
+		}
+		
 		
 		private void mkLod(String id){
 			VariableInfo vi =getVariableInfo(id);
@@ -671,7 +679,7 @@ import java.util.HashMap;
 		
 		private void mkMul(){
 			StringBuffer sb = new StringBuffer(mkSpace());
-			sb.append("mul");
+			sb.append("mult");
 			writeToUco(sb.toString());
 		}
 		
@@ -836,73 +844,82 @@ import java.util.HashMap;
 			mkStr(blockNumber,2);    //idx=0
 			mkLdc(0);
 			mkStr(blockNumber,3);    //check=0
-			mkLabel("for"+11);  //for1시작
+			mkLabel("for"+14);  //for1시작
 			mkLdc(0);
 			mkStr(blockNumber,5);  //i=0
 			mkLod(blockNumber,5);
 			mkLdc(20);
 			mkLt();
-			mkFjp("endfor"+11);
+			mkFjp("endfor"+14);
 			mkLdc(1);
 			mkStr(blockNumber,6);
-			mkLabel("for"+12); //for2시작
+			mkLabel("for"+15); //for2시작
 			mkLdc(1);
 			mkStr(blockNumber,7);   //j=1
 			mkLod(blockNumber,7);
 			mkLod(blockNumber,2);
 			mkLe(); //j<=idx
-			mkFjp("endfor"+12);
+			mkFjp("endfor"+15);
 			mkLod(blockNumber,6); //lod calval
 			mkLod(blockNumber,1);
 			mkMul();
 			mkStr(blockNumber,6);    //calval=calval*x
-			mkUjp("for"+12);
-			mkLabel("endfor"+12);
-			mkLabel("for"+13);
+			mkUjp("for"+15);
+			mkLabel("endfor"+15);
+			mkLabel("for"+16);
 			mkLdc(1);   
 			mkStr(blockNumber,7);   //j=1
 			mkLod(blockNumber,7); //lod j
 			mkLod(blockNumber,2); //lod idx
 			mkLe();
-			mkFjp("endfor"+13);
+			mkFjp("endfor"+16);
 			mkLod(blockNumber,6); //lod calval
 			mkLod(blockNumber,1); //lod x
 			mkDiv();
 			mkStr(blockNumber,6);
 			mkUjp("for"+13);
-			mkLabel("endfor"+13);
-			mkLabel("if"+11);
+			mkLabel("endfor"+16);
+			mkLabel("if"+12);
 			mkLdc(0);
 			mkLod(blockNumber,3);
 			mkEq();
-			mkFjp("else"+11);
+			mkFjp("else"+12);
 			mkLod(blockNumber,6);
 			mkLod(blockNumber,4);
 			mkAdd();
 			mkStr(blockNumber,4);
 			mkLdc(1);
 			mkStr(blockNumber,3);
-			mkUjp("endif"+11);
-			mkLabel("else"+11);
+			mkUjp("endif"+12);
+			mkLabel("else"+12);
 			mkLod(blockNumber,4);
 			mkLod(blockNumber,6);
 			mkSub();
 			mkStr(blockNumber,4);
 			mkLdc(0);
 			mkStr(blockNumber,3);
-			mkLabel("endif"+11);
+			mkLabel("endif"+12);
 			mkLod(blockNumber,2);
 			mkLdc(2);
 			mkAdd();
 			mkStr(blockNumber,2);
-			mkUjp("for"+11);
+			mkUjp("for"+12);
 			mkEnd();
 			
 			
 			blockNumber++;
 			//tan
-			mkProc("tan", 7);
-			
+			mkProc("tan", 1);
+			mkLdp();
+			mkLDA(blockNumber,1);
+			mkCall("read");
+			mkLdp();
+			mkLod(blockNumber,1);
+			mkCall("sin");
+			mkLdp();
+			mkLod(blockNumber,1);
+			mkCall("cos");
+			mkDiv();
 			blockNumber++;
 			//pinv
 			
@@ -928,7 +945,7 @@ import java.util.HashMap;
 			mkLdp();
 			for (Expression e : params){
 				VariableRef varef= (VariableRef) e;
-				mkLod(varef.getId());
+				mkUcode(varef);
 			}
 			mkCall("write");
 			
@@ -937,7 +954,7 @@ import java.util.HashMap;
 					{
 						VariableRef varef = (VariableRef) e;
 						if(e instanceof Variable){
-							mkLDA(varef.getId());
+							mkUcode(varef);
 					}
 				}
 				mkCall("read");

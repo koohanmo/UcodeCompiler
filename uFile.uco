@@ -30,7 +30,7 @@ for12      nop
            fjp endfor12
            lod 1 6
            lod 1 1
-           mul
+           mult
            str 1 6
            ujp for12
 endfor12   nop
@@ -87,68 +87,78 @@ cos        proc 7 2 3
            str 2 2
            ldc 0
            str 2 3
-for11      nop
+for14      nop
            ldc 0
            str 2 5
            lod 2 5
            ldc 20
            lt
-           fjp endfor11
+           fjp endfor14
            ldc 1
            str 2 6
-for12      nop
+for15      nop
            ldc 1
            str 2 7
            lod 2 7
            lod 2 2
            le
-           fjp endfor12
+           fjp endfor15
            lod 2 6
            lod 2 1
-           mul
+           mult
            str 2 6
-           ujp for12
-endfor12   nop
-for13      nop
+           ujp for15
+endfor15   nop
+for16      nop
            ldc 1
            str 2 7
            lod 2 7
            lod 2 2
            le
-           fjp endfor13
+           fjp endfor16
            lod 2 6
            lod 2 1
            div
            str 2 6
            ujp for13
-endfor13   nop
-if11       nop
+endfor16   nop
+if12       nop
            ldc 0
            lod 2 3
            eq
-           fjp else11
+           fjp else12
            lod 2 6
            lod 2 4
            add
            str 2 4
            ldc 1
            str 2 3
-           ujp endif11
-else11     nop
+           ujp endif12
+else12     nop
            lod 2 4
            lod 2 6
            sub
            str 2 4
            ldc 0
            str 2 3
-endif11    nop
+endif12    nop
            lod 2 2
            ldc 2
            add
            str 2 2
-           ujp for11
+           ujp for12
            end
-tan        proc 7 3 3
+tan        proc 1 3 3
+           ldp
+           lda 3 1
+           call read
+           ldp
+           lod 3 1
+           call sin
+           ldp
+           lod 3 1
+           call cos
+           div
 main       proc 2 5 2
            sym 5 1 1
            sym 5 2 1
@@ -162,12 +172,12 @@ main       proc 2 5 2
            str 5 1
            ldp
            call foo2
-           lda 5 2
+           lod 5 2
            call read
            ldp
            lod 5 2
            call write
-           lda 5 1
+           lod 5 1
            call read
            ldp
            ldc 1
@@ -176,8 +186,8 @@ main       proc 2 5 2
            str 5 1
            ldp
            call foo2
-           lda 5 2
-           lda 5 2
+           lod 5 2
+           lod 5 2
            call read
            ldp
            lod 5 2
@@ -196,7 +206,7 @@ foo1       proc 16 6 3
            lod 6 13
            ldp
            call F2I
-           mul
+           mult
            lod 6 14
            div
            lod 6 15
@@ -208,7 +218,7 @@ foo1       proc 16 6 3
            str 6 16
            lod 6 13
            ldc -1
-           mul
+           mult
            str 6 13
            str 6 13
            lod 6 13
@@ -224,7 +234,7 @@ foo1       proc 16 6 3
            ldc 1
            ldc 2
            lod 6 14
-           mul
+           mult
            sub
            ldc 2
            add
@@ -329,13 +339,13 @@ while5     nop
            ldc 1
            sub
            str 7 4
-           mul
+           mult
            ldc 0
            lda 7 4
            add
            ldi
            ldc -1
-           mul
+           mult
            str 7 4
            div
            add
