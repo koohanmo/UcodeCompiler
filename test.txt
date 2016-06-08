@@ -1,60 +1,20 @@
 //test program
 
-function int foo1 -> {int f1;int f2;}{
-   int a[10];
-   float b;
-   int c,d;
-   bool e;
-
-   b=a*b/c%d;
-   e=!e;
-   b=-b;
-   b=++b;
-   c=++c;
-
-   c=1-2*c+2+a[2];
-   c=++b;
-   
-   return a
-}
-
-function void foo2 -> {}
-{
-   int b,c,d,a[10];
-   b=0;
-   c=1;
-   
-   for(c=1;b<c;++b) d=1;
-   
-   
-   while(b<c) b=2;
-   
-   if b<c b=c; else b=c+1;
-   
-   for(a[0]=0;a[0]<2;++a[0]){
-      while(b<c+b+d){
-         d=a[1]+(++a[0])*(--a[1])/(-a[0]);
-         }
-   }
-}
+int c,d;
 
 main
 {
-   int a;
-   int i;
+   int a[10];
+   int b;
+
+   for(b=0;b<10;++b){
+ if(b<5){ a[b]=b;}
+
+}
    
-   call sin(a);
-   a=call foo1(1,2);
-   call foo2();
-   call read(i);
-   call write(i);
-  call read(a);
-  a=call foo1(1,2);
-  call foo2();
-  call read(i,i);
-  call write(i,a);
+  for(b=0;b<10;++b){
+ call write(a[b]);
+}
    
 
 }
-
-

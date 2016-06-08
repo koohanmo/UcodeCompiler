@@ -920,6 +920,7 @@ import java.util.HashMap;
 			mkLod(blockNumber,1);
 			mkCall("cos");
 			mkDiv();
+			mkEnd();
 			blockNumber++;
 			//pinv
 			
