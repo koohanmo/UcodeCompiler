@@ -63,9 +63,7 @@ public class TypeManager {
 	}
 	
 	
-<<<<<<< HEAD
 
-=======
 	/*
 	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
 	 */
@@ -76,8 +74,6 @@ public class TypeManager {
 		if(funcTable.containsKey(id))typeError(id +": 이미 선언되어 있는 이름입니다.");
 	}
 	
-	
->>>>>>> 8cd75bb23a8667815c5783781cc43319ced0171d
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
