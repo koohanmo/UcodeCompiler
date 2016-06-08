@@ -15,9 +15,9 @@ import java.util.HashMap;
 		
 		public final int LASTGENERATE = 609;
 		
-		public static int blockNumber=1;
-		public static int globalStart=1;
-		public static int LabelCnt=1;
+		public  int blockNumber=1;
+		public  int globalStart=1;
+		public  int LabelCnt=1;
 		
 		
 		private HashMap<String, VariableInfo> globalVars = new HashMap<String, VariableInfo>();
