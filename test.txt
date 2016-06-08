@@ -1,12 +1,26 @@
 //test program
+<<<<<<< HEAD
 int c;
 int g;
+=======
+
+function void foo -> {int i;}{
+int a;
+int b;
+
+call write(i);
+
+}
+>>>>>>> 5f2471deaf72558e4e6b5b6159739a0c55a92234
 
 main
 {
-   int a[10];
-   int b;
 
+<<<<<<< HEAD
+int a;
+
+call read(a);
+call foo(a);
    for(b=0;b<10;++b){
 
  if(b<5){ a[b]=b;}
@@ -15,12 +29,3 @@ main
 
 }
    
-  for(b=0;b<10;++b){
- call write(a[b]);
-}
-   
-
-}
-
-
-}

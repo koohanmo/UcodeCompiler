@@ -15,7 +15,7 @@ import java.util.HashMap;
 		
 		public final int LASTGENERATE = 609;
 		
-		public  int blockNumber=1;
+		public  int blockNumber=2;
 		public  int globalStart=1;
 		public  int LabelCnt=1;
 		public  boolean checkDeclGlobl= false;
@@ -960,13 +960,14 @@ import java.util.HashMap;
 			mkCall("write");
 			
 			}else if(id.equals("read")){
+				mkLdp();
 					for (Expression e : params)
 					{
-						VariableRef varef = (VariableRef) e;
 						if(e instanceof Variable){
-							mkUcode(varef);
+							mkLDA(((Variable)e).id);
+						}else mkUcode(e);
 					}
-				}
+				
 				mkCall("read");
 			}
 			//sin, cos, tan, pinv
