@@ -62,26 +62,14 @@ public class TypeManager {
 		instance=null;
 	}
 	
-<<<<<<< HEAD
 
-=======
-	
-
-	/*
-	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
-	 */
->>>>>>> 7e205bbad409fab6bf8c0cf0825019e0a4086b51
 	
 	public void IdCheck(String id){
 		if(definedFuncTable.contains(id)) typeError(id +": 이미 선언되어 있는 이름입니다.");
 		if(globalVariables.containsKey(id))  typeError(id +": 이미 선언되어 있는 이름입니다.");
 		if(funcTable.containsKey(id))typeError(id +": 이미 선언되어 있는 이름입니다.");
 	}
-	
-<<<<<<< HEAD
-	
-=======
->>>>>>> 7e205bbad409fab6bf8c0cf0825019e0a4086b51
+
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
