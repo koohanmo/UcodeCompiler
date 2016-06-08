@@ -17,10 +17,10 @@ public class Lexer {
 	private final char eolnCh = '\n';
 	private final char eofCh = '\004';
 	
-	public Lexer (String fileName) { // source filename //·º¼­ÀÇ »ý¼ºÀÚ	
+	public Lexer (String fileName) { // source filename //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 		try {
-			input = new BufferedReader (new FileReader(fileName)); 
-			//ÆÄÀÏ °¡Á®¿Í¼­ ¹öÆÛ input¿¡ ³Ö±â
+			input = new BufferedReader (new FileReader(fileName));
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ ï¿½ï¿½ï¿½ï¿½ inputï¿½ï¿½ ï¿½Ö±ï¿½
 		}
 		catch (FileNotFoundException e) {   
 			System.out.println("File not found: " + fileName);
@@ -29,23 +29,23 @@ public class Lexer {
 	}
 	
 	private char nextChar() { // Return next char	
-		if (ch == eofCh)    //´ÙÀ½¿¡ ÀÐÀ» ¹®ÀÚ°¡¾øÀ½
+		if (ch == eofCh)    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½
 			error("Attempt to read past end of file");
 		col++;
-		if (col >= line.length()) {  //colÀÌ ¶óÀÎÀÇ ±æÀÌ¸¦ ³Ñ¾î°¡¸é ´ÙÀ½ ¶óÀÎÀ» ÀÐ´Â´Ù.
+		if (col >= line.length()) {  //colï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð´Â´ï¿½.
 			try {
-				line = input.readLine( );  //ÈùÁÙ ÀÐ±â
+				line = input.readLine( );  //ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½
 			} catch (IOException e) {
 				System.err.println(e);
 				System.exit(1);
 			} // try
 			
 			if (line == null) // at end of file
-				line = "" + eofCh;      //³¡À» ¸¸³ª¸é ³¡ÀÌ¶ó´Â°ÍÀ» Ç¥½ÃÇÏ±â À§ÇØ ³ÖÀ½
+				line = "" + eofCh;      //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½Â°ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			else {
-				System.out.println("Line "+lineno);  //¶óÀÎ ³Ñ¹ö¸¦ ¸Þ°ÜÁÜ
+				System.out.println("Line "+lineno);  //ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½Þ°ï¿½ï¿½ï¿½
 				lineno++;
-				line += eolnCh;   //¶óÀÎÀÇ ³¡¿¡ \nÀ» ´õÇØÁà¼­ ´ÙÀ½ ÁÙ·Î³Ñ¾î°¨
+				line += eolnCh;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ \nï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½à¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·Î³Ñ¾î°¨
 			} // if line
 			col = 0;
 		} // if col
@@ -70,15 +70,15 @@ public class Lexer {
 				break;
 			case '/': // divide or comment
 				ch = nextChar();
-				if (ch != '/') return Token.divideTok;  // ½½·¡½Ã°¡ 1°³ÀÏ¶§ ³ª´°¼À	
+				if (ch != '/') return Token.divideTok;  // ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ 1ï¿½ï¿½ï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 // comment
-				do {                         //½½·¡½Ã°¡ µÎ°³ ÀÌ¸é ³ª¸ÓÁö´Â \nÀÌ ³ª¿Ã¶§±îÁö ±×³É³Ñ¾î°¨
+				do {                         //ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½Î°ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \nï¿½ï¿½ ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×³É³Ñ¾î°¨
 					ch = nextChar();
 				} while (ch != eolnCh);
-				ch = nextChar();      //±×·¯°í ´ÙÀ½ ¹®ÀÚ
+				ch = nextChar();      //ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				break;
 			case '\'': // char literal
-				char ch1 = nextChar();     //ÀÛÀºµû¿ÈÇ¥¸¦ Ãâ·ÂÇÏ°í½ÍÀ»‹š
+				char ch1 = nextChar();     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				nextChar(); // get '
 				ch = nextChar();
 				return Token.mkCharLiteral("" + ch1);
@@ -118,7 +118,7 @@ public class Lexer {
 	
 	private void check(char c) {
 		ch = nextChar();
-		if (ch != c) //´ÙÀ½¿¡ ÀÐÀ» ÅäÅ«ÀÌ c¿Í °°Áö ¾ÊÀ» ¶§ ¿¡·¯¹ß»ý
+		if (ch != c) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å«ï¿½ï¿½ cï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½
 			error("Illegal character, expecting " + c);
 		ch = nextChar();	
 	}
@@ -126,10 +126,10 @@ public class Lexer {
 	private Token chkOpt(char c, Token one, Token two) {
 		ch = nextChar();
 		
-		if(ch != c){        // =´ÙÀ½¿¡¿À´Â ÅäÅ«ÀÌ =ÀÌ ¾Æ´Ò °æ¿ì assign 
+		if(ch != c){        // =ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å«ï¿½ï¿½ =ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ assign 
 			return one;	
 		}
-		else {              //  ==ÀÏ °æ¿ì
+		else {              //  ==ï¿½ï¿½ ï¿½ï¿½ï¿½
 			ch = nextChar();
 			return two;	
 		}	
@@ -154,7 +154,7 @@ public class Lexer {
 		
 	}
 	
-	private String concat(String set) {       //letter¿Í digit stringÀ» ÇÕÃÄÁÜ
+	private String concat(String set) {       //letterï¿½ï¿½ digit stringï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String r = "";
 		do {
 			r += ch;

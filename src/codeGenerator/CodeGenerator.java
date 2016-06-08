@@ -46,6 +46,8 @@ import java.util.HashMap;
 			
 			try {
 				writer.flush();
+				writer.close();
+				TypeManager.clearTypeManager();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("File flush Error");

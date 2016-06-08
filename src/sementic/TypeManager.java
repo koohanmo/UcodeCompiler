@@ -23,6 +23,11 @@ public class TypeManager {
 		System.exit(0);
 	}
 	
+	public static void clearTypeManager(){
+		instance=null;
+	}
+	
+	
 	/*
 	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
 	 */

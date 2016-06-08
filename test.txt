@@ -1,4 +1,4 @@
-//test program
+//test programam
 
 function int foo1 -> {int f1;int f2;}{
 	int a[10];

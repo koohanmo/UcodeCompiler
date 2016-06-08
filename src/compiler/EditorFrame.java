@@ -184,6 +184,7 @@ public class EditorFrame extends JFrame{
 					FileWriter writer = new FileWriter(new File("test.txt"));
 					writer.write(s);
 					writer.flush();
+					writer.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -204,6 +205,9 @@ public class EditorFrame extends JFrame{
 						sb.append(s1+"\n");
 					}
 					jtUcode.setText(sb.toString());
+					input.close();
+					
+					
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					System.out.println("File open Error");
@@ -233,6 +237,7 @@ public class EditorFrame extends JFrame{
 					FileWriter writer = new FileWriter(new File("test.txt"));
 					writer.write(s);
 					writer.flush();
+					writer.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
