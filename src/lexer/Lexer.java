@@ -17,10 +17,9 @@ public class Lexer {
 	private final char eolnCh = '\n';
 	private final char eofCh = '\004';
 	
-	public Lexer (String fileName) { // source filename //������ ������	
+	public Lexer (String fileName) { // source filename 	
 		try {
 			input = new BufferedReader (new FileReader(fileName));
-			//���� �����ͼ� ���� input�� �ֱ�
 		}
 		catch (FileNotFoundException e) {   
 			System.out.println("File not found: " + fileName);
@@ -29,23 +28,23 @@ public class Lexer {
 	}
 	
 	private char nextChar() { // Return next char	
-		if (ch == eofCh)    //������ ���� ���ڰ�����
+		if (ch == eofCh)    
 			error("Attempt to read past end of file");
 		col++;
-		if (col >= line.length()) {  //col�� ������ ���̸� �Ѿ�� ���� ������ �д´�.
+		if (col >= line.length()) { 
 			try {
-				line = input.readLine( );  //���� �б�
+				line = input.readLine( );  
 			} catch (IOException e) {
 				System.err.println(e);
 				System.exit(1);
 			} // try
 			
 			if (line == null) // at end of file
-				line = "" + eofCh;      //���� ������ ���̶�°��� ǥ���ϱ� ���� ����
+				line = "" + eofCh;      
 			else {
-				System.out.println("Line "+lineno);  //���� �ѹ��� �ް���
+				System.out.println("Line "+lineno);  
 				lineno++;
-				line += eolnCh;   //������ ���� \n�� �����༭ ���� �ٷγѾ
+				line += eolnCh;   
 			} // if line
 			col = 0;
 		} // if col
@@ -70,15 +69,15 @@ public class Lexer {
 				break;
 			case '/': // divide or comment
 				ch = nextChar();
-				if (ch != '/') return Token.divideTok;  // �����ð� 1���϶� ������	
-// comment
-				do {                         //�����ð� �ΰ� �̸� �������� \n�� ���ö����� �׳ɳѾ
+				if (ch != '/') return Token.divideTok;  
+
+				do {                         //
 					ch = nextChar();
 				} while (ch != eolnCh);
-				ch = nextChar();      //�׷��� ���� ����
+				ch = nextChar();      
 				break;
 			case '\'': // char literal
-				char ch1 = nextChar();     //��������ǥ�� ����ϰ������
+				char ch1 = nextChar();     
 				nextChar(); // get '
 				ch = nextChar();
 				return Token.mkCharLiteral("" + ch1);
@@ -118,7 +117,7 @@ public class Lexer {
 	
 	private void check(char c) {
 		ch = nextChar();
-		if (ch != c) //������ ���� ��ū�� c�� ���� ���� �� �����߻�
+		if (ch != c) 
 			error("Illegal character, expecting " + c);
 		ch = nextChar();	
 	}
@@ -126,10 +125,10 @@ public class Lexer {
 	private Token chkOpt(char c, Token one, Token two) {
 		ch = nextChar();
 		
-		if(ch != c){        // =���������� ��ū�� =�� �ƴ� ��� assign 
+		if(ch != c){         
 			return one;	
 		}
-		else {              //  ==�� ���
+		else {              
 			ch = nextChar();
 			return two;	
 		}	
@@ -154,7 +153,7 @@ public class Lexer {
 		
 	}
 	
-	private String concat(String set) {       //letter�� digit string�� ������
+	private String concat(String set) {       
 		String r = "";
 		do {
 			r += ch;

@@ -28,9 +28,7 @@ public class TypeManager {
 	}
 	
 	
-	/*
-	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
-	 */
+
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
