@@ -283,7 +283,7 @@ import java.util.HashMap;
 			mkUcode(bi.term1);
 			mkUcode(bi.term2);
 			Type type=typeToEqual(bi.term1, bi.term2);
-			if(type.equals(Type.INT) || type.equals(Type.CHAR)){							
+			//if(type.equals(Type.INT) || type.equals(Type.CHAR)){							
 				if(bi.op.orOp()){
 					mkOr();
 				}
@@ -323,7 +323,7 @@ import java.util.HashMap;
 					else System.err.println("error mulop");
 				}				
 			}
-		}
+		//}
 		
 		private boolean bool(Operator op) {
 			// TODO Auto-generated method stub
@@ -667,6 +667,10 @@ import java.util.HashMap;
 			StringBuffer sb = new StringBuffer(mkSpace());
 			sb.append("mod");
 			writeToUco(sb.toString());
+		}
+		
+		private void mkPow(){
+			
 		}
 		
 		private void mkLdi(){

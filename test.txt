@@ -6,7 +6,7 @@ function int foo1 -> {int f1;int f2;}{
 	int c,d;
 	bool e;
 	
-	b=a*b/c%d**e+int(a);
+	b=a*b/c%d;
 	e=!e;
 	b=-b;
 	b=++b;
@@ -31,9 +31,10 @@ function void foo2 -> {}
 	
 	if b<c b=c; else b=c+1;
 	
-	for(a[0]=0;a[1]<1 and a[2]<0 or a[3]<11;++a[0]){
-		while(b<c+b+d)
+	for(a[0]=0;a[0]<2;++a[0]){
+		while(b<c+b+d){
 			d=a[1]+(++a[0])*(--a[1])/(-a[0]);
+			}
 	}
 }
 
