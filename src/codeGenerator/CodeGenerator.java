@@ -59,12 +59,13 @@ import java.util.HashMap;
 			for(Declaration  d : program.decpart){
 				mkUcode(d, TypeManager.getInstance().globalVariables);
 			}
-			//머리 선언된 함수 선언
-			definedFunction = new DefinedFunction();
-			writeCustomFunctions();
+
 			
 			//메인 구현
 			mkUcode(program.mainFunc);
+			
+			//머리 선언된 함수 선언
+			writeCustomFunctions();
 			
 			//함수 구현
 			mkUcode(program.funcs);
@@ -205,9 +206,9 @@ import java.util.HashMap;
 				mkLabel("endwhile"+whileN);
 			}else if(s instanceof ForLoop){
 				ForLoop fl = (ForLoop) s;
+				mkUcode(fl.assign);
 				int forN = LabelCnt++;
 				mkLabel("for"+forN);
-				mkUcode(fl.assign);
 				mkUcode(fl.test);
 				mkFjp("endfor"+forN);
 				mkUcode(fl.body);
@@ -251,7 +252,6 @@ import java.util.HashMap;
 			mkUcode(ar.index);
 			mkLDA(ar.id);
 			mkAdd();
-			mkLdi();
 		}
 		
 		private void mkUcode(Expression expr){
@@ -945,8 +945,15 @@ import java.util.HashMap;
 			if(id.equals("write")){
 			mkLdp();
 			for (Expression e : params){
-				VariableRef varef= (VariableRef) e;
-				mkUcode(varef);
+				
+				if(e instanceof ArrayRef){
+					ArrayRef ar = (ArrayRef)e;
+					mkUcode(ar.index);
+					mkLDA(ar.id);
+					mkAdd();
+					mkLdi();
+				}else mkUcode(e);
+				
 			}
 			mkCall("write");
 			
@@ -974,8 +981,6 @@ import java.util.HashMap;
 				mkUcode((ArrayRef)exp);
 				mkCall("pinv");
 			}
-		
-			
 			
 		}
 
