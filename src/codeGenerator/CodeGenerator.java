@@ -161,8 +161,6 @@ import java.util.HashMap;
 			blockNumber++;
 		}
 		
-		
-		
 		private void mkUcode(Statement s){
 			// Statement = Skip | Block | Assignment | Conditional | Loop | forLoop | voidFuncCall
 			if(s instanceof Skip) return;
@@ -226,10 +224,7 @@ import java.util.HashMap;
 				
 			}else System.err.println("Ucode make Error" + s);	
 			
-			
-			
 		}
-		
 		
 		private void mkUcode(Declaration d ,HashMap<String, SymbolElement> map){
 			int varSize = map.get(d.getId()).size;
@@ -285,12 +280,12 @@ import java.util.HashMap;
 			mkCall(f.id);
 			
 		}
-		
+			
 		private void mkUcode(Binary bi){
 			mkUcode(bi.term1);
 			mkUcode(bi.term2);
 			Type type=typeToEqual(bi.term1, bi.term2);
-			if(type.equals(Type.INT) || type.equals(Type.CHAR)){							
+			//if(type.equals(Type.INT) || type.equals(Type.CHAR)){							
 				if(bi.op.orOp()){
 					mkOr();
 				}
@@ -328,12 +323,9 @@ import java.util.HashMap;
 					else if(bi.op.modOp())mkMod();
 					else if(bi.op.powOp());
 					else System.err.println("error mulop");
-				}
-				
+				}				
 			}
-		}
-				
-			
+		//}
 		
 		private boolean bool(Operator op) {
 			// TODO Auto-generated method stub
@@ -381,6 +373,23 @@ import java.util.HashMap;
 					if(u.term instanceof ArrayRef){
 						ArrayRef ar =(ArrayRef)u.term;
 						mkUcode(ar);
+						mkNotOp();
+						mkStr(ar.id);
+					}
+					else if(u.term instanceof Variable)
+					{
+						ArrayRef ar =(ArrayRef)u.term;
+						mkUcode(ar);
+						mkNotOp();
+						mkStr(ar.id);
+					}
+					
+					else System.err.println("notOp Error");
+				}
+				else if(u.op.negOp()){
+					if(u.term instanceof ArrayRef){
+						ArrayRef ar =(ArrayRef)u.term;
+						mkUcode(ar);
 						mkLdc(-1);
 						mkMul();
 						mkStr(ar.id);
@@ -393,10 +402,8 @@ import java.util.HashMap;
 						mkMul();
 						mkStr(var.id);
 					}
-					else System.err.println("UnaryOp notOp Error");
+					else System.err.println("UnaryOp negOp Error");
 					
-				}
-				else if(u.op.negOp()){
 					
 				}
 				else System.err.println("Ucode make Error ");
@@ -437,8 +444,6 @@ import java.util.HashMap;
 				
 			}else System.err.println("Ucode make Error : cast" + to +" " + from );	
 		}
-		
-		
 		
 		private void mkUcode(Value val){
 			// Value = IntValue | BoolValue |
@@ -560,6 +565,17 @@ import java.util.HashMap;
 			sb.append("ne");
 			writeToUco(sb.toString());
 		}
+		private void mkRead(VariableRef vref){
+			mkLdp();
+			mkLDA(vref.getId());
+			mkCall("read");
+		}
+		
+		private void mkWrite(VariableRef vref){
+			mkLdp();
+			mkLod(vref.getId());
+			mkCall("write");
+		}
 		
 		
 		
@@ -609,6 +625,16 @@ import java.util.HashMap;
 			
 		}
 		
+		
+		private void mkLod(String id){
+			VariableInfo vi =getVariableInfo(id);
+			StringBuffer sb = new StringBuffer(mkSpace());
+			sb.append("lod ");
+			sb.append(vi.blockNumber+" "+vi.offset);
+			writeToUco(sb.toString()); 
+			
+		}
+		
 		private void mkLod(int block, int startAdd){
 			StringBuffer sb = new StringBuffer(mkSpace());
 			sb.append("lod ");
@@ -645,16 +671,22 @@ import java.util.HashMap;
 			writeToUco(sb.toString());
 		}
 		
+		private void mkPow(){
+			
+		}
+		
 		private void mkLdi(){
 			StringBuffer sb = new StringBuffer(mkSpace());
 			sb.append("ldi");
 			writeToUco(sb.toString());
 		}
 		
-		
-		
-		
-		
+
+		private void mkNotOp(){
+			StringBuffer sb = new StringBuffer(mkSpace());
+			sb.append("notop");
+			writeToUco(sb.toString());
+		}
 		
 		private void mkSti(){
 			StringBuffer sb = new StringBuffer(mkSpace());

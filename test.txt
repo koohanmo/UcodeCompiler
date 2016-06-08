@@ -1,20 +1,19 @@
-//test programam
+//test program
 
 function int foo1 -> {int f1;int f2;}{
 	int a[10];
 	float b;
 	int c,d;
 	bool e;
-	
-	b=a*b/c%d**e+int(a);
-	e=!e;
+
+	b=a*b/c%d;
+	//e=!e;
 	b=-b;
 	b=++b;
 	c=++c;
 
 	c=1-2*c+2+a[2];
 	c=++b;
-	
 	
 	return a
 }
@@ -32,9 +31,10 @@ function void foo2 -> {}
 	
 	if b<c b=c; else b=c+1;
 	
-	for(a[0]=0;a[1]<1 and a[2]<0 or a[3]<11;++a[0]){
-		while(b<c+b+d)
+	for(a[0]=0;a[0]<2;++a[0]){
+		while(b<c+b+d){
 			d=a[1]+(++a[0])*(--a[1])/(-a[0]);
+			}
 	}
 }
 
@@ -42,5 +42,10 @@ main
 {
 	int a;
 	a=call read();
+	int i;
+	a=call foo1(1,2);
 	call foo2();
+	//call read(i);
+	//call write(i);
+	
 }
