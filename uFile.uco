@@ -2,6 +2,9 @@ main       proc 2 1 2
            sym 1 1 1
            sym 1 2 1
            ldp
+           lod 1 1
+           call sin
+           ldp
            ldc 1
            ldc 2
            call foo1

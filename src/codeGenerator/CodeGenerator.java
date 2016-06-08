@@ -715,35 +715,7 @@ import java.util.HashMap;
 		//미리 정의된 definedFunc Ucode로 선언.
 		public void writeCustomFunctions(){
 
-	/*		if(id.equals("sin")){
-				mkLdp();
-				if(value is instanceof value)
-				mkLdc(value);
-				mkCall("sin");
-			}
-			
-			else if(id.equals("cos")){
-				mkLdp();
-				if(value is instanceof value)
-				mkLdc(value);
-				mkCall("sin");
-			}
-			
-			else if(id.equals("tan")){
-				mkLdp();
-				if(value is instanceof value)
-				mkLdc(value);
-				mkCall("sin");
-			}
-			
-			else if(id.equals("pinv")){
-				mkLdp();
-				if(arrayref instanceof Arrayref)
-				mkUcode(arrayref);
-				mkCall("pinv");
-			}*/
 
-			//sin, cos, tan, pinv 선언
 			
 		}
 			
@@ -766,23 +738,38 @@ import java.util.HashMap;
 			}
 			
 			if(id.equals("write")){
-				mkLdp();
-				for (Expression e : params){
-					VariableRef varef= (VariableRef) e;
-					mkLod(varef.getId());
-				}
-				mkCall("write");
-				
+			mkLdp();
+			for (Expression e : params){
+				VariableRef varef= (VariableRef) e;
+				mkLod(varef.getId());
+			}
+			mkCall("write");
+			
 			}else if(id.equals("read")){
-				for (Expression e : params)
-				{
-					VariableRef varef = (VariableRef) e;
-					if(e instanceof Variable){
-						mkLDA(varef.getId());
+					for (Expression e : params)
+					{
+						VariableRef varef = (VariableRef) e;
+						if(e instanceof Variable){
+							mkLDA(varef.getId());
 					}
 				}
 				mkCall("read");
 			}
+			//sin, cos, tan, pinv
+			else if(id.equals("sin") || id.equals("cos")||id.equals("tan")){
+				mkLdp();
+				if(params.size()!=1) TypeManager.getInstance().typeError("함수의 파라미터 수가 일치하지 않습니다.");
+				mkUcode(params.get(0));
+				mkCall(id);
+			}else if(id.equals("pinv")){
+				mkLdp();
+				if(params.size()!=1) TypeManager.getInstance().typeError("함수의 파라미터 수가 일치하지 않습니다.");
+				Expression exp = params.get(0);
+				if(!(exp instanceof ArrayRef)) TypeManager.getInstance().typeError("pinv는 배열의 주소를 참조하여야 합니다.");
+				mkUcode((ArrayRef)exp);
+				mkCall("pinv");
+			}
+		
 			
 			
 		}
