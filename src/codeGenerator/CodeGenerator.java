@@ -19,7 +19,7 @@ import java.util.HashMap;
 		public  int globalStart=1;
 		public  int LabelCnt=1;
 		
-		
+		DefinedFunction definedFunction;
 		private HashMap<String, VariableInfo> globalVars = new HashMap<String, VariableInfo>();
 		private HashMap<String, VariableInfo> localVars = new HashMap<String, VariableInfo>();
 		private FunctionDef currentFunc =null;
@@ -60,8 +60,8 @@ import java.util.HashMap;
 				mkUcode(d, TypeManager.getInstance().globalVariables);
 			}
 			//머리 선언된 함수 선언
-			DefinedFunction definedFunction = new DefinedFunction();
-			definedFunction.writeDefinedFunctions();
+			definedFunction = new DefinedFunction();
+			definedFunction.writeCustomFunctions();
 			
 			//메인 구현
 			mkUcode(program.mainFunc);
@@ -216,6 +216,10 @@ import java.util.HashMap;
 				mkLabel("endfor"+forN);
 			}else if(s instanceof voidFuncCall){
 				voidFuncCall vfc = (voidFuncCall)s;
+				if(TypeManager.getInstance().definedFuncTable.contains(vfc.id)){
+					definedFunction.writeUcode(s);
+					return;
+				}
 				mkLdp();
 				for(Expression e : vfc.param){
 					mkUcode(e);
@@ -264,6 +268,10 @@ import java.util.HashMap;
 				mkUcode(u);
 			}else if(expr instanceof FuncCall){
 				FuncCall f = (FuncCall) expr;
+				if(TypeManager.getInstance().definedFuncTable.contains(f.id)){
+					definedFunction.writeUcode(expr);
+					return;
+				}
 				mkUcode(f);
 			}else if(expr instanceof ArrayRef){
 				ArrayRef ar=(ArrayRef) expr;
@@ -713,7 +721,6 @@ import java.util.HashMap;
 			}else System.err.println("Ucode make Error Can't find  : " + id );
 			return vi;
 		}
-		
 		
 		public static void main(String[] args) {
 			
