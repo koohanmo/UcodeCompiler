@@ -43,6 +43,14 @@ import java.util.HashMap;
 		public void generate(){
 			Program program = typeChecker.check();
 			generate(program);
+			
+			try {
+				writer.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("File flush Error");
+				e.printStackTrace();
+			}
 		}
 		private void generate(Program program){
 			//전역번수 선언 to globalVars
@@ -705,5 +713,6 @@ import java.util.HashMap;
 			
 			CodeGenerator codeGen = new CodeGenerator("test.txt", "uFile.uco");
 			codeGen.generate();
+			
 		}
 }

@@ -3,15 +3,14 @@
 function int foo1 -> {int f1;int f2;}{
 	int a[10];
 	float b;
-	int c;
-//	bigint d;
-//	bool e;
+	int c,d;
+	bool e;
 	
-//	b=a*b/c%d**e+int(a);
-//	e=!e;
-//	b=-b;
-//	b=++b;
-//	c=++c;
+	b=a*b/c%d**e+int(a);
+	e=!e;
+	b=-b;
+	b=++b;
+	c=++c;
 
 	c=1-2*c+2+a[2];
 	c=++b;
