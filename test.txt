@@ -16,7 +16,6 @@ function int foo1 -> {int f1;int f2;}{
 	c=1-2*c+2+a[2];
 	c=++b;
 	
-	
 	return a
 }
 
@@ -42,6 +41,10 @@ function void foo2 -> {}
 main
 {
 	int a;
+	int i;
 	a=call foo1(1,2);
 	call foo2();
+	//call read(i);
+	//call write(i);
+	
 }
