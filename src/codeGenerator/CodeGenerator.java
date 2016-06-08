@@ -714,41 +714,41 @@ import java.util.HashMap;
 
 		//미리 정의된 definedFunc Ucode로 선언.
 		public void writeCustomFunctions(){
-<<<<<<< HEAD
+
 	/*		if(id.equals("sin")){
 				mkLdp();
+				if(value is instanceof value)
 				mkLdc(value);
 				mkCall("sin");
 			}
 			
 			else if(id.equals("cos")){
 				mkLdp();
+				if(value is instanceof value)
 				mkLdc(value);
 				mkCall("sin");
 			}
 			
 			else if(id.equals("tan")){
 				mkLdp();
+				if(value is instanceof value)
 				mkLdc(value);
 				mkCall("sin");
 			}
 			
 			else if(id.equals("pinv")){
 				mkLdp();
-				mkUcode(arrayref)
+				if(arrayref instanceof Arrayref)
+				mkUcode(arrayref);
 				mkCall("pinv");
 			}*/
-=======
+
 			//sin, cos, tan, pinv 선언
 			
-			
-			
-			
-			
-			
-			
->>>>>>> f6c64d24d5b70ffef807720e6a71a622ab443a04
 		}
+			
+			
+
 			
 		public void writeUcode(Object o){
 			

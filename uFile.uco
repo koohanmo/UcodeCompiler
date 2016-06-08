@@ -48,13 +48,10 @@ foo1       proc 16 2 3
            lod 2 15
            mod
            str 2 13
-<<<<<<< HEAD
-=======
            lod 2 16
            notop
            str 2 16
            str 2 16
->>>>>>> f6c64d24d5b70ffef807720e6a71a622ab443a04
            lod 2 13
            ldc -1
            mul
