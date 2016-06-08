@@ -49,4 +49,8 @@ main
    call read(i);
    call write(i);
    
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fa76f5d400c01e0c95c399ae27fe7a5419894712
