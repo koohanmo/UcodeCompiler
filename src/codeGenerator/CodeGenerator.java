@@ -18,6 +18,7 @@ import java.util.HashMap;
 		public  int blockNumber=2;
 		public  int globalStart=1;
 		public  int LabelCnt=1;
+		public  boolean checkDeclGlobl= false;
 		
 		DefinedFunction definedFunction;
 		private HashMap<String, VariableInfo> globalVars = new HashMap<String, VariableInfo>();
@@ -58,14 +59,15 @@ import java.util.HashMap;
 			//전역번수 선언 to globalVars
 			for(Declaration  d : program.decpart){
 				mkUcode(d, TypeManager.getInstance().globalVariables);
+				checkDeclGlobl=true;
 			}
-
+			//머리 선언된 함수 선언
+			definedFunction = new DefinedFunction();
+			writeCustomFunctions();
 			
 			//메인 구현
-			mkUcode(program.mainFunc);
 			
-			//머리 선언된 함수 선언
-			writeCustomFunctions();
+			mkUcode(program.mainFunc);
 			
 			//함수 구현
 			mkUcode(program.funcs);
@@ -206,9 +208,9 @@ import java.util.HashMap;
 				mkLabel("endwhile"+whileN);
 			}else if(s instanceof ForLoop){
 				ForLoop fl = (ForLoop) s;
-				mkUcode(fl.assign);
 				int forN = LabelCnt++;
 				mkLabel("for"+forN);
+				mkUcode(fl.assign);
 				mkUcode(fl.test);
 				mkFjp("endfor"+forN);
 				mkUcode(fl.body);
@@ -252,6 +254,7 @@ import java.util.HashMap;
 			mkUcode(ar.index);
 			mkLDA(ar.id);
 			mkAdd();
+			mkLdi();
 		}
 		
 		private void mkUcode(Expression expr){
@@ -751,6 +754,7 @@ import java.util.HashMap;
 		public void writeCustomFunctions(){
 		
 			//sin
+			if(checkDeclGlobl==true) blockNumber++; //전역변수가 선언되었으면 blockNum를 올려줌
 			mkProc("sin", 7);
 			mkSym(blockNumber,1,1);  //int x
 			mkSym(blockNumber,2,1);  //int idx
@@ -920,6 +924,7 @@ import java.util.HashMap;
 			mkLod(blockNumber,1);
 			mkCall("cos");
 			mkDiv();
+			mkEnd();
 			blockNumber++;
 			//pinv
 			
@@ -944,15 +949,8 @@ import java.util.HashMap;
 			if(id.equals("write")){
 			mkLdp();
 			for (Expression e : params){
-				
-				if(e instanceof ArrayRef){
-					ArrayRef ar = (ArrayRef)e;
-					mkUcode(ar.index);
-					mkLDA(ar.id);
-					mkAdd();
-					mkLdi();
-				}else mkUcode(e);
-				
+				VariableRef varef= (VariableRef) e;
+				mkUcode(varef);
 			}
 			mkCall("write");
 			
@@ -981,6 +979,8 @@ import java.util.HashMap;
 				mkUcode((ArrayRef)exp);
 				mkCall("pinv");
 			}
+		
+			
 			
 		}
 
