@@ -26,6 +26,7 @@ public class Program {
     }
     
     public void validCheck(){
+    	
     	TypeManager.getInstance().setGlobalVariable(decpart);
         funcs.validCheck();
         mainFunc.validCheck();

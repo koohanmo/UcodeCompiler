@@ -2,8 +2,35 @@ package sementic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
-import abstractSyntax.*;
+import abstractSyntax.ArrayDecl;
+import abstractSyntax.ArrayRef;
+import abstractSyntax.Assignment;
+import abstractSyntax.Binary;
+import abstractSyntax.Block;
+import abstractSyntax.Conditional;
+import abstractSyntax.Declaration;
+import abstractSyntax.Declarations;
+import abstractSyntax.Expression;
+import abstractSyntax.ForLoop;
+import abstractSyntax.Func;
+import abstractSyntax.FuncCall;
+import abstractSyntax.Funcs;
+import abstractSyntax.Loop;
+import abstractSyntax.MainFunc;
+import abstractSyntax.Skip;
+import abstractSyntax.Statement;
+import abstractSyntax.Statements;
+import abstractSyntax.Type;
+import abstractSyntax.Unary;
+import abstractSyntax.Value;
+import abstractSyntax.Variable;
+import abstractSyntax.VariableDecl;
+import abstractSyntax.VariableRef;
+import abstractSyntax.voidFunc;
+import abstractSyntax.voidFuncCall;
+import codeGenerator.DefinedFunction;
 
 public class TypeManager {
 	
@@ -11,6 +38,14 @@ public class TypeManager {
 	public HashMap<String, SymbolElement> globalVariables = new HashMap<String, SymbolElement>();
 	public HashMap<String, Integer> globalArray = new HashMap<String, Integer>();
 	public HashMap<String, FunctionDef> funcTable = new HashMap<String, FunctionDef>();
+	public LinkedList<String> definedFuncTable = new LinkedList<String>();
+	
+	public TypeManager(){
+		//기본함수 설정
+		for(String f : DefinedFunction.definedFunc){
+			definedFuncTable.add(f);
+		}		
+	}
 	
 	
 	public static TypeManager getInstance(){
@@ -31,16 +66,24 @@ public class TypeManager {
 	/*
 	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
 	 */
+	
+	public void IdCheck(String id){
+		if(definedFuncTable.contains(id)) typeError(id +": 이미 선언되어 있는 이름입니다.");
+		if(globalVariables.containsKey(id))  typeError(id +": 이미 선언되어 있는 이름입니다.");
+		if(funcTable.containsKey(id))typeError(id +": 이미 선언되어 있는 이름입니다.");
+	}
+	
+	
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
 				VariableDecl current = (VariableDecl)d;
-				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+				IdCheck(current.v.id);
 				globalVariables.put(current.v.id, new SymbolElement(current.t, Type.BIGINT.equals(current.t)? 100:1));
 			}
 			else{
 				ArrayDecl current = (ArrayDecl)d;
-				if(globalVariables.containsKey(current.v.id)) typeError(current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+				IdCheck(current.v.id);
 				globalVariables.put(current.v.id, new SymbolElement(current.t, current.size));
 				globalArray.put(current.v.id, current.size);
 			}
@@ -53,14 +96,14 @@ public class TypeManager {
 			for(Declaration d : arg){
 				if(d instanceof VariableDecl){
 					VariableDecl current = (VariableDecl)d;
-					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
-					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": 이미 선언되어 있는 이름입니다.");
+					IdCheck(current.v.id);
 					f.addVariable(current.v.id, current.t, Type.BIGINT.equals(current.t)? 100:1);
 				}
 				else{
 					ArrayDecl current = (ArrayDecl)d;
-					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
-					if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+					if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": 이미 선언되어 있는 이름입니다.");
+					IdCheck(current.v.id);
 					f.addVariable(current.v.id, current.t, current.size);
 					f.addArray(current.v.id, current.size);
 				}
@@ -69,14 +112,14 @@ public class TypeManager {
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
 				VariableDecl current = (VariableDecl)d;
-				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
-				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": 이미 선언되어 있는 이름입니다.");
+				IdCheck(current.v.id);
 				f.addVariable(current.v.id, current.t, Type.BIGINT.equals(current.t)? 100:1);
 			}
 			else{
 				ArrayDecl current = (ArrayDecl)d;
-				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
-				if(globalVariables.containsKey(current.v.id)) typeError(f.funcName+" : "+current.v.id +": �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙥釉앹삕�뜝�떎�뼲�삕�뜝�룞�삕�뜝�떦�뙋�삕.");
+				if(f.isContainVariable(current.v.id)) typeError(f.funcName+" : "+current.v.id +": 이미 선언되어 있는 이름입니다.");
+				IdCheck(current.v.id);
 				f.addVariable(current.v.id, current.t, current.size);
 				f.addArray(current.v.id, current.size);
 			}
@@ -183,9 +226,11 @@ public class TypeManager {
 			V(f,fo.test);
 			V(f,fo.body);			
 		}else if(s instanceof voidFuncCall){
-			//�뜝�룞�삕�뜝�룞�삕�뜝占� �뜝�뙃�눦�삕�뜝�룞�삕�뜝�룞�삕, �뜝�떇�씛�삕�뜝�룞�삕�뜝�룞�삕�뜝占� �뜝�룞�삕�뜝�룞�삕, ���뜝�룞�삕�뜝�룞�삕 �뜝�듅�뙋�삕�뜝�룞�삕 �솗�뜝�룞�삕.
 			voidFuncCall vf = (voidFuncCall) s;
-			//TODO �뜝�뜦蹂� �뜝�뙃�눦�삕�뜝�룞�삕 �뜝�떙�궪�삕 �뜝�뙥怨ㅼ삕�뜝�뙏�빞�벝�삕
+			
+			if(definedFuncTable.contains(vf.id)) return;
+			//TODO Custom func
+			
 			if(!funcTable.containsKey(vf.id)) typeError(vf.id +" : �뜝�룞�삕�뜝�룞�삕�벝�뜝占� �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�뙃�눦�삕 �뜝�뙃�땲�뙋�삕.");
 			FunctionDef fd=funcTable.get(vf.id);
 			V(f, vf.param, fd); //�뜝�떇�씛�삕�뜝�룞�삕�뜝占� �뜝�떙�궪�삕
@@ -226,7 +271,10 @@ public class TypeManager {
 			}else typeError(f.funcName +": "+ u.op +"�뜝�룞�삕 UnaryOp�뜝�룞�삕 �뜝�룞�삕�솗�뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 		}else if(e instanceof FuncCall){
 			FuncCall fc= (FuncCall) e;
-			//TODO �뜝�뜦蹂� �뜝�뙃�눦�삕�뜝�룞�삕 �뜝�떙�궪�삕 �뜝�뙥怨ㅼ삕�뜝�뙏�빞�벝�삕
+			
+			if(definedFuncTable.contains(fc.id)) return;
+			//TODO Custom func
+			
 			if(!funcTable.containsKey(fc.id)) typeError(f.funcName +": "+fc.id+"�뜝�룞�삕 �뜝�룞�삕�뜝�떎�릺�뼲�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 			FunctionDef fd=funcTable.get(fc.id);
 			V(f, fc.params, fd); //�뜝�떇�씛�삕�뜝�룞�삕�뜝占� �뜝�떙�궪�삕
@@ -303,6 +351,15 @@ public class TypeManager {
 			}
 		}else if(e instanceof FuncCall){
 			FuncCall fc = (FuncCall)e;
+			
+			if(definedFuncTable.contains(fc.id)){
+				Type t =DefinedFunction.definedType[definedFuncTable.indexOf(fc.id)];
+				if(t==null) typeError(fc.id+" : "+"올바르지 않은 타입니다.");
+				else return t;
+			}
+				
+			//TODO Custom func
+					
 			return funcTable.get(fc.id).getFuncType();
 		}else 
 			typeError(f.funcName+" : "+"�뜝�떙留욌뙋�삕 Expression�뜝�룞�삕 �뜝�떍�떃�땲�뙋�삕.");

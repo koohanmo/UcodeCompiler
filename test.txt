@@ -41,6 +41,6 @@ function void foo2 -> {}
 main
 {
 	int a;
-	a=call foo1(1,2);
+	a=call read();
 	call foo2();
 }
