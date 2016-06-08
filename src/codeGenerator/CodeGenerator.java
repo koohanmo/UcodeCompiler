@@ -515,6 +515,13 @@ import java.util.HashMap;
 			writeToUco(sb.toString());
 		}
 		
+		private void mkRetv(){
+			StringBuilder sb= new StringBuilder(mkSpace());
+			sb.append("retv");
+			writeToUco(sb.toString());
+		}
+		
+		
 		private void mkEnd(){
 			StringBuilder sb= new StringBuilder(mkSpace());
 			sb.append("end");
@@ -924,11 +931,9 @@ import java.util.HashMap;
 			mkLod(blockNumber,1);
 			mkCall("cos");
 			mkDiv();
-			mkEnd();
+			mkRetv();
 			blockNumber++;
 			//pinv
-			
-			blockNumber++;
 			
 		}
 		public void writeUcode(Object o){

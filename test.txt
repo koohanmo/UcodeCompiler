@@ -1,5 +1,6 @@
 //test program
-
+int c;
+int g;
 
 main
 {

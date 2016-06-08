@@ -1,79 +1,6 @@
-sin        proc 7 1 3
            sym 1 1 1
            sym 1 2 1
-           sym 1 3 1
-           sym 1 4 1
-           sym 1 5 1
-           sym 1 6 1
-           sym 1 7 1
-           ldc 3
-           str 1 1
-           ldc 1
-           str 1 2
-           ldc 0
-           str 1 3
-for11      nop
-           ldc 0
-           str 1 5
-           lod 1 5
-           ldc 20
-           lt
-           fjp endfor11
-           ldc 1
-           str 1 6
-for12      nop
-           ldc 1
-           str 1 7
-           lod 1 7
-           lod 1 2
-           le
-           fjp endfor12
-           lod 1 6
-           lod 1 1
-           mult
-           str 1 6
-           ujp for12
-endfor12   nop
-for13      nop
-           ldc 1
-           str 1 7
-           lod 1 7
-           lod 1 2
-           le
-           fjp endfor13
-           lod 1 6
-           lod 1 1
-           div
-           str 1 6
-           ujp for13
-endfor13   nop
-if11       nop
-           ldc 0
-           lod 1 3
-           eq
-           fjp else11
-           lod 1 6
-           lod 1 4
-           add
-           str 1 4
-           ldc 1
-           str 1 3
-           ujp endif11
-else11     nop
-           lod 1 4
-           lod 1 6
-           sub
-           str 1 4
-           ldc 0
-           str 1 3
-endif11    nop
-           lod 1 2
-           ldc 2
-           add
-           str 1 2
-           ujp for11
-           end
-cos        proc 7 2 3
+sin        proc 7 2 3
            sym 2 1 1
            sym 2 2 1
            sym 2 3 1
@@ -83,83 +10,158 @@ cos        proc 7 2 3
            sym 2 7 1
            ldc 3
            str 2 1
-           ldc 0
+           ldc 1
            str 2 2
            ldc 0
            str 2 3
-for14      nop
+for11      nop
            ldc 0
            str 2 5
            lod 2 5
            ldc 20
            lt
-           fjp endfor14
+           fjp endfor11
            ldc 1
            str 2 6
-for15      nop
+for12      nop
            ldc 1
            str 2 7
            lod 2 7
            lod 2 2
            le
-           fjp endfor15
+           fjp endfor12
            lod 2 6
            lod 2 1
            mult
            str 2 6
-           ujp for15
-endfor15   nop
-for16      nop
+           ujp for12
+endfor12   nop
+for13      nop
            ldc 1
            str 2 7
            lod 2 7
            lod 2 2
            le
-           fjp endfor16
+           fjp endfor13
            lod 2 6
            lod 2 1
            div
            str 2 6
            ujp for13
-endfor16   nop
-if12       nop
+endfor13   nop
+if11       nop
            ldc 0
            lod 2 3
            eq
-           fjp else12
+           fjp else11
            lod 2 6
            lod 2 4
            add
            str 2 4
            ldc 1
            str 2 3
-           ujp endif12
-else12     nop
+           ujp endif11
+else11     nop
            lod 2 4
            lod 2 6
            sub
            str 2 4
            ldc 0
            str 2 3
-endif12    nop
+endif11    nop
            lod 2 2
            ldc 2
            add
            str 2 2
+           ujp for11
+           end
+cos        proc 7 3 3
+           sym 3 1 1
+           sym 3 2 1
+           sym 3 3 1
+           sym 3 4 1
+           sym 3 5 1
+           sym 3 6 1
+           sym 3 7 1
+           ldc 3
+           str 3 1
+           ldc 0
+           str 3 2
+           ldc 0
+           str 3 3
+for14      nop
+           ldc 0
+           str 3 5
+           lod 3 5
+           ldc 20
+           lt
+           fjp endfor14
+           ldc 1
+           str 3 6
+for15      nop
+           ldc 1
+           str 3 7
+           lod 3 7
+           lod 3 2
+           le
+           fjp endfor15
+           lod 3 6
+           lod 3 1
+           mult
+           str 3 6
+           ujp for15
+endfor15   nop
+for16      nop
+           ldc 1
+           str 3 7
+           lod 3 7
+           lod 3 2
+           le
+           fjp endfor16
+           lod 3 6
+           lod 3 1
+           div
+           str 3 6
+           ujp for13
+endfor16   nop
+if12       nop
+           ldc 0
+           lod 3 3
+           eq
+           fjp else12
+           lod 3 6
+           lod 3 4
+           add
+           str 3 4
+           ldc 1
+           str 3 3
+           ujp endif12
+else12     nop
+           lod 3 4
+           lod 3 6
+           sub
+           str 3 4
+           ldc 0
+           str 3 3
+endif12    nop
+           lod 3 2
+           ldc 2
+           add
+           str 3 2
            ujp for12
            end
-tan        proc 1 3 3
+tan        proc 1 4 3
            ldp
-           lda 3 1
+           lda 4 1
            call read
            ldp
-           lod 3 1
+           lod 4 1
            call sin
            ldp
-           lod 3 1
+           lod 4 1
            call cos
            div
-           end
+           retv
 main       proc 11 5 2
            sym 5 1 10
            sym 5 11 1
@@ -216,7 +218,7 @@ for3       nop
            ujp for3
 endfor3    nop
            end
-           bgn 0
+           bgn 2
            ldp
            call main
            end
