@@ -386,7 +386,7 @@ import java.util.HashMap;
 					}
 					else if(u.term instanceof Variable)
 					{
-						ArrayRef ar =(ArrayRef)u.term;
+						Variable ar =(Variable)u.term;
 						mkUcode(ar);
 						mkNotOp();
 						mkStr(ar.id);
@@ -714,6 +714,7 @@ import java.util.HashMap;
 
 		//미리 정의된 definedFunc Ucode로 선언.
 		public void writeCustomFunctions(){
+<<<<<<< HEAD
 	/*		if(id.equals("sin")){
 				mkLdp();
 				mkLdc(value);
@@ -737,6 +738,16 @@ import java.util.HashMap;
 				mkUcode(arrayref)
 				mkCall("pinv");
 			}*/
+=======
+			//sin, cos, tan, pinv 선언
+			
+			
+			
+			
+			
+			
+			
+>>>>>>> f6c64d24d5b70ffef807720e6a71a622ab443a04
 		}
 			
 		public void writeUcode(Object o){
@@ -771,7 +782,6 @@ import java.util.HashMap;
 					}
 				}
 				mkCall("read");
-			
 			}
 			
 			
