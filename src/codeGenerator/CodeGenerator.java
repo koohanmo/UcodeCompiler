@@ -61,7 +61,7 @@ import java.util.HashMap;
 			}
 			//머리 선언된 함수 선언
 			definedFunction = new DefinedFunction();
-			definedFunction.writeCustomFunctions();
+			writeCustomFunctions();
 			
 			//메인 구현
 			mkUcode(program.mainFunc);
@@ -721,6 +721,14 @@ import java.util.HashMap;
 			}else System.err.println("Ucode make Error Can't find  : " + id );
 			return vi;
 		}
+		
+		//미리 정의된 definedFunc Ucode로 선언.
+		public void writeCustomFunctions(){
+			
+			
+			
+		}
+		
 		
 		public static void main(String[] args) {
 			

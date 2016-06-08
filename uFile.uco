@@ -2,21 +2,12 @@ main       proc 2 1 2
            sym 1 1 1
            sym 1 2 1
            ldp
-           lod 1 1
-           call read
-           ldp
            ldc 1
            ldc 2
            call foo1
            str 1 1
            ldp
            call foo2
-           ldp
-           lod 1 2
-           call read
-           ldp
-           lod 1 2
-           call write
            end
 foo1       proc 16 2 3
            sym 2 1 1

@@ -44,7 +44,7 @@ public class TypeManager {
 		//기본함수 설정
 		for(String f : DefinedFunction.definedFunc){
 			definedFuncTable.add(f);
-		}		
+		}
 	}
 	
 	
@@ -62,13 +62,7 @@ public class TypeManager {
 		instance=null;
 	}
 	
-	
-<<<<<<< HEAD
 
-=======
-	/*
-	 *  �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 泥댄겕
-	 */
 	
 	public void IdCheck(String id){
 		if(definedFuncTable.contains(id)) typeError(id +": 이미 선언되어 있는 이름입니다.");
@@ -77,7 +71,6 @@ public class TypeManager {
 	}
 	
 	
->>>>>>> 8cd75bb23a8667815c5783781cc43319ced0171d
 	public void setGlobalVariable(Declarations decls){
 		for(Declaration d : decls){
 			if(d instanceof VariableDecl){
@@ -182,7 +175,6 @@ public class TypeManager {
 		return funcTable.get(funcName);
 	}
 	
-	//TODO Complete
 	//function statements check
 	public void V(FunctionDef f, Statements statements){
 		if(statements.size()==0) return;
@@ -233,7 +225,6 @@ public class TypeManager {
 			voidFuncCall vf = (voidFuncCall) s;
 			
 			if(definedFuncTable.contains(vf.id)) return;
-			//TODO Custom func
 			
 			if(!funcTable.containsKey(vf.id)) typeError(vf.id +" : �뜝�룞�삕�뜝�룞�삕�벝�뜝占� �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�뙃�눦�삕 �뜝�뙃�땲�뙋�삕.");
 			FunctionDef fd=funcTable.get(vf.id);
@@ -277,7 +268,6 @@ public class TypeManager {
 			FuncCall fc= (FuncCall) e;
 			
 			if(definedFuncTable.contains(fc.id)) return;
-			//TODO Custom func
 			
 			if(!funcTable.containsKey(fc.id)) typeError(f.funcName +": "+fc.id+"�뜝�룞�삕 �뜝�룞�삕�뜝�떎�릺�뼲�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�떗�룞�삕�뜝�떦�뙋�삕.");
 			FunctionDef fd=funcTable.get(fc.id);
@@ -362,8 +352,6 @@ public class TypeManager {
 				else return t;
 			}
 				
-			//TODO Custom func
-					
 			return funcTable.get(fc.id).getFuncType();
 		}else 
 			typeError(f.funcName+" : "+"�뜝�떙留욌뙋�삕 Expression�뜝�룞�삕 �뜝�떍�떃�땲�뙋�삕.");

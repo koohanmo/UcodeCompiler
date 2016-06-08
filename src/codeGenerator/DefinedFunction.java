@@ -6,25 +6,17 @@ import abstractSyntax.Expression;
 import abstractSyntax.FuncCall;
 import abstractSyntax.Type;
 import abstractSyntax.voidFuncCall;
+import sementic.FunctionDef;
 
 public class DefinedFunction {
 	
 	
-	public static String[] definedFunc ={"write","read"};
-	public static Type[] definedType ={null, Type.INT};
-	public static String[] customFunc ={};
+	public static String[] definedFunc ={"write","read","sin","cos","tan","pinv"};
+	public static Type[] definedType ={null, Type.INT, Type.FLOAT, Type.FLOAT, Type.FLOAT, null};
  
 	public DefinedFunction(){
 		
 	}
-	
-
-	
-	//미리 정의된 definedFunc Ucode로 선언.
-	public void writeCustomFunctions(){
-			
-	}
-	
 	
 	//Expr(funcCall) or voidFuncCall로 날라옴
 	public void writeUcode(Object o){
@@ -48,9 +40,7 @@ public class DefinedFunction {
 			
 			
 		}else if(id.equals("read")){
-			
-			
-			
+
 			
 			
 		}

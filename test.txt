@@ -43,7 +43,7 @@ main
    int a;
    int i;
    
-   call read(a);
+   call sin(a);
    a=call foo1(1,2);
    call foo2();
    call read(i);
