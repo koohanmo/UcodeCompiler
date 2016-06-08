@@ -4,16 +4,16 @@ int c,d;
 
 main
 {
-   int a;
+   int a[10];
    int b;
 
    for(b=0;b<10;++b){
-a=b;
+  a[b]=b;
 
 }
    
   for(b=0;b<10;++b){
-call write(a);
+ call write(a[b]);
 }
    
 

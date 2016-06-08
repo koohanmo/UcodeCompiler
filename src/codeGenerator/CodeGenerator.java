@@ -252,7 +252,6 @@ import java.util.HashMap;
 			mkUcode(ar.index);
 			mkLDA(ar.id);
 			mkAdd();
-			mkLdi();
 		}
 		
 		private void mkUcode(Expression expr){
@@ -945,7 +944,15 @@ import java.util.HashMap;
 			if(id.equals("write")){
 			mkLdp();
 			for (Expression e : params){
-				mkUcode(e);
+				
+				if(e instanceof ArrayRef){
+					ArrayRef ar = (ArrayRef)e;
+					mkUcode(ar.index);
+					mkLDA(ar.id);
+					mkAdd();
+					mkLdi();
+				}else mkUcode(e);
+				
 			}
 			mkCall("write");
 			
