@@ -1,45 +1,11 @@
+main       proc 1 1 2
            sym 1 1 1
-           sym 1 2 1
-main       proc 11 1 2
-           sym 1 1 10
-           sym 1 11 1
-           ldc 0
-           str 1 11
-for1       nop
-           lod 1 11
-           ldc 10
-           lt
-           fjp endfor1
-           lod 1 11
-           lda 1 1
-           add
-           lod 1 11
-           sti
-           lod 1 11
-           ldc 1
-           add
-           str 1 11
-           ujp for1
-endfor1    nop
-           ldc 0
-           str 1 11
-for2       nop
-           lod 1 11
-           ldc 10
-           lt
-           fjp endfor2
            ldp
-           lod 1 11
            lda 1 1
-           add
-           ldi
-           call write
-           lod 1 11
-           ldc 1
-           add
-           str 1 11
-           ujp for2
-endfor2    nop
+           call read
+           ldp
+           lod 1 1
+           call foo
            end
 sin        proc 7 2 3
            sym 2 1 1
@@ -202,7 +168,15 @@ tan        proc 1 4 3
            lod 4 1
            call cos
            div
-           bgn 2
+foo        proc 3 6 3
+           sym 6 1 1
+           sym 6 2 1
+           sym 6 3 1
+           ldp
+           lod 6 1
+           call write
+           end
+           bgn 0
            ldp
            call main
            end

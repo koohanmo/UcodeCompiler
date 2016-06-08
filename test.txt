@@ -1,22 +1,25 @@
 //test program
 
-int c,d;
+function void foo -> {int i;}{
+int a;
+int b;
+
+call write(i);
+
+}
+
 
 main
 {
-   int a[10];
-   int b;
 
-   for(b=0;b<10;++b){
-  a[b]=b;
+int a;
+
+call read(a);
+call foo(a);
 
 }
    
-  for(b=0;b<10;++b){
- call write(a[b]);
-}
-   
 
-}
+
 
 
