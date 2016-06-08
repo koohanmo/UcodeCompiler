@@ -1,13 +1,12 @@
            sym 1 1 1
            sym 1 2 1
-main       proc 1 2 2
-           sym 2 1 1
+main       proc 0 2 2
            ldp
-           lda 2 1
-           call read
-           ldp
-           lod 2 1
+           ldc 5
            call foo
+           ldp
+           lod 1 1
+           call write
            end
 sin        proc 7 3 3
            sym 3 1 1
@@ -175,9 +174,29 @@ foo        proc 3 6 3
            sym 6 1 1
            sym 6 2 1
            sym 6 3 1
-           ldp
+           ldc 0
+           str 6 2
+for1       nop
+           lod 6 2
            lod 6 1
+           lt
+           fjp endfor1
+           lod 6 1
+           ldc 2
+           str 6 3
+           ldp
+           lod 6 3
            call write
+           lod 1 1
+           lod 6 3
+           add
+           str 1 1
+           lod 6 2
+           ldc 1
+           add
+           str 6 2
+           ujp for1
+endfor1    nop
            end
            bgn 2
            ldp

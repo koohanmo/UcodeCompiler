@@ -209,9 +209,9 @@ import java.util.HashMap;
 				mkLabel("endwhile"+whileN);
 			}else if(s instanceof ForLoop){
 				ForLoop fl = (ForLoop) s;
+				mkUcode(fl.assign);
 				int forN = LabelCnt++;
 				mkLabel("for"+forN);
-				mkUcode(fl.assign);
 				mkUcode(fl.test);
 				mkFjp("endfor"+forN);
 				mkUcode(fl.body);
@@ -743,7 +743,7 @@ import java.util.HashMap;
 			if(localVars.containsKey(id)){
 				vi =localVars.get(id);
 			}else if(globalVars.containsKey(id)){
-				vi =localVars.get(id);
+				vi =globalVars.get(id);
 			}else System.err.println("Ucode make Error Can't find  : " + id );
 			return vi;
 		}

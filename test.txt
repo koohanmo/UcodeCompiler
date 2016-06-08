@@ -3,19 +3,20 @@ int c;
 int g;
 
 function void foo -> {int i;}{
-int a;
-int b;
 
-call write(i);
+int j,temp;
+
+for(j=0;j<i;++j){
+  temp=i**2;
+  call write(temp);
+ c=c+temp;
+}
 
 }
 
 main
 {
-int a;
-
-call read(a);
-call foo(a);
-
+call foo(5);
+call write(c);
 }
    
