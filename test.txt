@@ -48,5 +48,13 @@ main
    call foo2();
    call read(i);
    call write(i);
+  call read(a);
+  a=call foo1(1,2);
+  call foo2();
+  call read(i,i);
+  call write(i,a);
    
+
 }
+
+

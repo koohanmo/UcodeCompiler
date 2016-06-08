@@ -217,7 +217,7 @@ import java.util.HashMap;
 			}else if(s instanceof voidFuncCall){
 				voidFuncCall vfc = (voidFuncCall)s;
 				if(TypeManager.getInstance().definedFuncTable.contains(vfc.id)){
-					definedFunction.writeUcode(s);
+					writeUcode(s);
 					return;
 				}
 				mkLdp();
@@ -269,7 +269,7 @@ import java.util.HashMap;
 			}else if(expr instanceof FuncCall){
 				FuncCall f = (FuncCall) expr;
 				if(TypeManager.getInstance().definedFuncTable.contains(f.id)){
-					definedFunction.writeUcode(expr);
+					writeUcode(expr);
 					return;
 				}
 				mkUcode(f);
@@ -573,18 +573,7 @@ import java.util.HashMap;
 			sb.append("ne");
 			writeToUco(sb.toString());
 		}
-		private void mkRead(VariableRef vref){
-			mkLdp();
-			mkLDA(vref.getId());
-			mkCall("read");
-		}
-		
-		private void mkWrite(VariableRef vref){
-			mkLdp();
-			mkLod(vref.getId());
-			mkCall("write");
-		}
-		
+	
 		
 		
 		private void mkFjp(String Label){
@@ -722,14 +711,48 @@ import java.util.HashMap;
 			return vi;
 		}
 		
+
 		//미리 정의된 definedFunc Ucode로 선언.
-		public void writeCustomFunctions(){
+		public void writeCustomFunctions(){}
 			
+		public void writeUcode(Object o){
+			
+			String id =null;
+			ArrayList<Expression> params = null;
+			
+			if(o instanceof FuncCall){
+				FuncCall e = (FuncCall)o;
+				id=e.id;
+				params=e.params;
+			}else if(o instanceof voidFuncCall){
+				voidFuncCall v = (voidFuncCall)o;
+				id=v.id;
+				params=v.param;
+			}
+			
+			if(id.equals("write")){
+				mkLdp();
+				for (Expression e : params){
+					VariableRef varef= (VariableRef) e;
+					mkLod(varef.getId());
+				}
+				mkCall("write");
+				
+			}else if(id.equals("read")){
+				for (Expression e : params)
+				{
+					VariableRef varef = (VariableRef) e;
+					if(e instanceof Variable){
+						mkLDA(varef.getId());
+					}
+				}
+				mkCall("read");
+			
+			}
 			
 			
 		}
-		
-		
+
 		public static void main(String[] args) {
 			
 			CodeGenerator codeGen = new CodeGenerator("test.txt", "uFile.uco");
