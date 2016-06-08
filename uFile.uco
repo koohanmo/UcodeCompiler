@@ -151,6 +151,46 @@ for4       nop
            ldc 2
            lt
            fjp endfor4
+while5     nop
+           lod 3 1
+           lod 3 2
+           lod 3 1
+           add
+           lod 3 3
+           add
+           lt
+           fjp endwhile5
+           ldc 1
+           lda 3 4
+           add
+           ldi
+           ldc 0
+           lda 3 4
+           add
+           ldi
+           ldc 1
+           add
+           str 3 4
+           ldc 1
+           lda 3 4
+           add
+           ldi
+           ldc 1
+           sub
+           str 3 4
+           mul
+           ldc 0
+           lda 3 4
+           add
+           ldi
+           ldc -1
+           mul
+           str 3 4
+           div
+           add
+           str 3 3
+           ujp while5
+endwhile5  nop
            ldc 0
            lda 3 4
            add

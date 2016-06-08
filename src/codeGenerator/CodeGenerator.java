@@ -165,9 +165,9 @@ import java.util.HashMap;
 			// Statement = Skip | Block | Assignment | Conditional | Loop | forLoop | voidFuncCall
 			if(s instanceof Skip) return;
 			else if(s instanceof Block){
-				for(Statement ss : (Block)s){
-					mkUcode(ss);
-				}
+				for(Statement interS : ((Block) s).members){
+						mkUcode(interS);
+					}
 			}else if(s instanceof Assignment){
 				// Assignment = Variable target; Expression source
 				// VariableRef target; Expression source			
@@ -718,10 +718,6 @@ import java.util.HashMap;
 
 			
 		}
-			
-			
-
-			
 		public void writeUcode(Object o){
 			
 			String id =null;
