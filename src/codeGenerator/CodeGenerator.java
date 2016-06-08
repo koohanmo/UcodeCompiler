@@ -712,9 +712,34 @@ import java.util.HashMap;
 		}
 		
 
+		private void mkProc(String name, int varSize){
+			StringBuffer sb = new StringBuffer(mkSpace(name));
+			sb.append("proc ");
+			sb.append(varSize+" "+blockNumber+" "+3);
+			writeToUco(sb.toString());
+		}
+		
+		
+		
 		//미리 정의된 definedFunc Ucode로 선언.
 		public void writeCustomFunctions(){
-
+			
+			//sin
+			mkProc("sin", 변수크기);
+			
+			blockNumber++;
+			//cos
+			mkProc("cos", 변수크기);
+			
+			blockNumber++;
+			//tan
+			mkProc("tan", 변수크기);
+			
+			blockNumber++;
+			//pinv
+			
+			blockNumber++;
+			
 
 			
 		}
