@@ -1,22 +1,39 @@
 //test program
-int c;
-int g;
 
-function void foo -> {int i;}{
+function float sin3 -> {int x;}{
 
-int j,temp;
+int i,j,idx,check;
+int calVal;
 
-for(j=0;j<i;++j){
-  temp=i**2;
-  call write(temp);
- c=c+temp;
+int result;
+
+result=0;
+x=3;
+idx=1;
+check=0;
+
+for(i=0;i<20;++i){
+calVal=1;
+for(j=1;j<=idx;++j){
+   calVal=calVal/j;
 }
 
+if(check==0){
+result=result+calVal;
+check=1;
+}else{
+result=result-calVal;
+check=1;
+}
+}
+
+return result
 }
 
 main
 {
-call foo(5);
-call write(c);
+float out;
+
+out = call sin3(3);
+call write(out);
 }
-   

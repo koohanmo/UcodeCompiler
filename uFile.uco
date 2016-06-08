@@ -1,11 +1,11 @@
-           sym 1 1 1
-           sym 1 2 1
-main       proc 0 2 2
+main       proc 1 2 2
+           sym 2 1 1
            ldp
-           ldc 5
-           call foo
+           ldc 3
+           call sin3
+           str 2 1
            ldp
-           lod 1 1
+           lod 2 1
            call write
            end
 sin        proc 7 3 3
@@ -16,8 +16,6 @@ sin        proc 7 3 3
            sym 3 5 1
            sym 3 6 1
            sym 3 7 1
-           ldc 3
-           str 3 1
            ldc 1
            str 3 2
            ldc 0
@@ -82,7 +80,7 @@ endif11    nop
            add
            str 3 2
            ujp for11
-           end
+           retv
 cos        proc 7 4 3
            sym 4 1 1
            sym 4 2 1
@@ -157,7 +155,7 @@ endif12    nop
            add
            str 4 2
            ujp for12
-           end
+           retv
 tan        proc 1 5 3
            ldp
            lda 5 1
@@ -170,35 +168,77 @@ tan        proc 1 5 3
            call cos
            div
            retv
-foo        proc 3 6 3
+sin3       proc 7 6 3
            sym 6 1 1
            sym 6 2 1
            sym 6 3 1
+           sym 6 4 1
+           sym 6 5 1
+           sym 6 6 1
+           sym 6 7 1
+           ldc 0
+           str 6 7
+           ldc 3
+           str 6 1
+           ldc 1
+           str 6 4
+           ldc 0
+           str 6 5
            ldc 0
            str 6 2
 for1       nop
            lod 6 2
-           lod 6 1
+           ldc 20
            lt
            fjp endfor1
-           lod 6 1
-           ldc 2
+           ldc 1
+           str 6 6
+           ldc 1
            str 6 3
-           ldp
+for2       nop
            lod 6 3
-           call write
-           lod 1 1
+           lod 6 4
+           le
+           fjp endfor2
+           lod 6 6
            lod 6 3
+           div
+           str 6 6
+           lod 6 3
+           ldc 1
            add
-           str 1 1
+           str 6 3
+           ujp for2
+endfor2    nop
+if3        nop
+           lod 6 5
+           ldc 0
+           eq
+           fjp else3
+           lod 6 7
+           lod 6 6
+           add
+           str 6 7
+           ldc 1
+           str 6 5
+           ujp endif3
+else3      nop
+           lod 6 7
+           lod 6 6
+           sub
+           str 6 7
+           ldc 1
+           str 6 5
+endif3     nop
            lod 6 2
            ldc 1
            add
            str 6 2
            ujp for1
 endfor1    nop
-           end
-           bgn 2
+           lod 6 7
+           retv
+           bgn 0
            ldp
            call main
            end

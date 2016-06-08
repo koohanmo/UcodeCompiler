@@ -137,7 +137,7 @@ import java.util.HashMap;
 			}
 			
 			//리턴
-			mkEnd();
+			mkRet();
 			
 			localVars.clear();
 			blockNumber++;
@@ -327,15 +327,19 @@ import java.util.HashMap;
 					else if(bi.op.minusOp())mkSub();
 					else System.err.println("error addop");
 				}
-				else if(bi.op.timesOp() || bi.op.divOp()||bi.op.modOp() ||bi.op.powOp())
+				else if(bi.op.timesOp() || bi.op.divOp()||bi.op.modOp())
 				{	
 					
 					if(bi.op.timesOp()) mkMul();
 					else if(bi.op.divOp())mkDiv();
 					else if(bi.op.modOp())mkMod();
-					else if(bi.op.powOp());
 					else System.err.println("error mulop");
-				}				
+				}else if(bi.op.powOp()){
+					mkMul();
+					mkUcode(bi.term2);
+					mkMul();
+			
+				}
 			}
 		//}
 		
@@ -706,7 +710,9 @@ import java.util.HashMap;
 		}
 		
 		private void mkPow(){
-			
+			StringBuffer sb = new StringBuffer(mkSpace());
+			sb.append("mult");
+			writeToUco(sb.toString());
 		}
 		
 		private void mkLdi(){
@@ -715,6 +721,11 @@ import java.util.HashMap;
 			writeToUco(sb.toString());
 		}
 		
+		private void mkRet(){
+			StringBuffer sb = new StringBuffer(mkSpace());
+			sb.append("ret");
+			writeToUco(sb.toString());
+		}
 
 		private void mkNotOp(){
 			StringBuffer sb = new StringBuffer(mkSpace());
@@ -770,8 +781,6 @@ import java.util.HashMap;
 			mkSym(blockNumber,5,1);  //int i
 			mkSym(blockNumber,6,1);  //float calval
 			mkSym(blockNumber,7,1);  //int j
-			mkLdc(3);
-			mkStr(blockNumber,1);    //x=3
 			mkLdc(1);    
 			mkStr(blockNumber,2);    //idx=1
 			mkLdc(0);
@@ -836,7 +845,7 @@ import java.util.HashMap;
 			mkAdd();
 			mkStr(blockNumber,2);
 			mkUjp("for"+11);
-			mkEnd();
+			mkRetv();
 			
 		
 			blockNumber++;
@@ -915,7 +924,7 @@ import java.util.HashMap;
 			mkAdd();
 			mkStr(blockNumber,2);
 			mkUjp("for"+12);
-			mkEnd();
+			mkRetv();
 			
 			
 			blockNumber++;
